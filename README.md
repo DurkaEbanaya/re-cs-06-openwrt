@@ -33,6 +33,7 @@ Hardware backup and a second physical copy remain prerequisites for writing.
 
 - [Build instructions](docs/BUILD.md)
 - [Adaptations and hardware acceptance gates](docs/ADAPTATION.md)
+- [Firmware licensing and publication](docs/LICENSING.md)
 - [Pinned source/feed commits](sources.lock.json)
 - [Minimal configuration](config/minimal.config)
 - [Local tests](tests/test_tools.py): `python3 -m unittest discover -s tests -v`

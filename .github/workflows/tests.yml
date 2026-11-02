@@ -1,0 +1,26 @@
+name: Source policy and offline tools
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Test policy, image parsers and mocked provisioning
+        run: python3 -m unittest discover -s tests -v
+      - name: Audit public tracked sources
+        run: python3 scripts/audit-public.py
+      - name: Check shell syntax without running image scripts
+        run: |
+          sh -n scripts/container-run
+          sh -n overlay/etc/uci-defaults/90-minimal-defaults
+          sh -n overlay/usr/sbin/re-cs-06-provision-macs

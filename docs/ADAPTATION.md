@@ -26,7 +26,7 @@ than presenting it as a new upstream OpenWrt port.
    new Wi-Fi 7/MLO requirements. MLO support is not claimed as tested.
 5. Use LAN `192.168.76.1/24`, UTC, standard LuCI and English/Russian. WAN is
    administratively disabled initially. Disable software/hardware flow
-   offloading during first acceptance. Do not silently consume official
+   offloading and full-cone NAT during first acceptance. Do not silently consume official
    OpenWrt binary feeds with incompatible custom kernel/package ABIs.
 
 No GPT, bootloader, ART or MAC values are written by the build process.
@@ -37,12 +37,26 @@ restart networking or touch raw storage. Wireless MAC setup and stability
 must be inspected after the actual PHY devices appear. Multiple devices
 must never use a hardcoded shared public identity.
 
+The fork's hard dependencies still include `kmod-nft-fullcone`, PPP's
+`shellsync` helper and LuCI's local OUI/vendor display. Their presence is not
+an optional proxy/cloud bundle: full-cone NAT is disabled in configuration,
+`shellsync` is a local PPP multi-dial synchronization helper (not a remote
+sync service), and OUI display uses local vendor/icon data. They are not
+claimed to be removed. CPU speed-bin and thermal-sensor QFPROM NVMEM
+references are preserved; only the storage-backed MAC dependency is removed.
+
 ## Required hardware acceptance — not yet performed
 
 - Verify a working recovery/UART or suitable RAM boot method and a second
   physical backup copy. Merely finding HTTP recovery strings is not enough.
 - RAM boot without writing rootfs/HLOS. Establish isolated wired access and
   capture serial/kernel logs without publishing unique identity or keys.
+  Inspect the generated `/init` and initramfs contents first. The pinned
+  OpenWrt init exports `INITRAMFS=1`, switches to tmpfs, and skips the normal
+  preinit overlay mount. This static inspection is not proof of a completely
+  write-free boot: inherited boot arguments, board init/hotplug hooks and
+  late `mount_root done` behavior also need review. Do not treat the word
+  "initramfs" or an old firmware's kexec availability as a recovery guarantee.
 - Confirm eMMC geometry, ART extraction, both radios and their BDF/caldata
   requests; no assumptions based solely on successful compilation.
 - Test all four physical Ethernet ports and actual LAN/WAN mapping at 1G

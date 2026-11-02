@@ -59,6 +59,41 @@ def string(value):
     return value.rstrip(b"\0").decode()
 
 
+def inspect_nvmem(tree):
+    """Allow SoC speed/thermal fuses, never storage-backed MAC providers."""
+    handles = {}
+    for path, props in tree.items():
+        for key in ("phandle", "linux,phandle"):
+            if key in props:
+                assert len(props[key]) == 4
+                handle = int.from_bytes(props[key], "big")
+                assert handle not in handles or handles[handle] == path
+                handles[handle] = path
+        assert props.get("partname", b"") != b"factory\0", "Unexpected factory provider"
+    consumers = 0
+    for path, props in tree.items():
+        if "nvmem-cells" not in props:
+            continue
+        compatibles = props.get("compatible", b"").split(b"\0")
+        assert any(x in compatibles for x in (b"operating-points-v2-kryo-cpu", b"qcom,ipq5332-tsens")), \
+            f"Unexpected NVMEM consumer: {path}"
+        assert b"mac-address" not in props.get("nvmem-cell-names", b""), "MAC NVMEM dependency"
+        data = props["nvmem-cells"]
+        assert len(data) % 4 == 0 and data
+        cells = struct.unpack(">" + "I" * (len(data) // 4), data)
+        index = 0
+        while index < len(cells):
+            provider = handles[cells[index]]
+            parent = provider.rsplit("/", 1)[0]
+            assert b"qcom,qfprom" in tree[parent].get("compatible", b"").split(b"\0"), \
+                "NVMEM must refer only to SoC efuses"
+            argument_count = int.from_bytes(tree[provider].get("#nvmem-cell-cells", bytes(4)), "big")
+            index += 1 + argument_count
+            assert index <= len(cells), "Truncated NVMEM reference"
+        consumers += 1
+    return consumers
+
+
 def inspect(data, persistent=True):
     total, nodes = fdt(data)
     config = string(nodes["/configurations"]["default"])
@@ -93,7 +128,7 @@ def inspect(data, persistent=True):
         else:
             _, tree = fdt(image)
             assert b"jdcloud,re-cs-06\0" in tree["/"]["compatible"]
-            assert not any("nvmem-cells" in props for props in tree.values()), "Unexpected MAC NVMEM dependency"
+            record["soc_efuse_consumers_checked"] = inspect_nvmem(tree)
             record["device_tree_model"] = string(tree["/"]["model"])
             record["no_nvmem_mac_dependency"] = True
         result["images"].append(record)

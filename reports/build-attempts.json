@@ -1,0 +1,27 @@
+{
+  "hardware_boot_tested": false,
+  "router_modified": false,
+  "attempts": [
+    {
+      "phase": "host tools",
+      "command": "make -j12",
+      "result": "stopped at tools/dwarves; serial retry succeeded",
+      "root_cause_established": false,
+      "checks_disabled": false
+    },
+    {
+      "phase": "kernel link",
+      "command": "make target/linux/compile -j1 V=s",
+      "result": "resolve_btfids could not load libelf.so.1",
+      "resolution": "add libelf-dev to the rootless builder container and rebuild it",
+      "checks_disabled": false
+    },
+    {
+      "phase": "image generation",
+      "command": "make target/linux/install -j1 V=s",
+      "result": "shell syntax error from parentheses in CONFIG_VERSION_DIST-derived unquoted filename",
+      "resolution": "use RE-CS-06-Minimal-LEDE and add a version-name safety test",
+      "checks_disabled": false
+    }
+  ]
+}

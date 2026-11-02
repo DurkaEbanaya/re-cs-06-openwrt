@@ -22,6 +22,7 @@ def module(name):
 fit = module("inspect-fit")
 policy = module("check-config")
 audit = module("audit-public")
+rootfs = module("inspect-rootfs")
 
 
 def make_fdt(node):
@@ -87,6 +88,19 @@ class FitTests(unittest.TestCase):
         with self.assertRaises(AssertionError):
             fit.inspect(sample_fit(nvmem=True))
 
+    def test_soc_efuses_are_not_mac_factory_dependencies(self):
+        tree = {
+            "/": {},
+            "/opp-table-cpu": {"compatible": b"operating-points-v2-kryo-cpu\0",
+                               "nvmem-cells": struct.pack(">I", 1)},
+            "/soc/efuse": {"compatible": b"qcom,ipq5332-qfprom\0qcom,qfprom\0"},
+            "/soc/efuse/speed-bin": {"phandle": struct.pack(">I", 1)},
+        }
+        self.assertEqual(fit.inspect_nvmem(tree), 1)
+        tree["/soc/efuse"]["compatible"] = b"block\0"
+        with self.assertRaises(AssertionError):
+            fit.inspect_nvmem(tree)
+
     def test_wrong_config(self):
         with self.assertRaises(AssertionError):
             fit.inspect(sample_fit(config="config@wrong"))
@@ -103,6 +117,12 @@ class FitTests(unittest.TestCase):
 
 
 class PolicyTests(unittest.TestCase):
+    def test_image_version_name_is_shell_safe(self):
+        policy.check_version_name('CONFIG_VERSION_DIST="RE-CS-06-Minimal-LEDE"\n')
+        for value in ("Unsafe (fork)", "unsafe/name", "unsafe;name", "unsafe name"):
+            with self.assertRaises(AssertionError):
+                policy.check_version_name(f'CONFIG_VERSION_DIST="{value}"\n')
+
     def test_forbidden_services(self):
         for name in ("default-settings", "luci-app-nikki", "luci-app-passwall2", "vsftpd",
                      "ttyd", "mihomo", "xray-core", "samba4-server", "luci-theme-argon"):
@@ -120,6 +140,18 @@ class PolicyTests(unittest.TestCase):
     def test_secret_patterns(self):
         self.assertIsNotNone(audit.PATTERNS["private_key"].search(b"-----BEGIN " + b"OPENSSH PRIVATE KEY-----"))
         self.assertIsNotNone(audit.PATTERNS["github_token"].search(b"ghp_" + b"x" * 32))
+
+    def test_staged_secret_cannot_hide_behind_clean_working_file(self):
+        with tempfile.TemporaryDirectory() as temp:
+            repo = Path(temp)
+            subprocess.run(["git", "init", "-q", str(repo)], check=True)
+            path = repo / "README.md"
+            path.write_text("synthetic-private-marker")
+            subprocess.run(["git", "add", "README.md"], cwd=repo, check=True)
+            path.write_text("innocent working file")
+            result = audit.inspect_repo(repo, ["synthetic-private-marker"])
+            self.assertFalse(result["public_source_audit_passed"])
+            self.assertEqual(result["errors"], [{"file": "README.md", "reason": "private_literal"}])
 
 
 class ProvisionTests(unittest.TestCase):
@@ -167,6 +199,43 @@ if [ "$1" = add ]; then echo "cfg$PPID$RANDOM"; fi
             result, log = self.run_fixture(bad, good)
             self.assertNotEqual(result.returncode, 0)
             self.assertEqual(log, "")
+
+
+class RootfsTests(unittest.TestCase):
+    def fixture(self, root):
+        content = {
+            "etc/shadow": "root:::0:99999:7:::\n",
+            "etc/passwd": "root:x:0:0:root:/root:/bin/ash\n",
+            "etc/opkg.conf": "option check_signature\n",
+            "etc/uci-defaults/90-minimal-defaults": (REPO / "overlay/etc/uci-defaults/90-minimal-defaults").read_text(),
+            "usr/sbin/re-cs-06-provision-macs": "#!/bin/sh\nexit 0\n",
+            "lib/wifi/mac80211.sh": "set wireless.${section}.disabled='1'\nset wireless.${iface}.disabled='1'\ncountry=\"00\"\n",
+        }
+        for name, data in content.items():
+            path = root / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(data)
+
+    def test_clean_and_private_literal_rejected(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            self.fixture(root)
+            self.assertTrue(rootfs.inspect(root)["rootfs_offline_policy_passed"])
+            (root / "private-marker").write_text("synthetic-private-identity-marker")
+            with self.assertRaises(AssertionError):
+                rootfs.inspect(root, ["synthetic-private-identity-marker"])
+
+    def test_password_or_embedded_key_rejected(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            self.fixture(root)
+            (root / "etc/shadow").write_text("root:embedded-secret:0:0:0:0:::\n")
+            with self.assertRaises(AssertionError):
+                rootfs.inspect(root)
+            self.fixture(root)
+            (root / "etc/uhttpd.key").write_text("synthetic-key-marker")
+            with self.assertRaises(AssertionError):
+                rootfs.inspect(root)
 
 
 if __name__ == "__main__":

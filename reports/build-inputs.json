@@ -21,17 +21,20 @@
       "commit": "2d0f967bd6bd95d4c0d3c330e4713e79d75b4c54"
     }
   ],
-  "config_sha256": "0b3513fef2fec16a79e857ddf92b8bd5f1b8e0b3a552c0c2543ac3a9877fe81b",
+  "config_sha256": "2b2be77dfdc889202046ae2ca1fb790a2794fc4ff48ce5cacd48518611214a7a",
+  "config_seed_sha256": "17ff8e7a6c05ec7f124fb4f29f84456537f22a40c521e591347e89a4ceebe3b1",
+  "containerfile_sha256": "f45504467ab37810a2fd78f9232b6b1da66cd8cb4e09f613c8c5fc35d8d48c0d",
+  "public_defaults_sha256": "00efa95aded474a1af6a18b4d4ff7b3ffe2ec68578f5f1e0fd2468eee0179987",
   "patch_sha256": {
     "0001-minimal-router-defaults.patch": "10324856fae037cab28e9b988e90a8e217df03d04a67de05ab2f027231a11508",
     "0002-re-cs-06-no-factory-nvmem-dependency.patch": "c5c5ce1a78cee8e6ad07da5e92eac0519b5065cd159405ea88caf6bb3e182e74",
     "0003-enforce-persistent-kernel-slot-size.patch": "0b6f284edc718ecd86d71c360497adecf28f0b648d5bebf7f671594cf3d7ff15",
     "0004-wireless-disabled-until-configured.patch": "fcdb66eb5febd08e8b3936ca69a1f0a2aad381e4a35ef51192e5b34438fb7069"
   },
-  "builder_image_id": "d17d3b32edb4ef65527f600104eebc773c43ac8d62e52fbdbd38e3f3436c8271",
+  "builder_image_id": "14b88a4cb29397624ac22034349517ce41c247f772ffb459dc0368baad6c0dc2",
   "build_command": "make -j12",
   "config_policy_passed": true,
-  "tests_passed": 12,
+  "tests_passed": 17,
   "hardware_boot_tested": false,
   "persistent_install_performed": false,
   "binary_redistribution_license_review_complete": false

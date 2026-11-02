@@ -45,3 +45,22 @@ before connecting uplinks; Wi-Fi and WAN are disabled by default.
 Official OpenWrt package repositories are deliberately disabled because
 their kernel ABI does not match this custom source build. Build extra
 packages from the pinned tree; do not disable package-signature checking.
+
+## Offline acceptance
+
+`scripts/inspect-fit.py` checks FIT hashes, ARM64 kernel structure, board DTB,
+SoC-only NVMEM dependencies and the persistent kernel's size limit. Use its
+`--initramfs` flag only for a RAM image; that flag deliberately removes the
+persistent storage limit.
+
+After extracting a newly built squashfs into a fresh local directory,
+`scripts/inspect-rootfs.py DIRECTORY` checks first-boot defaults, signature
+verification, missing embedded passwords/host keys and optional local
+private-literal exclusions. It does not run any image binaries and does not
+claim runtime isolation or a comprehensive security audit. The private deny
+list, if used, must remain local, outside this repository.
+
+The GitHub workflow runs fast offline tool/policy tests, not a complete
+firmware cross-build and not hardware tests. Source audit checks both index
+and working copies of allowlisted tracked files; it is not an audit of
+arbitrary Git history or untracked release assets.

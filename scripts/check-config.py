@@ -23,11 +23,18 @@ REQUIRED = {
 }
 
 
+def check_version_name(text):
+    value = re.search(r'^CONFIG_VERSION_DIST="([^"]+)"$', text, re.M)
+    assert value and re.fullmatch(r"[A-Za-z0-9._-]+", value[1]), \
+        "VERSION_DIST is used in unquoted image paths: use letters/digits/dot/underscore/hyphen only"
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("config", type=Path)
     args = parser.parse_args()
     text = args.config.read_text()
+    check_version_name(text)
     packages = set(re.findall(r"^CONFIG_PACKAGE_([^=]+)=y$", text, re.M))
     bad = sorted(x for x in packages if FORBIDDEN.fullmatch(x))
     missing = sorted(REQUIRED - packages)
