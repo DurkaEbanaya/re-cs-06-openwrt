@@ -1,0 +1,17 @@
+{
+  "test_wrapper_version": 3,
+  "kernel_boot_confirmed": true,
+  "initramfs_root_tmpfs_observed": true,
+  "diagnostic_rounds_completed": 4,
+  "partitions_list_empty_in_all_rounds": true,
+  "mmc_card_not_enumerated": true,
+  "runtime_mmc_compatible": "jdcloud,ram-test-no-mmc-driver",
+  "runtime_mmc_status": "okay",
+  "bootloader_overrode_status_confirmed": true,
+  "ubusd_process_and_socket_observed": true,
+  "procd_did_not_reach_init_stage": true,
+  "only_loopback_netdev_observed": true,
+  "normal_module_loading_stage_not_reached": true,
+  "persistent_install_performed": false,
+  "next_step": "test-only DBGLVL and ubus process/socket diagnostics; not persistent flashing"
+}

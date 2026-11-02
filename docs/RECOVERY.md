@@ -193,3 +193,27 @@ the RAM test's HTTP timeout alone cannot establish a firmware Ethernet
 failure. The deferred-probe messages remain genuine observations, but
 their effect on eventual connectivity is unproven. Repeat network testing
 with a confirmed seated cable after strengthening storage isolation.
+
+## Diagnostic RAM v3: storage guard confirmed at runtime
+
+The next local-only test changed the MMC controller `compatible` to an
+unmatched diagnostic identifier, in addition to disabling its status.
+It also replaced `/init` and an unused Wi-Fi detection script body inside
+the embedded archive, keeping their lengths and kernel section offsets
+unchanged, to emit four rounds of early runtime diagnostics. No such
+modifications were applied to the published persistent images. Wireless
+configuration is deliberately unavailable in this diagnostic image.
+
+All four rounds showed an empty `/proc/partitions`, root on tmpfs, no eMMC
+card and no storage mounts. The runtime DT exposed the unmatched MMC
+compatible but **status `okay`**, directly confirming that the bootloader
+overrode the uploaded `disabled` property. The unmatched compatible
+prevented its SDHCI driver from binding despite this override.
+
+The diagnostics narrow the userspace blocker: PID 1 is procd, `ubusd` is
+running and its Unix socket exists, but procd has not advanced past its
+UBUS startup stage. Only loopback exists and the normal service/module
+loading stage has not been reached. This means the lack of Ethernet is
+not yet an isolated Ethernet-driver diagnosis. Further test-only procd
+debug output and bounded ubus/process queries are prepared; the exact
+cause remains unproven. See `reports/ram-v3-diagnostics.json`.
