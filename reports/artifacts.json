@@ -1,0 +1,81 @@
+{
+  "build_succeeded": true,
+  "images": [
+    {
+      "file": "re-cs-06-minimal-lede-experimental-2026.11.02-qualcommbe-ipq53xx-jdcloud_re-cs-06-initramfs-uImage.itb",
+      "bytes": 30467276,
+      "sha256": "8ef1d908735c71cf4476e8c0f024678ad6a761db558210e46f73de11f5720996",
+      "published_binary": false
+    },
+    {
+      "file": "re-cs-06-minimal-lede-experimental-2026.11.02-qualcommbe-ipq53xx-jdcloud_re-cs-06-squashfs-factory.bin",
+      "bytes": 26875723,
+      "sha256": "14d514d61d8234feea9aca924883c76becb02de73d7c674688b5e9400e16ced4",
+      "published_binary": false
+    },
+    {
+      "file": "re-cs-06-minimal-lede-experimental-2026.11.02-qualcommbe-ipq53xx-jdcloud_re-cs-06-squashfs-sysupgrade.bin",
+      "bytes": 26461009,
+      "sha256": "dcea9b4b6b09acf75e407ac42462fd1fa2bfeded7a8391243076015754cf32bf",
+      "published_binary": false
+    }
+  ],
+  "factory_kernel_equals_checked_sysupgrade_kernel": true,
+  "factory_rootfs_equals_inspected_squashfs": true,
+  "persistent_kernel_bytes": 6857104,
+  "hlos_slot_bytes": 7340032,
+  "hlos_remaining_bytes": 482928,
+  "root_squashfs_bytes": 19534842,
+  "initramfs_fit": {
+    "fit_bytes": 30467276,
+    "file_bytes": 30467276,
+    "default_config": "config@mi01.6",
+    "images": [
+      {
+        "role": "kernel",
+        "bytes": 30435044,
+        "hash_algorithms_verified": [
+          "crc32",
+          "sha1"
+        ],
+        "sha256": "da5d222e8895a341b284707c97b75a2360a98dab359af38109996957a54631cf",
+        "compression": "gzip",
+        "uncompressed_bytes": 95379464,
+        "load": 1090519040,
+        "entry": 1090519040
+      },
+      {
+        "role": "fdt",
+        "bytes": 30318,
+        "hash_algorithms_verified": [
+          "crc32",
+          "sha1"
+        ],
+        "sha256": "fdbd31279b9559eb7832a605eb80a34016dca1b3bdf2e9d81c3758aba2673a25",
+        "soc_efuse_consumers_checked": 2,
+        "device_tree_model": "JDCloud RE-CS-06",
+        "no_nvmem_mac_dependency": true
+      }
+    ],
+    "hardware_boot_tested": false,
+    "persistent_slot_limit_checked": false
+  },
+  "fwtool_metadata": {
+    "metadata_version": "1.1",
+    "compat_version": "1.0",
+    "supported_devices": [
+      "jdcloud,re-cs-06",
+      "jdcloud,re-cs-06"
+    ],
+    "version": {
+      "dist": "RE-CS-06-Minimal-LEDE",
+      "version": "experimental-2026.11.02",
+      "revision": "r0-667a1afd",
+      "target": "qualcommbe/ipq53xx",
+      "board": "jdcloud_re-cs-06"
+    }
+  },
+  "hardware_boot_tested": false,
+  "persistent_install_performed": false,
+  "binary_redistribution_license_review_complete": false
+}

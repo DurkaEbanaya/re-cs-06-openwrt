@@ -2,11 +2,13 @@
 import gzip
 import hashlib
 import importlib.util
+import io
 import json
 from pathlib import Path
 import struct
 import subprocess
 import tempfile
+import tarfile
 import unittest
 
 REPO = Path(__file__).resolve().parents[1]
@@ -23,6 +25,8 @@ fit = module("inspect-fit")
 policy = module("check-config")
 audit = module("audit-public")
 rootfs = module("inspect-rootfs")
+initramfs = module("inspect-initramfs")
+sysupgrade = module("inspect-sysupgrade")
 
 
 def make_fdt(node):
@@ -116,7 +120,105 @@ class FitTests(unittest.TestCase):
         self.assertFalse(fit.inspect(data, persistent=False)["persistent_slot_limit_checked"])
 
 
+class CpioTests(unittest.TestCase):
+    def entry(self, name, content=b"", mode=0o100644):
+        names = name.encode() + b"\0"
+        fields = (1, mode, 0, 0, 1, 0, len(content), 0, 0, 0, 0, len(names), 0)
+        header = b"070701" + b"".join(f"{value:08x}".encode() for value in fields)
+        result = header + names
+        result += bytes(-len(result) % 4)
+        result += content
+        return result + bytes(-len(result) % 4)
+
+    def test_newc_valid_truncated_and_unsafe_path(self):
+        archive = self.entry("init", b"#!/bin/sh\n", 0o100755) + self.entry("TRAILER!!!")
+        files, size = initramfs.newc(archive, 0)
+        self.assertEqual(files["init"], (0o100755, b"#!/bin/sh\n"))
+        self.assertEqual(size, len(archive))
+        for invalid in (archive[:-8], self.entry("../escape") + self.entry("TRAILER!!!"),
+                        self.entry("/absolute") + self.entry("TRAILER!!!"),
+                        self.entry("init") + archive):
+            with self.assertRaises((AssertionError, ValueError)):
+                initramfs.newc(invalid, 0)
+
+    def test_embedded_archive_members_are_not_multiple_archives(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            RootfsTests().fixture(root)
+            init = b"export INITRAMFS=1\nmount -t tmpfs tmpfs $NEW_ROOT\nswitch_root $NEW_ROOT /sbin/init\n"
+            archive = self.entry("init", init, 0o100755)
+            for path in sorted(root.rglob("*")):
+                if path.is_file():
+                    archive += self.entry(path.relative_to(root).as_posix(), path.read_bytes())
+            archive += self.entry("TRAILER!!!")
+            # Replace only the compressed kernel data/hash in a synthetic valid FIT.
+            _, tree = fit.fdt(sample_fit())
+            raw = bytearray(128)
+            raw[56:60] = b"ARM\x64"
+            data = gzip.compress(bytes(raw) + archive, mtime=0)
+            tree["/images/kernel@1"]["data"] = data
+            tree["/images/kernel@1/hash@1"]["value"] = hashlib.sha256(data).digest()
+            def node(path):
+                children = [(name.rsplit("/", 1)[1], *node(name)) for name in tree
+                            if name != "/" and name.rsplit("/", 1)[0] == path.rstrip("/")]
+                return tree[path], children
+            result = initramfs.inspect(make_fdt(node("/")), root)
+            self.assertTrue(result["initramfs_offline_check_passed"])
+            self.assertFalse(result["write_free_boot_proven"])
+
+
+class SysupgradeTests(unittest.TestCase):
+    def image(self, *, extra=False, corrupt=False):
+        output = io.BytesIO()
+        prefix = "sysupgrade-jdcloud_re-cs-06"
+        with tarfile.open(fileobj=output, mode="w:") as archive:
+            directory = tarfile.TarInfo(prefix)
+            directory.type = tarfile.DIRTYPE
+            archive.addfile(directory)
+            objects = {"CONTROL": b"BOARD=jdcloud_re-cs-06\n", "kernel": sample_fit(bad_hash=corrupt),
+                       "root": b"hsqs" + bytes(65532)}
+            if extra:
+                objects["private-settings"] = b"not-allowed"
+            for name, data in objects.items():
+                entry = tarfile.TarInfo(prefix + "/" + name)
+                entry.size = len(data)
+                archive.addfile(entry, io.BytesIO(data))
+        return output.getvalue()
+
+    def test_tar_kernel_root_and_no_extra_settings(self):
+        result = sysupgrade.inspect(self.image(), b"hsqs")
+        self.assertTrue(result["sysupgrade_offline_check_passed"])
+        self.assertFalse(result["old_qwrt_direct_upgrade_approved"])
+        for image in (self.image(extra=True), self.image(corrupt=True)):
+            with self.assertRaises(AssertionError):
+                sysupgrade.inspect(image, b"hsqs")
+
+
 class PolicyTests(unittest.TestCase):
+    def test_image_recipe_defers_soc_and_dtb_expansion(self):
+        patch = (REPO / "patches/0003-enforce-persistent-kernel-slot-size.patch").read_text()
+        recipes = "\n".join(line[1:] for line in patch.splitlines()
+                            if line.startswith("+\tKERNEL"))
+        with tempfile.TemporaryDirectory() as temp:
+            makefile = Path(temp) / "Makefile"
+            makefile.write_text("""KDIR := /kernel
+define Device/Test
+DEVICE_DTS = $$(SOC)-re-cs-06
+""" + recipes + """
+SOC := ipq5322
+KERNEL_SIZE := 7168k
+endef
+$(eval $(call Device/Test))
+all:
+\t@printf '%s\\n' '$(KERNEL)' '$(KERNEL_INITRAMFS)'
+""")
+            result = subprocess.check_output(["make", "--no-print-directory", "-f", str(makefile)], text=True)
+            lines = result.splitlines()
+            self.assertEqual(len(lines), 2)
+            self.assertTrue(all("/kernel/image-ipq5322-re-cs-06.dtb" in line for line in lines))
+            self.assertIn("check-size 7168k", lines[0])
+            self.assertNotIn("check-size", lines[1])
+
     def test_image_version_name_is_shell_safe(self):
         policy.check_version_name('CONFIG_VERSION_DIST="RE-CS-06-Minimal-LEDE"\n')
         for value in ("Unsafe (fork)", "unsafe/name", "unsafe;name", "unsafe name"):

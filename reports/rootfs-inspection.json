@@ -1,0 +1,16 @@
+{
+  "regular_files_checked": 1467,
+  "regular_bytes_checked": 76189160,
+  "default_file_sha256": {
+    "etc/opkg.conf": "f38c19f696ea87c0b30eb5bfeb8657237f4625e1a749c58b99f01595edfb6446",
+    "etc/shadow": "53ebc3912b36fb6c0b64b9cbf6c0d83bc5d16c688a89d0e767fbb9acad43ade5",
+    "etc/uci-defaults/90-minimal-defaults": "00efa95aded474a1af6a18b4d4ff7b3ffe2ec68578f5f1e0fd2468eee0179987",
+    "usr/sbin/re-cs-06-provision-macs": "596eb06925e986905c23b5a846ebd3bc6fe3b06dbf24d3eb17619ddd018cb3ba"
+  },
+  "embedded_root_password": false,
+  "embedded_host_private_keys": false,
+  "private_literals_checked": true,
+  "image_defaults_are_first_boot_instructions_not_runtime_test": true,
+  "rootfs_offline_policy_passed": true,
+  "hardware_boot_tested": false
+}

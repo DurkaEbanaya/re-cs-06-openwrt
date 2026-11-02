@@ -1,0 +1,43 @@
+{
+  "tar_members_verified": 4,
+  "persistent_kernel": {
+    "fit_bytes": 6857104,
+    "file_bytes": 6857104,
+    "default_config": "config@mi01.6",
+    "images": [
+      {
+        "role": "kernel",
+        "bytes": 6824871,
+        "hash_algorithms_verified": [
+          "crc32",
+          "sha1"
+        ],
+        "sha256": "081cd075292ede1e4b72313e451d003955410d10a80087e23bc4bd6c945add99",
+        "compression": "gzip",
+        "uncompressed_bytes": 18964488,
+        "load": 1090519040,
+        "entry": 1090519040
+      },
+      {
+        "role": "fdt",
+        "bytes": 30318,
+        "hash_algorithms_verified": [
+          "crc32",
+          "sha1"
+        ],
+        "sha256": "fdbd31279b9559eb7832a605eb80a34016dca1b3bdf2e9d81c3758aba2673a25",
+        "soc_efuse_consumers_checked": 2,
+        "device_tree_model": "JDCloud RE-CS-06",
+        "no_nvmem_mac_dependency": true
+      }
+    ],
+    "hardware_boot_tested": false,
+    "persistent_slot_limit_checked": true
+  },
+  "rootfs_bytes": 19595264,
+  "rootfs_padding_bytes": 60422,
+  "rootfs_sha256": "53f4ba723cc807300577d7226a2afd23897677686a355e6c5f96f1b6f68b017c",
+  "sysupgrade_offline_check_passed": true,
+  "hardware_boot_tested": false,
+  "old_qwrt_direct_upgrade_approved": false
+}

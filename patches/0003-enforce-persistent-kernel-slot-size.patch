@@ -7,8 +7,8 @@ index 89c808c4..bc5ece40 100644
  	$(call Device/FitImage)
  	$(call Device/EmmcImage)
 +	# Persistent kernel must fit HLOS. RAM-only initramfs is exempt.
-+	KERNEL := kernel-bin | libdeflate-gzip | fit gzip $$(KDIR)/image-$$(DEVICE_DTS).dtb | check-size $$(KERNEL_SIZE)
-+	KERNEL_INITRAMFS := kernel-bin | libdeflate-gzip | fit gzip $$(KDIR)/image-$$(DEVICE_DTS).dtb
++	KERNEL = kernel-bin | libdeflate-gzip | fit gzip $$(KDIR)/image-$$(DEVICE_DTS).dtb | check-size $$(KERNEL_SIZE)
++	KERNEL_INITRAMFS = kernel-bin | libdeflate-gzip | fit gzip $$(KDIR)/image-$$(DEVICE_DTS).dtb
  	DEVICE_VENDOR := JDCloud
  	DEVICE_MODEL := BE6500
  	DEVICE_DTS_CONFIG := config@mi01.6

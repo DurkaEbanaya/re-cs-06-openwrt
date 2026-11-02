@@ -22,6 +22,8 @@ packages. Diagnose a failed step using a serial `make -j1 V=s` invocation.
 Feed revision checks are pinned; `feeds update -i` only indexes local feeds.
 `prepare.py` refuses to overwrite a config or merge an unreviewed overlay.
 To resume a prepared tree, rerun make rather than rerunning preparation.
+`config/resolved.config` records the final first-build configuration;
+`minimal.config` is the smaller seed used to derive it.
 
 Use a moderate parallelism limit so the desktop remains usable. The container
 is non-root and only the source tree is mounted into it: no SSH agent,
@@ -59,6 +61,16 @@ verification, missing embedded passwords/host keys and optional local
 private-literal exclusions. It does not run any image binaries and does not
 claim runtime isolation or a comprehensive security audit. The private deny
 list, if used, must remain local, outside this repository.
+
+`scripts/inspect-initramfs.py IMAGE ROOT_DIRECTORY` independently parses the
+embedded newc archive, checks the RAM `/init` and compares selected files
+with the inspected rootfs. It does not assert that booting cannot write to
+flash. Bootloader/kernel behavior and runtime mounts remain hardware gates.
+
+`scripts/inspect-sysupgrade.py IMAGE ROOT_SQUASHFS` checks the expected tar
+members, board CONTROL file, persistent FIT and exact rootfs bytes/padding.
+Appended fwtool metadata is inspected separately using the build's `fwtool`;
+neither check approves a direct upgrade from older QWRT.
 
 The GitHub workflow runs fast offline tool/policy tests, not a complete
 firmware cross-build and not hardware tests. Source audit checks both index

@@ -22,6 +22,21 @@
       "result": "shell syntax error from parentheses in CONFIG_VERSION_DIST-derived unquoted filename",
       "resolution": "use RE-CS-06-Minimal-LEDE and add a version-name safety test",
       "checks_disabled": false
+    },
+    {
+      "phase": "FIT packaging",
+      "command": "make target/linux/install -j1 V=s",
+      "result": "new kernel recipes expanded DEVICE_DTS before the board SOC assignment",
+      "resolution": "use deferred Make assignments as in Device/FitImage; add a Make expansion regression test",
+      "checks_disabled": false
+    },
+    {
+      "phase": "persistent kernel size gate",
+      "command": "make -j12",
+      "result": "FIT size 8111356 bytes exceeded the existing 7340032-byte HLOS slot",
+      "resolution": "remove optional allocated BTF type metadata; retain gzip and the slot-size gate",
+      "checks_disabled": false,
+      "feature_removed": "kernel/module BTF and BPF CO-RE introspection"
     }
   ]
 }

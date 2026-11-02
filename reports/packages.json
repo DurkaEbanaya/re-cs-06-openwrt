@@ -1,0 +1,830 @@
+{
+  "installed_packages": 206,
+  "forbidden_optional_packages": [],
+  "packages": [
+    {
+      "name": "ath12k-firmware-ipq5332-ddwrt",
+      "version": "2026.11.01~bd7c0abd-1"
+    },
+    {
+      "name": "ath12k-firmware-qcn9274-ddwrt",
+      "version": "2026.11.01~bd7c0abd-1"
+    },
+    {
+      "name": "base-files",
+      "version": "1-r0-667a1afd"
+    },
+    {
+      "name": "busybox",
+      "version": "1.38.0-2"
+    },
+    {
+      "name": "ca-bundle",
+      "version": "20260601-1"
+    },
+    {
+      "name": "cgi-io",
+      "version": "2022-08-10-901b0f04-21"
+    },
+    {
+      "name": "dnsmasq",
+      "version": "2.93-1"
+    },
+    {
+      "name": "dropbear",
+      "version": "2026.94-1"
+    },
+    {
+      "name": "e2fsprogs",
+      "version": "1.47.4-1"
+    },
+    {
+      "name": "ethtool",
+      "version": "7.1-1"
+    },
+    {
+      "name": "firewall4",
+      "version": "2024-12-18-18fc0ead-6"
+    },
+    {
+      "name": "fstools",
+      "version": "2026-07-25-2aa16407-1"
+    },
+    {
+      "name": "fwtool",
+      "version": "2025-10-03-04cd252e-1"
+    },
+    {
+      "name": "getrandom",
+      "version": "2025-10-30-6f78fa49-1"
+    },
+    {
+      "name": "hostapd-common",
+      "version": "2024-09-15-5ace39b0-1"
+    },
+    {
+      "name": "ip-full",
+      "version": "6.18.0-2"
+    },
+    {
+      "name": "ipq-wifi-jdcloud_re-cs-06",
+      "version": "2026-10-25-49ce14c0-1"
+    },
+    {
+      "name": "iw",
+      "version": "6.17-1"
+    },
+    {
+      "name": "iwinfo",
+      "version": "2026-05-26-66bdd1a0-1"
+    },
+    {
+      "name": "jansson4",
+      "version": "2.15.0-1"
+    },
+    {
+      "name": "jshn",
+      "version": "2026-07-21-e7608b69-1"
+    },
+    {
+      "name": "jsonfilter",
+      "version": "2026-03-16-b9034210-1"
+    },
+    {
+      "name": "kernel",
+      "version": "6.18.60-1-3ae6090a5b73d28a636ef061d5944a13"
+    },
+    {
+      "name": "kmod-ath",
+      "version": "6.18.60+7.2-26"
+    },
+    {
+      "name": "kmod-ath12k",
+      "version": "6.18.60+7.2-26"
+    },
+    {
+      "name": "kmod-cfg80211",
+      "version": "6.18.60+7.2-26"
+    },
+    {
+      "name": "kmod-crypto-aead",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-crypto-arc4",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-crypto-authenc",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-crypto-ccm",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-crypto-cmac",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-crypto-crc32c",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-crypto-ctr",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-crypto-ecb",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-crypto-gcm",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-crypto-geniv",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-crypto-gf128",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-crypto-ghash",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-crypto-hash",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-crypto-hmac",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-crypto-manager",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-crypto-michael-mic",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-crypto-null",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-crypto-rng",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-crypto-seqiv",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-crypto-sha1",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-crypto-sha3",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-crypto-sha512",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-crypto-user",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-cryptodev",
+      "version": "6.18.60+1.14-2"
+    },
+    {
+      "name": "kmod-dsa",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-dsa-qca8k",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-fs-ext4",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-gpio-button-hotplug",
+      "version": "6.18.60-3"
+    },
+    {
+      "name": "kmod-leds-gpio",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-lib-crc-ccitt",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-lib-crc16",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-lib-crc32c",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-libphy",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-mac80211",
+      "version": "6.18.60+7.2-26"
+    },
+    {
+      "name": "kmod-macvlan",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-mdio-devres",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-mhi-bus",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-mppe",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-net-selftests",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-nf-conntrack",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-nf-conntrack-netlink",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-nf-conntrack6",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-nf-flow",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-nf-log",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-nf-log6",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-nf-nat",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-nf-nat6",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-nf-reject",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-nf-reject6",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-nf-tproxy",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-nfnetlink",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-nft-core",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-nft-fib",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-nft-fullcone",
+      "version": "6.18.60+2023-05-17-07d93b62-3"
+    },
+    {
+      "name": "kmod-nft-nat",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-nft-nat6",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-nft-offload",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-nft-tproxy",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-nls-base",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-pcs-qcom-ipq9574",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-phy-qca83xx",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-phylib-qcom",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-phylink",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-ppp",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-pppoe",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-pppox",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-qcom-ppe",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-qcom-qmi-helpers",
+      "version": "6.18.60+7.2-26"
+    },
+    {
+      "name": "kmod-qrtr",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-qrtr-mhi",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-qrtr-smd",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-regmap-core",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-slhc",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-tcp-bbr",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-usb-common",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-usb-core",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-usb-dwc3",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-usb-dwc3-qcom",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-usb-roles",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-usb-xhci-hcd",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "kmod-usb3",
+      "version": "6.18.60-1"
+    },
+    {
+      "name": "libblkid1",
+      "version": "2.42.2-1"
+    },
+    {
+      "name": "libblobmsg-json20260721",
+      "version": "2026-07-21-e7608b69-1"
+    },
+    {
+      "name": "libbpf1",
+      "version": "1.7.0-1"
+    },
+    {
+      "name": "libc",
+      "version": "1.2.5-4"
+    },
+    {
+      "name": "libcomerr0",
+      "version": "1.47.4-1"
+    },
+    {
+      "name": "libe2p2",
+      "version": "1.47.4-1"
+    },
+    {
+      "name": "libelf1",
+      "version": "0.195-2"
+    },
+    {
+      "name": "libext2fs2",
+      "version": "1.47.4-1"
+    },
+    {
+      "name": "libgcc1",
+      "version": "13.3.0-4"
+    },
+    {
+      "name": "libiwinfo-data",
+      "version": "2026-05-26-66bdd1a0-1"
+    },
+    {
+      "name": "libiwinfo20230701",
+      "version": "2026-05-26-66bdd1a0-1"
+    },
+    {
+      "name": "libjson-c5",
+      "version": "0.18-1"
+    },
+    {
+      "name": "libjson-script20260721",
+      "version": "2026-07-21-e7608b69-1"
+    },
+    {
+      "name": "liblucihttp-ucode",
+      "version": "2023-03-15-9b5b683f-1"
+    },
+    {
+      "name": "liblucihttp0",
+      "version": "2023-03-15-9b5b683f-1"
+    },
+    {
+      "name": "libmnl0",
+      "version": "1.0.5-1"
+    },
+    {
+      "name": "libnftnl11",
+      "version": "1.3.1-2"
+    },
+    {
+      "name": "libnl-tiny1",
+      "version": "2025-12-02-40493a65-1"
+    },
+    {
+      "name": "libopenssl-conf",
+      "version": "3.6.4-1"
+    },
+    {
+      "name": "libopenssl-legacy",
+      "version": "3.6.4-1"
+    },
+    {
+      "name": "libopenssl3",
+      "version": "3.6.4-1"
+    },
+    {
+      "name": "libpthread",
+      "version": "1.2.5-4"
+    },
+    {
+      "name": "librt",
+      "version": "1.2.5-4"
+    },
+    {
+      "name": "libsmartcols1",
+      "version": "2.42.2-1"
+    },
+    {
+      "name": "libss2",
+      "version": "1.47.4-1"
+    },
+    {
+      "name": "libubox20260721",
+      "version": "2026-07-21-e7608b69-1"
+    },
+    {
+      "name": "libubus20260628",
+      "version": "2026-06-28-24864e78-1"
+    },
+    {
+      "name": "libuci20250120",
+      "version": "2025-12-02-66127cd7-1"
+    },
+    {
+      "name": "libuclient20201210",
+      "version": "2026-06-07-daad21fa-1"
+    },
+    {
+      "name": "libucode20230711",
+      "version": "2026-07-09-b885dd0f-1"
+    },
+    {
+      "name": "libudebug",
+      "version": "2026-07-08-75843a1b"
+    },
+    {
+      "name": "libustream-openssl20201210",
+      "version": "2026-03-01-99f1c0db-2"
+    },
+    {
+      "name": "libuuid1",
+      "version": "2.42.2-1"
+    },
+    {
+      "name": "logd",
+      "version": "2025-10-30-6f78fa49-1"
+    },
+    {
+      "name": "losetup",
+      "version": "2.42.2-1"
+    },
+    {
+      "name": "luci",
+      "version": "26.306.34307~f4c14a8"
+    },
+    {
+      "name": "luci-app-firewall",
+      "version": "26.306.34307~f4c14a8"
+    },
+    {
+      "name": "luci-app-oui",
+      "version": "1.0.9-r1"
+    },
+    {
+      "name": "luci-app-package-manager",
+      "version": "26.306.34307~f4c14a8"
+    },
+    {
+      "name": "luci-base",
+      "version": "26.306.34307~f4c14a8"
+    },
+    {
+      "name": "luci-i18n-base-ru",
+      "version": "26.306.34307~f4c14a8"
+    },
+    {
+      "name": "luci-i18n-firewall-ru",
+      "version": "26.306.34307~f4c14a8"
+    },
+    {
+      "name": "luci-i18n-package-manager-ru",
+      "version": "26.306.34307~f4c14a8"
+    },
+    {
+      "name": "luci-lib-uqr",
+      "version": "26.306.34307~f4c14a8"
+    },
+    {
+      "name": "luci-light",
+      "version": "26.306.34307~f4c14a8"
+    },
+    {
+      "name": "luci-mod-admin-full",
+      "version": "26.306.34307~f4c14a8"
+    },
+    {
+      "name": "luci-mod-network",
+      "version": "26.306.34307~f4c14a8"
+    },
+    {
+      "name": "luci-mod-status",
+      "version": "26.306.34307~f4c14a8"
+    },
+    {
+      "name": "luci-mod-system",
+      "version": "26.306.34307~f4c14a8"
+    },
+    {
+      "name": "luci-proto-ipv6",
+      "version": "26.306.34307~f4c14a8"
+    },
+    {
+      "name": "luci-proto-ppp",
+      "version": "26.306.34307~f4c14a8"
+    },
+    {
+      "name": "luci-ssl-openssl",
+      "version": "26.306.34307~f4c14a8"
+    },
+    {
+      "name": "luci-theme-bootstrap",
+      "version": "26.306.34307~f4c14a8"
+    },
+    {
+      "name": "mtd",
+      "version": "28"
+    },
+    {
+      "name": "netifd",
+      "version": "2025-05-23-7901e66c-1"
+    },
+    {
+      "name": "nftables-json",
+      "version": "1.1.6-6"
+    },
+    {
+      "name": "odhcp6c",
+      "version": "2021-01-09-53f07e90-18"
+    },
+    {
+      "name": "odhcpd-ipv6only",
+      "version": "2026-06-28-68f38269-1"
+    },
+    {
+      "name": "openssl-util",
+      "version": "3.6.4-1"
+    },
+    {
+      "name": "openwrt-keyring",
+      "version": "2025-12-10-f0670054-1"
+    },
+    {
+      "name": "opkg",
+      "version": "2025-11-05-80503d94-1"
+    },
+    {
+      "name": "ppp",
+      "version": "2.5.3-2"
+    },
+    {
+      "name": "ppp-mod-pppoe",
+      "version": "2.5.3-2"
+    },
+    {
+      "name": "procd",
+      "version": "2026-06-17-60fdbf00-1"
+    },
+    {
+      "name": "procd-seccomp",
+      "version": "2026-06-17-60fdbf00-1"
+    },
+    {
+      "name": "procd-ujail",
+      "version": "2026-06-17-60fdbf00-1"
+    },
+    {
+      "name": "rpcd",
+      "version": "2026-07-19-e37ed9d8-1"
+    },
+    {
+      "name": "rpcd-mod-file",
+      "version": "2026-07-19-e37ed9d8-1"
+    },
+    {
+      "name": "rpcd-mod-iwinfo",
+      "version": "2026-07-19-e37ed9d8-1"
+    },
+    {
+      "name": "rpcd-mod-luci",
+      "version": "20240305-10"
+    },
+    {
+      "name": "rpcd-mod-rrdns",
+      "version": "20170710"
+    },
+    {
+      "name": "rpcd-mod-ucode",
+      "version": "2026-07-19-e37ed9d8-1"
+    },
+    {
+      "name": "shellsync",
+      "version": "0.2-2"
+    },
+    {
+      "name": "ubi-utils",
+      "version": "2.3.1-1"
+    },
+    {
+      "name": "uboot-envtools",
+      "version": "2023.01-10"
+    },
+    {
+      "name": "ubox",
+      "version": "2025-10-30-6f78fa49-1"
+    },
+    {
+      "name": "ubus",
+      "version": "2026-06-28-24864e78-1"
+    },
+    {
+      "name": "ubusd",
+      "version": "2026-06-28-24864e78-1"
+    },
+    {
+      "name": "uci",
+      "version": "2025-12-02-66127cd7-1"
+    },
+    {
+      "name": "uclient-fetch",
+      "version": "2026-06-07-daad21fa-1"
+    },
+    {
+      "name": "ucode",
+      "version": "2026-07-09-b885dd0f-1"
+    },
+    {
+      "name": "ucode-mod-fs",
+      "version": "2026-07-09-b885dd0f-1"
+    },
+    {
+      "name": "ucode-mod-html",
+      "version": "1"
+    },
+    {
+      "name": "ucode-mod-log",
+      "version": "2026-07-09-b885dd0f-1"
+    },
+    {
+      "name": "ucode-mod-math",
+      "version": "2026-07-09-b885dd0f-1"
+    },
+    {
+      "name": "ucode-mod-nl80211",
+      "version": "2026-07-09-b885dd0f-1"
+    },
+    {
+      "name": "ucode-mod-rtnl",
+      "version": "2026-07-09-b885dd0f-1"
+    },
+    {
+      "name": "ucode-mod-socket",
+      "version": "2026-07-09-b885dd0f-1"
+    },
+    {
+      "name": "ucode-mod-ubus",
+      "version": "2026-07-09-b885dd0f-1"
+    },
+    {
+      "name": "ucode-mod-uci",
+      "version": "2026-07-09-b885dd0f-1"
+    },
+    {
+      "name": "ucode-mod-uloop",
+      "version": "2026-07-09-b885dd0f-1"
+    },
+    {
+      "name": "uhttpd",
+      "version": "2025-10-03-ebb92e6b-1"
+    },
+    {
+      "name": "uhttpd-mod-ubus",
+      "version": "2025-10-03-ebb92e6b-1"
+    },
+    {
+      "name": "urandom-seed",
+      "version": "3"
+    },
+    {
+      "name": "urngd",
+      "version": "2025-10-03-f17e33d9-1"
+    },
+    {
+      "name": "usign",
+      "version": "2025-10-03-c4c72b1b-1"
+    },
+    {
+      "name": "wireless-regdb",
+      "version": "2026.05.30-1"
+    },
+    {
+      "name": "wpad-openssl",
+      "version": "2024-09-15-5ace39b0-1"
+    },
+    {
+      "name": "zlib",
+      "version": "1.3.2-1"
+    }
+  ]
+}

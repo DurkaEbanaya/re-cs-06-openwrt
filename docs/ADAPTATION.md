@@ -20,6 +20,12 @@ than presenting it as a new upstream OpenWrt port.
 3. Reject persistent FIT kernels larger than the 7 MiB HLOS slot. Build an
    independent initramfs FIT without that storage-only limit. Use gzip,
    which the previous installed image used; that is still not a boot test.
+   The first linked kernel had 4097327 bytes of allocated BTF metadata and
+   produced an 8111356-byte FIT, so the size check correctly rejected it.
+   Disable optional `KERNEL_DEBUG_INFO_BTF` to fit the existing slot rather
+   than repartitioning or skipping the check. This removes BPF CO-RE/type
+   introspection support; it is not a failure bypass. Normal DWARF debug
+   information remains available in local build objects, not flash images.
 4. Generate Wi-Fi disabled with world regulatory domain (`00`). Choose the
    actual operating country and encryption before enabling it. Full
    `wpad-openssl` is selected instead of assuming basic hostapd covers all

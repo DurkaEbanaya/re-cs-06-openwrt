@@ -3,7 +3,8 @@
 Experimental, source-based build for **JDCloud RE-CS-06 / BE6500** with
 Qualcomm IPQ5322/IPQ5332. This is **not an official OpenWrt release**.
 
-**Status: first cross-build running; no hardware boot validation yet. Do not flash.**
+**Status: first cross-build succeeded; generated images passed offline inspection.
+No hardware boot validation yet. Do not flash.**
 
 ## Goals
 
@@ -37,6 +38,7 @@ Hardware backup and a second physical copy remain prerequisites for writing.
 - [Pinned source/feed commits](sources.lock.json)
 - [Minimal configuration](config/minimal.config)
 - [Local tests](tests/test_tools.py): `python3 -m unittest discover -s tests -v`
+- [Build and image inspection results](docs/RESULTS.md)
 
 The build produces a persistent kernel/rootfs candidate and an initramfs FIT
 for a separately verified RAM-boot method. No preconfigured private identity
