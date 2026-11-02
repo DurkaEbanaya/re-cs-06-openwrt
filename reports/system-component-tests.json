@@ -1,0 +1,72 @@
+{
+  "installed_version": "experimental-2026.11.02-install-r2",
+  "scope": "Bounded checks on the installed device in its enclosure; not complete hardware qualification",
+  "cpu_memory": {
+    "passed": true,
+    "workers": 4,
+    "affinity_per_cpu": true,
+    "seconds_per_worker": 90,
+    "total_allocated_bytes": 201326592,
+    "patterns": ["zero", "ones", "alternating bits", "inverse alternating bits", "index", "inverse multiplied index"],
+    "full_ram_test": false
+  },
+  "storage": {
+    "persistent_ext4_read_write": true,
+    "temporary_64_mib_file_hash_before_after_sync_matched": true,
+    "cache_bypassed_readback": false,
+    "root_partition_512_mib_sequential_read_passed": true,
+    "appsbl_art_and_both_calibration_slices_match_backup": true,
+    "full_emmc_surface_or_destructive_test": false,
+    "wear_fields_report_zero_unspecified": true
+  },
+  "network_endpoint_tests": {
+    "tool": "iperf3 3.19.1, TCP, two streams, 15 seconds per direction",
+    "measurements_are_router_endpoints_not_nat_forwarding": true,
+    "wired_lan_1g": {"client_to_router_mbps": 941.31, "router_to_client_mbps": 867.41, "reverse_tcp_retransmits": 899, "hardware_rx_tx_errors": 0},
+    "wifi_5g": {"configured_mode": "HE80", "snapshot_negotiated_mode": "VHT, two spatial streams", "channel": 36, "client_to_router_mbps": 506.84, "router_to_client_mbps": 683.55},
+    "wifi_2g": {"configured_mode": "HE20", "snapshot_negotiated_mode": "HT", "channel": 1, "client_to_router_mbps": 85.38, "router_to_client_mbps": 87.51},
+    "wifi_client": "Intel AX201",
+    "wifi_security": "temporary random WPA2-CCMP password; removed after testing",
+    "he_eht_association_validated": false,
+    "all_ports_previously_link_tested_at_1g_in_ram": true,
+    "all_ports_retested_on_installed_image": false,
+    "wan_nat_ipv6_upstream_pppoe_tested": false,
+    "external_2g5_tested": false
+  },
+  "services": {
+    "ssh_http_https_respond": true,
+    "local_authoritative_dns_passed": true,
+    "wired_and_wireless_dhcp_leases_obtained": true,
+    "nftables_ruleset_check_passed": true,
+    "running_procd_services_healthy": true,
+    "urandom_seed_exit_zero_is_normal_one_shot": true,
+    "internet_dns_ntp_not_tested_without_uplink": true,
+    "root_password_still_empty_requires_owner_setup": true
+  },
+  "observed_sensor_samples_celsius": {"initial_min": 37.7, "after_tests_max": 46.6, "continuous_peak_measurement": false},
+  "remaining_warnings": [
+    "PCIe correctable physical-layer receiver error during boot",
+    "QCA8K FDB delete failures with -22 at boot and when removing temporary APs",
+    "899 reverse wired TCP retransmits: cause not established",
+    "Firmware reports NO11BE mapped to NO-EHT for RU; this alone is not a legal determination about Wi-Fi 7",
+    "HT/VHT observed despite configured HE modes; HE/EHT negotiation requires further investigation",
+    "Clock not synchronized to host time without uplink"
+  ],
+  "usb_led_buttons": {
+    "usb2_usb3_root_hubs_present": true,
+    "usb_peripheral_transfer_tested": false,
+    "led_sysfs_present": true,
+    "visual_led_and_button_tests_performed": false
+  },
+  "cleanup": {
+    "temporary_aps_removed_radios_disabled": true,
+    "pretest_wireless_config_restored": true,
+    "restored_config_country": "RU",
+    "country_is_not_claimed_owner_approved_final_configuration": true,
+    "temporary_host_wifi_profile_deleted": true,
+    "iperf_server_stopped_and_ram_test_binaries_removed": true,
+    "host_primary_internet_route_unchanged": true,
+    "no_reflash_or_reboot_performed_during_tests": true
+  },
+  "complete_all_components_verdict": "not established; uplink, peripherals, mode negotiation and extended stability remain"
+}
