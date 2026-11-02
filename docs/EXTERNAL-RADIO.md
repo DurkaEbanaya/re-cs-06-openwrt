@@ -22,6 +22,12 @@ RAM environment's `/lib/firmware/ath12k/` before the radio driver loads. For a
 persistent installation the same files need to be provided in the writable
 overlay, but persistent copying/reloading is not performed by this repository.
 The exact runtime driver/reprobe procedure still needs hardware testing.
+In the v5 diagnostic session, live PCI unbind after a missing-firmware startup
+caused a kernel panic in ath12k cleanup. Do not use unbind/rebind or module
+unloading as the way to inject these files. A fresh diagnostic boot with
+radio autoload suppressed, followed by a first load after files are present,
+is the next test; it is not yet validated. The AHB firmware also failed in
+SCM initialization, so simply copying the files is not a working Wi-Fi claim.
 
 For an optional complete local rebuild, copy the verified `lib/firmware/`
 subtree into the prepared build's `files/lib/firmware/` overlay, then rebuild.
