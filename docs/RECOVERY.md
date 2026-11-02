@@ -275,3 +275,14 @@ sysupgrade checks passed and external radio blobs remain absent. This is an
 offline check of the corrected images, not a claim that those exact images
 were booted (the current router still runs diagnostic v5). Results are in
 `reports/external-radio-r1.json` and `reports/ethernet-ram-tests.json`.
+
+The third cable move confirmed `lan2` at 1000/full with SSH and HTTP access.
+All three logical LAN ports therefore pass basic single-link connectivity.
+This is not a multi-client switching/throughput test or 2.5G validation.
+
+For a planned fourth-port test, only the running diagnostic tmpfs system
+was configured with a static WAN address on an isolated test subnet and a
+temporary firewall rule permitting management TCP only from the directly
+connected test host address. No gateway/DNS/uplink was added; no eMMC was
+present. Production defaults continue to keep WAN disabled. The WAN cable
+test has not yet been performed.

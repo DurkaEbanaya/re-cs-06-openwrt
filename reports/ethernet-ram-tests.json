@@ -1,10 +1,31 @@
 {
   "environment": "v5 diagnostic initramfs; eMMC driver not bound",
   "ports": {
-    "lan3": {"carrier": true, "speed_mbps": 1000, "duplex": "full", "ssh": true, "http": true},
-    "lan1": {"carrier": true, "speed_mbps": 1000, "duplex": "full", "ssh": true, "http": true},
-    "lan2": {"tested": false},
-    "wan": {"tested": false, "administratively_enabled": false}
+    "lan3": {
+      "carrier": true,
+      "speed_mbps": 1000,
+      "duplex": "full",
+      "ssh": true,
+      "http": true
+    },
+    "lan1": {
+      "carrier": true,
+      "speed_mbps": 1000,
+      "duplex": "full",
+      "ssh": true,
+      "http": true
+    },
+    "lan2": {
+      "carrier": true,
+      "speed_mbps": 1000,
+      "duplex": "full",
+      "ssh": true,
+      "http": true
+    },
+    "wan": {
+      "tested": false,
+      "administratively_enabled": false
+    }
   },
   "physical_connector_label_mapping_confirmed": false,
   "two_point_five_gigabit_tested": false,
