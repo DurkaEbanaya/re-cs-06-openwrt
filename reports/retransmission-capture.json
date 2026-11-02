@@ -1,0 +1,13 @@
+{
+  "capture_drops_both_endpoints": 0,
+  "single_stream_sender_repeat_sequence_length_keys": 194,
+  "repeated_keys_both_copies_at_receiver": 134,
+  "repeated_keys_one_copy_at_receiver": 60,
+  "receiver_ack_records": 134844,
+  "receiver_ack_records_missing_from_sender_capture": 0,
+  "exact_underlying_driver_or_hardware_cause_established": false,
+  "capture_is_software_not_external_wire_tap": true,
+  "runtime_settings_restored": true,
+  "temporary_router_tools_removed": true,
+  "persistent_firmware_changed": false
+}
