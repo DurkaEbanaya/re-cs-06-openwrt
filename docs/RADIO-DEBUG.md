@@ -60,3 +60,13 @@ letting the driver's documented single-device grouping fallback isolate
 the radios from inter-device MLO. Kernel, firmware files and calibration
 are otherwise unchanged. This is an untested diagnostic, not a published
 claim of working independent radios or a persistent firmware change.
+
+## Independent-radio result (RAM v8)
+
+With only that DTB change, both `phy0` and `phy1` registered, Q6 remained
+running, and SSH was available. eMMC block devices were still absent and
+root was tmpfs. No wireless interface was created; AP/client traffic,
+regulatory configuration, long-term stability and MLO were not tested.
+This isolates the initial crash to the grouped-radio path sufficiently to
+continue independent-radio diagnostics; it does not prove its ultimate
+firmware/driver cause or that persistent images are ready to install.

@@ -67,5 +67,20 @@
       "stored_bootloader_environment_matches_backup": true,
       "full_rootfs_equality_claimed": false
     }
+  },
+  "v8_independent_radios": {
+    "changes_from_v7": "only DTB WSI graph/controller removal; same kernel, firmware and calibration",
+    "ahb_phy_registered": true,
+    "pci_phy_registered": true,
+    "q6_running": true,
+    "ssh_available": true,
+    "mmc_block_devices_present": false,
+    "root_filesystem": "tmpfs",
+    "wireless_interfaces_created": false,
+    "ap_station_traffic_tested": false,
+    "long_term_stability_tested": false,
+    "inter_device_mlo_tested_working": false,
+    "kernel_panic_observed_during_initial_capture": false,
+    "persistent_install_performed": false
   }
 }
