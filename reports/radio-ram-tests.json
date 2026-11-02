@@ -29,5 +29,18 @@
     "hlos": true,
     "primary_gpt": true,
     "saved_environment_key_values": true
+  },
+  "v6_fresh_first_load": {
+    "radio_autoload_suppressed": true,
+    "upstream_firmware_and_own_calibration_present_before_first_load": true,
+    "eMMC_block_devices_present": false,
+    "root_filesystem": "tmpfs",
+    "ahb_scm_init_result": -5,
+    "pci_packaged_firmware_found": true,
+    "pci_packaged_firmware_bytes": 7786496,
+    "phy_registered": false,
+    "ssh_still_accessible": true,
+    "pci_unbind_attempted": false,
+    "kernel_panic_observed": false
   }
 }

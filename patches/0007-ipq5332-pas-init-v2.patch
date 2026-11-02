@@ -1,0 +1,46 @@
+diff --git a/target/linux/qualcommbe/patches-6.18/2010-05-firmware-qcom-scm-ipq5332-pas-init-v2.patch b/target/linux/qualcommbe/patches-6.18/2010-05-firmware-qcom-scm-ipq5332-pas-init-v2.patch
+new file mode 100644
+index 00000000..98171618
+--- /dev/null
++++ b/target/linux/qualcommbe/patches-6.18/2010-05-firmware-qcom-scm-ipq5332-pas-init-v2.patch
+@@ -0,0 +1,40 @@
++From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
++Date: Tue, 2 May 2023 07:55:52 +0530
++Subject: [PATCH] firmware: qcom: scm: support IPQ5332 PAS init v2
++
++IPQ5332 security software expects the metadata buffer size in PAS init.
++Use the v2 call when advertised, preserving the legacy fallback otherwise.
++
++Adapted to Linux 6.18's drivers/firmware/qcom/ paths for RE-CS-06 on
++2026-11-02. Original Qualcomm patch:
++de95dbf665d742604997705d62c9ec6e320005b6
++Change-Id: I43175661ad7378e19c0000c6f37cb0f9a79c28fd
++Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
++
++--- a/drivers/firmware/qcom/qcom_scm.c
+++++ b/drivers/firmware/qcom/qcom_scm.c
++@@ -663,6 +663,14 @@ int qcom_scm_pas_init_image(u32 pas_id, const void *metadata, size_t size,
++ 
++ 	desc.args[1] = mdata_phys;
++ 
+++	if (__qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_PIL,
+++					 QCOM_SCM_PAS_INIT_IMAGE_V2_CMD)) {
+++		desc.cmd = QCOM_SCM_PAS_INIT_IMAGE_V2_CMD;
+++		desc.arginfo =
+++			QCOM_SCM_ARGS(3, QCOM_SCM_VAL, QCOM_SCM_RW, QCOM_SCM_VAL);
+++		desc.args[2] = size;
+++	}
+++
++ 	ret = qcom_scm_call(__scm->dev, &desc, &res);
++ 	qcom_scm_bw_disable();
++ 
++--- a/drivers/firmware/qcom/qcom_scm.h
+++++ b/drivers/firmware/qcom/qcom_scm.h
++@@ -100,6 +100,7 @@ extern void __qcom_scm_init(void);
++ 
++ #define QCOM_SCM_SVC_PIL		0x02
++ #define QCOM_SCM_PIL_PAS_INIT_IMAGE	0x01
+++#define QCOM_SCM_PAS_INIT_IMAGE_V2_CMD	0x1a
++ #define QCOM_SCM_PIL_PAS_MEM_SETUP	0x02
++ #define QCOM_SCM_PIL_PAS_AUTH_AND_RESET	0x05
++ #define QCOM_SCM_PIL_PAS_SHUTDOWN	0x06

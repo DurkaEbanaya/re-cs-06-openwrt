@@ -306,3 +306,7 @@ UART captured the older QWRT 5.4.213 boot afterwards. Do not repeat live
 unbind/rebind as a firmware-loading recipe for this driver state. A clean
 RAM boot with any required files already present is a separate future test,
 after reviewing the secure-firmware failure. No persistent image was written.
+# Radio diagnostic follow-up
+
+See [RADIO-DEBUG.md](RADIO-DEBUG.md) for the fresh first-load v6 test and
+the PAS INIT v2 candidate. No persistent install is approved by these tests.
