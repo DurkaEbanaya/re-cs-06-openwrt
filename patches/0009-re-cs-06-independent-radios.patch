@@ -1,0 +1,17 @@
+diff --git a/target/linux/qualcommbe/dts/ipq5322-re-cs-06.dts b/target/linux/qualcommbe/dts/ipq5322-re-cs-06.dts
+--- a/target/linux/qualcommbe/dts/ipq5322-re-cs-06.dts
++++ b/target/linux/qualcommbe/dts/ipq5322-re-cs-06.dts
+@@ -192,8 +192,13 @@
+ 
+ &wifi0 {
+ 	qcom,board-id = <22>;
++	/* RAM v8: independent PHYs avoid the failing inter-device WSI group. */
++	/delete-property/ qcom,wsi-controller;
++	/delete-node/ ports;
+ };
+ 
+ &wifi1 {
+ 	qcom,board-id = <2>;
++	/delete-property/ qcom,wsi-controller;
++	/delete-node/ ports;
+ };
