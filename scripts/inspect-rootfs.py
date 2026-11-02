@@ -5,6 +5,7 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import stat
 
 
 def inspect(root, deny=()):
@@ -13,6 +14,11 @@ def inspect(root, deny=()):
     for name in ("etc/shadow", "etc/passwd", "etc/uci-defaults/90-minimal-defaults",
                  "usr/sbin/re-cs-06-provision-macs", "etc/opkg.conf"):
         assert (root / name).is_file() and not (root / name).is_symlink(), name
+    for name in ("etc/passwd", "etc/group"):
+        path = root / name
+        assert path.is_file() and not path.is_symlink()
+        assert stat.S_IMODE(path.stat().st_mode) == 0o644, f"Account database must be readable by unprivileged services: {name}"
+    assert stat.S_IMODE((root / "etc/shadow").stat().st_mode) == 0o600, "Shadow must remain private"
     shadow = (root / "etc/shadow").read_text()
     entries = [line.split(":") for line in shadow.splitlines() if line.startswith("root:")]
     assert len(entries) == 1 and entries[0][1] in ("", "!", "*", "!!"), "Embedded root password"

@@ -217,3 +217,25 @@ loading stage has not been reached. This means the lack of Ethernet is
 not yet an isolated Ethernet-driver diagnosis. Further test-only procd
 debug output and bounded ubus/process queries are prepared; the exact
 cause remains unproven. See `reports/ram-v3-diagnostics.json`.
+
+## Diagnostic RAM v4: account database permissions blocker
+
+With procd debug enabled, both procd and the standalone `ubus` client
+repeatedly failed to connect despite a listening `ubusd` socket. Procd and
+ubusd remained in epoll waits; only boot-stage modules were loaded. Storage
+isolation remained active (no block partitions; root on tmpfs).
+
+Offline inspection then found both `/etc/passwd` and `/etc/group` have mode
+0600 in the generated squashfs **and** initramfs. `ubusd` runs as user ubus
+and its ACL setup uses `getpwuid()`/`getgrgid()` for incoming clients. These
+public account databases must be readable by that service (0644), unlike
+`/etc/shadow`, which must remain 0600. This is a concrete build defect and
+a strong explanation of the observed connection failure, pending the next
+RAM confirmation. Existing published images are not installation-ready.
+
+A test-only v5 wrapper changes those two permissions in its tmpfs root
+before procd starts; shadow stays private and the unmatched MMC compatible
+guard remains unchanged. It is prepared but not hardware-tested yet. The
+rootfs inspector now rejects 0600 passwd/group and non-0600 shadow, with a
+regression test. Earlier content-only inspection passes did not check this
+functional permissions requirement and must not be interpreted as such.

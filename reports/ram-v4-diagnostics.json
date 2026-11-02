@@ -1,0 +1,17 @@
+{
+  "diagnostic_version": 4,
+  "linux_boot_confirmed": true,
+  "storage_guard_active_in_observed_diagnostics": true,
+  "root_on_tmpfs": true,
+  "procd_ubus_connection_retries_observed": true,
+  "standalone_ubus_query_failed": true,
+  "ubusd_process_and_listening_socket_present": true,
+  "image_passwd_mode": "0600",
+  "image_group_mode": "0600",
+  "image_shadow_mode": "0600",
+  "unprivileged_ubusd_account_database_readability_defect": true,
+  "permissions_correction_runtime_test_completed": false,
+  "next_test": "v5 tmpfs-only chmod 0644 passwd/group before procd; keep shadow 0600",
+  "persistent_install_performed": false,
+  "raw_uart_log_published": false
+}

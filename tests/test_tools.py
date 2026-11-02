@@ -320,6 +320,7 @@ class RootfsTests(unittest.TestCase):
         content = {
             "etc/shadow": "root:::0:99999:7:::\n",
             "etc/passwd": "root:x:0:0:root:/root:/bin/ash\n",
+            "etc/group": "root:x:0:\n",
             "etc/opkg.conf": "option check_signature\n",
             "etc/uci-defaults/90-minimal-defaults": (REPO / "overlay/etc/uci-defaults/90-minimal-defaults").read_text(),
             "usr/sbin/re-cs-06-provision-macs": "#!/bin/sh\nexit 0\n",
@@ -329,6 +330,17 @@ class RootfsTests(unittest.TestCase):
             path = root / name
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(data)
+            path.chmod(0o600 if name == "etc/shadow" else 0o644)
+
+    def test_unreadable_account_database_rejected(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            self.fixture(root)
+            for name in ("etc/passwd", "etc/group"):
+                (root / name).chmod(0o600)
+                with self.assertRaises(AssertionError):
+                    rootfs.inspect(root)
+                (root / name).chmod(0o644)
 
     def test_clean_and_private_literal_rejected(self):
         with tempfile.TemporaryDirectory() as temp:
