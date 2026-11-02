@@ -195,6 +195,18 @@ class SysupgradeTests(unittest.TestCase):
 
 
 class PolicyTests(unittest.TestCase):
+    def test_radio_manifest_matches_verified_local_download_policy(self):
+        records = json.loads((REPO / "radio-files.lock.json").read_text())["files"]
+        self.assertEqual(len(records), 52)
+        paths = set()
+        for record in records:
+            self.assertNotIn(record["path"], paths)
+            paths.add(record["path"])
+            self.assertTrue(record["path"].startswith("lib/firmware/ath12k/"))
+            self.assertNotIn("..", Path(record["path"]).parts)
+            self.assertTrue(record["url"].startswith("https://raw.githubusercontent.com/"))
+            self.assertRegex(record["sha256"], r"^[0-9a-f]{64}$")
+
     def test_image_recipe_defers_soc_and_dtb_expansion(self):
         patch = (REPO / "patches/0003-enforce-persistent-kernel-slot-size.patch").read_text()
         recipes = "\n".join(line[1:] for line in patch.splitlines()

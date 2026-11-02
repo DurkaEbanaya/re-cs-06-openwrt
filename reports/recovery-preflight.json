@@ -1,0 +1,14 @@
+{
+  "read_only_router_inspection": true,
+  "installed_kernel": "5.4.213",
+  "kexec_kernel_support": false,
+  "usb_running_role": "host",
+  "usb_gadget_kernel_support": false,
+  "ordinary_usb_a_to_a_console_supported": false,
+  "saved_bootloader_has_bootm_tftpboot_httpd_strings": true,
+  "bootloader_strings_are_not_recovery_validation": true,
+  "ethernet_ram_upload_feature_verified": false,
+  "uart_required_or_agreed": false,
+  "hardware_boot_tested": false,
+  "router_rebooted_or_flashed": false
+}

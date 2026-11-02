@@ -1,0 +1,265 @@
+{
+  "purpose": "Optional original firmware downloads, not a redistribution license or hardware compatibility claim",
+  "files": [
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/Data.msc",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/Data.msc",
+      "sha256": "5181dbd5b0b615b8207a48bac238b983413d5277a63ac6445dbad6e8f4e9880e"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/board-2.bin",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/board-2.bin",
+      "sha256": "1dbd815d521e05a0de0f40b3308177dfc60a38d3ceb4515d1e4e7994589cf5bc"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/firmware_rdp_feature.ini",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/firmware_rdp_feature.ini",
+      "sha256": "edc3049334e18dd2ab3da933d9ddc207e5586b5bcdc341e08c556dd749a2ff74"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/firmware_rdp_feature_512P.ini",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/firmware_rdp_feature_512P.ini",
+      "sha256": "ec9091243bc2fb9e417ba5c0359e1bf106564535f619038c13df2765e1222200"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/fw_ini_cfg.bin",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/fw_ini_cfg.bin",
+      "sha256": "4cb1c2f68da1eb815e94bf394a390a3a04903f8123d73e37a5d07653cf53a798"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/iu_fw.b00",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/iu_fw.b00",
+      "sha256": "a5f566f1cc8c8f74d469920ee6effd8bb4043bf3afa4a2eaf9dc151750941aaa"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/iu_fw.b01",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/iu_fw.b01",
+      "sha256": "2a5ce8f267a2d9627bad27b257b709073c18123bb87470829ad33c4910aa7e57"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/iu_fw.b02",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/iu_fw.b02",
+      "sha256": "8660dd9c03b6123e6c72ee6507a56ea71e698d5c37a33b2a53f3d67b611fff3e"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/iu_fw.flist",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/iu_fw.flist",
+      "sha256": "41e05c3bb5a30092c59d9aa413cf89459115dd1e9af770c710c901a0e0ae38fc"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/iu_fw.mdt",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/iu_fw.mdt",
+      "sha256": "28f4153af1ba2b6c4b6d9a5b269c69f6511f030d01bd36e4252b780452a5e465"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/q6_fw0.b00",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/q6_fw0.b00",
+      "sha256": "3d164e03f6b33454c483b0441ab5caa68565fc3e6f350ddfd465031561fb9ec2"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/q6_fw0.b01",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/q6_fw0.b01",
+      "sha256": "ae3b8afdfde3eb0f4915dd8094c45998521a951568167dae51c393f41851a409"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/q6_fw0.b02",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/q6_fw0.b02",
+      "sha256": "26c0a09d9242ae992cec2b5b5eb62617f076c2059f19d6e9fafbbb57bba3b5ca"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/q6_fw0.b03",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/q6_fw0.b03",
+      "sha256": "16e315815f30b13ce1f57e6b2bb2ff5f2f9c256c5f3eb385d3cbf5f8b3e4a2a9"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/q6_fw0.b04",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/q6_fw0.b04",
+      "sha256": "438efdd1786de1a34bbc9253b0cd9819d1f1461d4e86eacf878b878ba8e52581"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/q6_fw0.b05",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/q6_fw0.b05",
+      "sha256": "bc159333af22f88d03bfb354babe2c55205986a6f2c24a1c4fcd0446754a4303"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/q6_fw0.b06",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/q6_fw0.b06",
+      "sha256": "e073170bb7a13b20b0f02649c405773cac5737de5a2b63b87c505d1ce0247cb0"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/q6_fw0.b07",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/q6_fw0.b07",
+      "sha256": "8455e96b062c0e3e56add5867c07e584987e8ec349b5693d43da5e131a407eec"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/q6_fw0.b08",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/q6_fw0.b08",
+      "sha256": "bb8dddc8b9fd2239a9077c5f03f77c4e164dc3cff5e9c77cf37a2857af3f853f"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/q6_fw0.b09",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/q6_fw0.b09",
+      "sha256": "5dd9800e9905c3af1dc072b4bdc8033505682a92115ab0fe236f5407e0e15918"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/q6_fw0.b11",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/q6_fw0.b11",
+      "sha256": "40dee6c7b7e006139c4522bf7584dfb272ed8a6aa18a7bfef66a7ba53d30637a"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/q6_fw0.flist",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/q6_fw0.flist",
+      "sha256": "1370a15cf2ecc22697207d34d5819959d7a816896f6ae3c0461b422c2e58685a"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/q6_fw0.mdt",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/q6_fw0.mdt",
+      "sha256": "320fac501cfeb6dd4f0af02023680d38a05d19fed00273f738a7aeef6bb019d4"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/q6_fw1.b00",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/q6_fw1.b00",
+      "sha256": "dfb3a6af4442ebc1c09443ff135e0c716c163fa72c7a7ceffea3555d046ace12"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/q6_fw1.b01",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/q6_fw1.b01",
+      "sha256": "10ae9e1a22c829a0fae98c8910b1ca1f7dbffaee28b6d3632324e2aeda07c537"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/q6_fw1.b02",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/q6_fw1.b02",
+      "sha256": "948acebfd22bb73748a066f5cf044c338fab4dcc33ae753ddcb3a79adde2052b"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/q6_fw1.flist",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/q6_fw1.flist",
+      "sha256": "c84b47b56df25d74ac77c7a8f090c673f268464cda6aa4db02a96a2782b98b7e"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/q6_fw1.mdt",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/q6_fw1.mdt",
+      "sha256": "4e7cd71e9756b947ad621cf0b4c2ae047e7b418ada3334180f9f174128fcfbe3"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/qdss_trace_config.bin",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/qdss_trace_config.bin",
+      "sha256": "9b562386f2f1b48f946c405fbd22193dbac2f7cf9160c63221352471ed3502db"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/regdb.bin",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/IPQ5332/5332.wlanfw.eval/regdb.bin",
+      "sha256": "6870431fa7a711ede29141562de507f6759b0451fcb9f7937f0fd30940166996"
+    },
+    {
+      "path": "lib/firmware/ath12k/QCN9274/hw2.0/board-2.bin",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/QCN9274/hw2.0/board-2.bin",
+      "sha256": "f38a621b1840fe2cb3d0653c69d9ad44dc16bff7c9aaa485b93425d266ac313b"
+    },
+    {
+      "path": "lib/firmware/ath12k/QCN9274/hw2.0/firmware-2.bin",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/QCN9274/hw2.0/firmware-2.bin",
+      "sha256": "fd1eced1b631267845fc68559da1f34c44f43538b24a961d868b902489f7223a"
+    },
+    {
+      "path": "lib/firmware/ath12k/QCN9274/hw2.0/regdb.bin",
+      "url": "https://raw.githubusercontent.com/mirror/dd-wrt/bd7c0abd4575446a514c5f109de3c317ca26819a/src/router/firmwares/wireless/ath12k/QCN9274/hw2.0/regdb.bin",
+      "sha256": "da8b6c97c265c07148f54e8f7b526a9e6547ad4ce5ad963ffd96f9c82d9f6a4e"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/bdwlan.b12",
+      "url": "https://raw.githubusercontent.com/coolsnowwolf/lede/667a1afd89eb6955d29796f7979c1c77d999616c/package/firmware/ath-firmware-ddwrt/src/ath12k/IPQ5332/hw1.0/bdwlan.b12",
+      "sha256": "7ee171ff36e42a7a8a40dec61577788dd9a98b967d0a25403404efb22e35d3fb"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/bdwlan.b13",
+      "url": "https://raw.githubusercontent.com/coolsnowwolf/lede/667a1afd89eb6955d29796f7979c1c77d999616c/package/firmware/ath-firmware-ddwrt/src/ath12k/IPQ5332/hw1.0/bdwlan.b13",
+      "sha256": "af035547c9e10e782b053787a81377e28c282c8deb92f284a7ed0b90ca41d0ac"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/bdwlan.b16",
+      "url": "https://raw.githubusercontent.com/coolsnowwolf/lede/667a1afd89eb6955d29796f7979c1c77d999616c/package/firmware/ath-firmware-ddwrt/src/ath12k/IPQ5332/hw1.0/bdwlan.b16",
+      "sha256": "09396e07b97aeda4ad4046e3b61d525b1bbbaf2727aa562a90cf73156573205b"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/bdwlan.b1b",
+      "url": "https://raw.githubusercontent.com/coolsnowwolf/lede/667a1afd89eb6955d29796f7979c1c77d999616c/package/firmware/ath-firmware-ddwrt/src/ath12k/IPQ5332/hw1.0/bdwlan.b1b",
+      "sha256": "b2ce2fca58f570ee849828f948fc5a1d56ad6155cf41a2bb04a640bbd7892916"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/bdwlan.b31",
+      "url": "https://raw.githubusercontent.com/coolsnowwolf/lede/667a1afd89eb6955d29796f7979c1c77d999616c/package/firmware/ath-firmware-ddwrt/src/ath12k/IPQ5332/hw1.0/bdwlan.b31",
+      "sha256": "41e29be1f7ca84f7825eeb9e0d5c781b7807e903a0a94f82e3949fa35f48bf98"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/bdwlan.b41",
+      "url": "https://raw.githubusercontent.com/coolsnowwolf/lede/667a1afd89eb6955d29796f7979c1c77d999616c/package/firmware/ath-firmware-ddwrt/src/ath12k/IPQ5332/hw1.0/bdwlan.b41",
+      "sha256": "6c84173a1cefc98b94c4caed222136ab5a1d3b22f00109fe69c4eb49bb369a0a"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/bdwlan.b42",
+      "url": "https://raw.githubusercontent.com/coolsnowwolf/lede/667a1afd89eb6955d29796f7979c1c77d999616c/package/firmware/ath-firmware-ddwrt/src/ath12k/IPQ5332/hw1.0/bdwlan.b42",
+      "sha256": "b61d524e6802cebce4ea64d490c075713a8e561243243d916c0deb24d55fbe53"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/bdwlan.b43",
+      "url": "https://raw.githubusercontent.com/coolsnowwolf/lede/667a1afd89eb6955d29796f7979c1c77d999616c/package/firmware/ath-firmware-ddwrt/src/ath12k/IPQ5332/hw1.0/bdwlan.b43",
+      "sha256": "49421c854a6f5b2037cd1309c834b11f1ff2b4c2e53922ca00507ba0c3f68a4f"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/bdwlan.b45",
+      "url": "https://raw.githubusercontent.com/coolsnowwolf/lede/667a1afd89eb6955d29796f7979c1c77d999616c/package/firmware/ath-firmware-ddwrt/src/ath12k/IPQ5332/hw1.0/bdwlan.b45",
+      "sha256": "d47bfe11d6571446a69c51ec3de4c3c11db31536863af8e6d56d651cc014a82e"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/bdwlan.b51",
+      "url": "https://raw.githubusercontent.com/coolsnowwolf/lede/667a1afd89eb6955d29796f7979c1c77d999616c/package/firmware/ath-firmware-ddwrt/src/ath12k/IPQ5332/hw1.0/bdwlan.b51",
+      "sha256": "dd6a9688a4557abbd2fedc3edeb10c482fbd21ac910616b207747e474fd378b5"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/bdwlan.bin",
+      "url": "https://raw.githubusercontent.com/coolsnowwolf/lede/667a1afd89eb6955d29796f7979c1c77d999616c/package/firmware/ath-firmware-ddwrt/src/ath12k/IPQ5332/hw1.0/bdwlan.bin",
+      "sha256": "f9a485acf9a06e1eea9dcc31344557523a81b0e6edf5cb47b86d0b26f029d004"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/bdwlanKCT.b12",
+      "url": "https://raw.githubusercontent.com/coolsnowwolf/lede/667a1afd89eb6955d29796f7979c1c77d999616c/package/firmware/ath-firmware-ddwrt/src/ath12k/IPQ5332/hw1.0/bdwlanKCT.b12",
+      "sha256": "5cad49eb7623cc5f0b49bfb369204318c0cf3cf7b291d298c262f6d8726368a0"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/bdwlanKCT_33V.b12",
+      "url": "https://raw.githubusercontent.com/coolsnowwolf/lede/667a1afd89eb6955d29796f7979c1c77d999616c/package/firmware/ath-firmware-ddwrt/src/ath12k/IPQ5332/hw1.0/bdwlanKCT_33V.b12",
+      "sha256": "8c7ee6ec41060dafe5fb2c237d32402d5536a335e969c39a6ec3807f2fa9fb85"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/bdwlan_2G_GTX2.b42",
+      "url": "https://raw.githubusercontent.com/coolsnowwolf/lede/667a1afd89eb6955d29796f7979c1c77d999616c/package/firmware/ath-firmware-ddwrt/src/ath12k/IPQ5332/hw1.0/bdwlan_2G_GTX2.b42",
+      "sha256": "c0fb64119f70328ed639da7ba026e4a355e69f4cb3cff50f795c1deb8e1d2a84"
+    },
+    {
+      "path": "lib/firmware/ath12k/IPQ5332/hw1.0/bdwlan_2G_HP.b42",
+      "url": "https://raw.githubusercontent.com/coolsnowwolf/lede/667a1afd89eb6955d29796f7979c1c77d999616c/package/firmware/ath-firmware-ddwrt/src/ath12k/IPQ5332/hw1.0/bdwlan_2G_HP.b42",
+      "sha256": "264adf0cabe01fc4ef0140ca492eb0570cc13958abbb046787f88a29f4bcf25b"
+    },
+    {
+      "path": "lib/firmware/ath12k/QCN9274/hw1.0/Notice.txt",
+      "url": "https://raw.githubusercontent.com/coolsnowwolf/lede/667a1afd89eb6955d29796f7979c1c77d999616c/package/firmware/ath-firmware-ddwrt/src/ath12k/QCN9274/hw1.0/Notice.txt",
+      "sha256": "28cbb8b458cf53b6825fab135251b5454ca2bf6e290317d6895aa2967dd99ec3"
+    },
+    {
+      "path": "lib/firmware/ath12k/QCN9274/hw1.0/amss.bin",
+      "url": "https://raw.githubusercontent.com/coolsnowwolf/lede/667a1afd89eb6955d29796f7979c1c77d999616c/package/firmware/ath-firmware-ddwrt/src/ath12k/QCN9274/hw1.0/amss.bin",
+      "sha256": "9299ca58a9c7e2a02ba0871abaf2d68079764d5932d2dd318a2d76a4049775f7"
+    },
+    {
+      "path": "lib/firmware/ath12k/QCN9274/hw1.0/m3.bin",
+      "url": "https://raw.githubusercontent.com/coolsnowwolf/lede/667a1afd89eb6955d29796f7979c1c77d999616c/package/firmware/ath-firmware-ddwrt/src/ath12k/QCN9274/hw1.0/m3.bin",
+      "sha256": "57fd2154ca115f8a47b456ee676b6ceb955cd844f42c6ae4a191f6b0068eff31"
+    },
+    {
+      "path": "lib/firmware/ath12k/QCN9274/hw1.0/regdb.bin",
+      "url": "https://raw.githubusercontent.com/coolsnowwolf/lede/667a1afd89eb6955d29796f7979c1c77d999616c/package/firmware/ath-firmware-ddwrt/src/ath12k/QCN9274/hw1.0/regdb.bin",
+      "sha256": "10e0ab463e5a4e58951629173e70ccdf2ff3970115da131c1ac9f65bfcd8153d"
+    }
+  ]
+}

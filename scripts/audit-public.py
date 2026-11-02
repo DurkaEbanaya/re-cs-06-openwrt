@@ -7,7 +7,7 @@ import re
 import subprocess
 
 ALLOWED = re.compile(
-    r"^(?:\.gitignore|\.gitattributes|\.github/workflows/tests\.yml|README\.md|LICENSE|Containerfile|sources\.lock\.json|"
+    r"^(?:\.gitignore|\.gitattributes|\.github/workflows/tests\.yml|README\.md|LICENSE|Containerfile|sources\.lock\.json|radio-files\.lock\.json|"
     r"config/[a-z0-9._-]+\.config|patches/[a-z0-9._-]+\.patch|"
     r"docs/[A-Z0-9._-]+\.md|scripts/[a-z0-9._-]+|"
     r"tests/test_[a-z0-9_]+\.py|reports/[a-z0-9._-]+\.json|"

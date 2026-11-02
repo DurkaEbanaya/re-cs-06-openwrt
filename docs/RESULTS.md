@@ -1,5 +1,9 @@
 # First build results — 2026-11-02
 
+**Historical full local build below.** The later public `external-radio`
+variant has separate hashes/results in `reports/external-radio.json` and
+includes downloadable binaries plus a pinned external-radio downloader.
+
 The complete rootless-container cross-build finished successfully, including
 package indexes, image metadata and checksums. It produced three local,
 device-generic experimental images. **None has been booted or installed on

@@ -35,6 +35,8 @@ Hardware backup and a second physical copy remain prerequisites for writing.
 - [Build instructions](docs/BUILD.md)
 - [Adaptations and hardware acceptance gates](docs/ADAPTATION.md)
 - [Firmware licensing and publication](docs/LICENSING.md)
+- [External radio download workflow](docs/EXTERNAL-RADIO.md)
+- [Recovery and USB preflight](docs/RECOVERY.md)
 - [Pinned source/feed commits](sources.lock.json)
 - [Minimal configuration](config/minimal.config)
 - [Local tests](tests/test_tools.py): `python3 -m unittest discover -s tests -v`
@@ -55,3 +57,9 @@ This public repository contains build recipes and tests, not private backups
 or vendored chipset firmware. Generated binary redistribution additionally
 requires review of the applicable third-party notices; source availability
 does not by itself grant rights to redistribute every firmware blob.
+
+The follow-up `external-radio` prerelease provides binary images without the
+disputed radio files and a pinned, SHA256-verified downloader for those external
+dependencies. Wi-Fi needs these files; this is not an all-in-one Wi-Fi image.
+Earlier reports describe the original full local build, while
+`reports/external-radio.json` describes the separately built public candidate.

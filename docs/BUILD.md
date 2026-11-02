@@ -25,6 +25,11 @@ To resume a prepared tree, rerun make rather than rerunning preparation.
 `config/resolved.config` records the final first-build configuration;
 `minimal.config` is the smaller seed used to derive it.
 
+Follow-up: `resolved.config` now records the public `external-radio` build.
+Original complete-build hashes remain in the historical first-build reports.
+The public seed excludes the radio firmware/BDF packages and keeps ath12k;
+see [external dependencies](EXTERNAL-RADIO.md) for full local reconstruction.
+
 Use a moderate parallelism limit so the desktop remains usable. The container
 is non-root and only the source tree is mounted into it: no SSH agent,
 GitHub credentials, home directory, backups, router block devices or private

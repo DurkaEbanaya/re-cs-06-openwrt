@@ -18,8 +18,7 @@ REQUIRED = {
     "base-files", "busybox", "dropbear", "dnsmasq", "firewall4", "netifd",
     "luci", "luci-theme-bootstrap", "luci-ssl-openssl", "wpad-openssl",
     "kmod-qcom-ppe", "kmod-dsa-qca8k", "kmod-phy-qca83xx", "kmod-ath12k",
-    "ath12k-firmware-ipq5332-ddwrt", "ath12k-firmware-qcn9274-ddwrt",
-    "ipq-wifi-jdcloud_re-cs-06", "kmod-fs-ext4", "e2fsprogs", "opkg",
+    "kmod-fs-ext4", "e2fsprogs", "opkg",
 }
 
 
@@ -40,6 +39,9 @@ def main():
     missing = sorted(REQUIRED - packages)
     assert not bad, f"Forbidden packages selected: {bad}"
     assert not missing, f"Required packages missing: {missing}"
+    assert not packages.intersection({"ath12k-firmware-ipq5332-ddwrt",
+                                     "ath12k-firmware-qcn9274-ddwrt", "ipq-wifi-jdcloud_re-cs-06"}), \
+        "Public build must use separately downloaded radio firmware"
     for line in ("CONFIG_TARGET_qualcommbe_ipq53xx_DEVICE_jdcloud_re-cs-06=y",
                  "CONFIG_TARGET_ROOTFS_INITRAMFS=y", "CONFIG_TARGET_ROOTFS_SQUASHFS=y",
                  "CONFIG_SIGNED_PACKAGES=y", "CONFIG_LUCI_LANG_ru=y"):
