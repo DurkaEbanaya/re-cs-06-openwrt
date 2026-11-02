@@ -62,3 +62,41 @@ source-specific routing table on the dedicated USB adapter; normal Internet
 traffic remained on the primary Ethernet interface. NetworkManager's temporary
 device settings can disappear after link loss. Always recheck the interface,
 source address and route before accessing or uploading to a recovery server.
+
+## Follow-up: controlled RAM test attempted
+
+The owner subsequently authorized firmware testing, with UART as a fallback.
+Static inspection of the saved July 2024 bootloader found a distinct script
+container path, not an advertised web RAM-loader page:
+
+- A marker at offset 0x5c selects a special image type before the ordinary
+  FIT case. The special recovery branch initializes SPI and invokes the
+  FIT image's `script` from the upload buffer.
+- The ordinary FIT branch instead writes HLOS/rootfs, so **uploading an
+  ordinary initramfs to this page is still unsafe**. This discovery is not
+  permission to treat other bootloaders or recovery forms the same way.
+- A no-op script wrapper was accepted; the router rebooted to QWRT and
+  APPSBL, ART and HLOS hashes matched the original backup. No serial script
+  output was captured; that test alone does not directly prove execution.
+
+A separate local wrapper was then uploaded. It embedded the external-radio
+initramfs with only its RAM DTB's eMMC controller disabled. Its script used
+guarded extraction to a separate RAM address, volatile boot arguments and
+`bootm`. No `flash`, `saveenv`, raw-storage write or persistent installation
+was requested. The disabled eMMC controller is an additional safeguard in
+the test kernel, not a property of the normal published firmware images.
+
+**Result: Linux boot was not confirmed.** Recovery accepted the complete
+upload and Ethernet dropped. The router subsequently returned to its
+original QWRT, reachable over SSH; the new test LAN was not reachable.
+After return, APPSBL, ART, HLOS, the primary GPT-head backup range and saved
+bootloader environment values matched the original backup. The live QWRT
+overlay was not claimed byte-identical: normal boots write runtime settings.
+
+Static analysis found a 64 MiB bootloader kernel decompression bound, while
+the test kernel including initramfs expands to 55402504 bytes. This does not
+establish why the attempt failed. Script/extraction errors, bootloader FIT
+handling and an early kernel failure cannot be distinguished without console
+logs. Do not claim a successful RAM boot or flash the persistent image as a
+workaround. UART capture is the next diagnostic step. No bootloader/GPT/ART
+replacement is proposed.

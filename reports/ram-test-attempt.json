@@ -1,0 +1,27 @@
+{
+  "test": "local external-radio initramfs wrapped for installed July-2024 HTTP recovery",
+  "owner_authorized_test_and_uart_fallback": true,
+  "input_initramfs_sha256": "16f80f26bfd7f7b950baf183e7c07a3648e5e7d7a08cde5f8dc6b0916709ee98",
+  "local_wrapper_sha256": "3c0d7188fb327ca5b625ca6d09c6b87a2ff3570d7d33225be7255b4324fdf62b",
+  "upload_bytes": 17714562,
+  "http_upload_accepted": true,
+  "emmc_controller_disabled_in_test_dtb": true,
+  "persistent_flash_commands_requested": false,
+  "persistent_environment_save_requested": false,
+  "linux_boot_confirmed": false,
+  "new_lan_access_confirmed": false,
+  "returned_to_original_qwrt": true,
+  "post_return_backup_comparisons": {
+    "appsbl": true,
+    "art": true,
+    "hlos": true,
+    "primary_gpt_head_range": true,
+    "saved_environment_values": true
+  },
+  "raw_kernel_including_initramfs_bytes": 55402504,
+  "statically_observed_bootloader_decompression_limit_bytes": 67108864,
+  "failure_stage_known": false,
+  "console_output_captured": false,
+  "persistent_install_performed": false,
+  "next_diagnostic": "UART bootloader and early kernel logs"
+}
