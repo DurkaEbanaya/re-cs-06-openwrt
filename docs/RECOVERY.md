@@ -145,3 +145,36 @@ HTTP ugrade is done! Rebooting...
 This confirms hash verification and execution of the no-op script, not
 Linux boot. Recovery automatically reboots after the script returns. The
 corrected initramfs wrapper still needs a separate recovery entry/test.
+
+## Corrected initramfs: kernel boot confirmed, acceptance incomplete
+
+The corrected wrapper was subsequently uploaded with receive-only UART
+capture. U-Boot verified script/payload/kernel/DTB hashes, decompressed the
+kernel, and transferred control to AArch64 Linux. The serial log confirms
+Linux **6.18.60**, model RE-CS-06, all four CPUs, `/init`, preinit and procd
+reaching `- ubus -`. PCIe Gen3 x2 and the radio PCI endpoint enumerated;
+that is not a radio functionality test. No persistent install was requested.
+
+The test exposed two blockers:
+
+1. **eMMC isolation failed.** The uploaded nested DTB was checked to have
+   `status = "disabled"` at `/soc@0/mmc@7804000`, but Linux nevertheless
+   probed the controller and enumerated the card and partitions. The saved
+   bootloader contains the literal fixup string
+   `/soc@0/mmc@7804000/%status%?okay`, consistent with re-enabling this node.
+   The runtime DTB has not been retrieved, so that explanation remains
+   strongly indicated rather than independently verified. Do not repeat
+   claims of disabled storage or proven write-free boot for this wrapper.
+   No mount/storage write is shown in the captured excerpt, but absence of
+   such log messages does not establish absence of writes.
+2. LAN HTTP access timed out after reapplying the isolated host address.
+   Kernel diagnostics show deferred probing at MDIO `:10` and pending clock
+   sync for Ethernet/PPE, PCS and Wi-Fi. The last userspace stage observed
+   was procd `- ubus -`; no normal shell/login prompt was observed. The
+   exact userspace/Ethernet root cause is not established. Do not equate
+   an Ethernet carrier indication with a working LAN or successful boot.
+
+Next: return to the saved QWRT installation and recheck critical hashes;
+prepare stronger test-only storage isolation and early runtime diagnostics
+before further RAM tests. A persistent flash is not a remedy for these
+blockers. Raw serial logs remain private because they contain identifiers.

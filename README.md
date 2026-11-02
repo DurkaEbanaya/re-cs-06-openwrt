@@ -3,9 +3,10 @@
 Experimental, source-based build for **JDCloud RE-CS-06 / BE6500** with
 Qualcomm IPQ5322/IPQ5332. This is **not an official OpenWrt release**.
 
-**Status: cross-build and offline inspection succeeded. A controlled RAM test
-returned to original QWRT without confirming a new Linux boot. UART diagnosis
-is needed; persistent installation is not validated. Do not flash.**
+**Status: cross-build and offline inspection succeeded. UART confirms Linux
+6.18.60 RAM boot and early OpenWrt userspace. LAN access is not working yet;
+the attempted DTB-only eMMC disable did not survive boot. Persistent
+installation is not validated. Do not flash.**
 
 ## Goals
 

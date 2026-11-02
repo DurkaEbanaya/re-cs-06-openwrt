@@ -30,7 +30,7 @@
     "script_first_echo_observed": false,
     "missing_outer_root_metadata": ["description", "timestamp"],
     "corrected_wrappers_prepared": true,
-    "corrected_wrappers_hardware_tested": false,
+    "corrected_wrappers_hardware_tested": true,
     "corrected_noop_wrapper": {
       "bytes": 16384,
       "sha256": "13228f593f431323ff3ec24dede8fa000505ff852ddf01b0cd861bc70bf23478",
@@ -39,9 +39,29 @@
       "exact_script_echo_observed": "JD_RAM_SCRIPT_PREFLIGHT_NO_FLASH",
       "automatic_reboot_after_script_return": true
     },
-    "corrected_initramfs_wrapper_hardware_tested": false,
+    "corrected_initramfs_wrapper_hardware_tested": true,
     "raw_uart_log_published": false
   },
+  "corrected_initramfs_attempt": {
+    "wrapper_bytes": 17714659,
+    "wrapper_sha256": "87ceb75fcd84ae4fd47458a43ea9109fd2e430f13c1554b31451527815a77592",
+    "linux_boot_confirmed": true,
+    "linux_version": "6.18.60",
+    "cpus_started": 4,
+    "init_process_started": true,
+    "last_userspace_stage_observed": "procd: - ubus -",
+    "new_lan_http_access_confirmed": false,
+    "kernel_panic_observed": false,
+    "input_dtb_emmc_status_disabled": true,
+    "runtime_emmc_card_and_partitions_enumerated": true,
+    "emmc_isolation_succeeded": false,
+    "bootloader_has_mmc_status_okay_fixup_literal": true,
+    "runtime_dtb_retrieved": false,
+    "write_free_boot_proven": false,
+    "deferred_mdio_switch_probe_observed": true,
+    "root_cause_of_missing_lan_established": false,
+    "returned_to_qwrt_and_rechecked_after_this_attempt": false
+  },
   "persistent_install_performed": false,
-  "next_diagnostic": "enter recovery again and test corrected no-eMMC initramfs wrapper with UART capture"
+  "next_diagnostic": "return to QWRT and verify critical hashes; strengthen test storage isolation and diagnose early userspace/Ethernet"
 }
