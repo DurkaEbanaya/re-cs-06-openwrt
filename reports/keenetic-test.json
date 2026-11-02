@@ -1,0 +1,96 @@
+{
+  "jdcloud_lan2_link_mbps": 2500,
+  "host_ethernet_link_mbps": 1000,
+  "transport": "IPv6 link-local TCP",
+  "streams": 2,
+  "seconds_per_run": 15,
+  "results": [
+    {
+      "test": "forward-1",
+      "receiver_mbps": 927.01,
+      "retransmits": 1
+    },
+    {
+      "test": "reverse-1",
+      "receiver_mbps": 914.97,
+      "retransmits": 40856
+    },
+    {
+      "test": "reverse-2",
+      "receiver_mbps": 904.61,
+      "retransmits": 40686
+    },
+    {
+      "test": "forward-2",
+      "receiver_mbps": 927.7,
+      "retransmits": 0
+    },
+    {
+      "test": "reverse-paced-800",
+      "receiver_mbps": 799.94,
+      "retransmits": 0
+    },
+    {
+      "test": "reverse-paced-900",
+      "receiver_mbps": 899.82,
+      "retransmits": 0
+    }
+  ],
+  "usb_adapter_in_path": false,
+  "root_cause_established": false,
+  "dhcp_ra_services_temporarily_stopped": true,
+  "saved_service_configuration_changed": false,
+  "host_nic_error_drop_counter_growth_observed": false,
+  "pacing_configured_persistently": false,
+  "direct_router_test": {
+    "keenetic_system_iperf_version": "3.19",
+    "new_packages_installed": false,
+    "vpn_routing_changed": false,
+    "keenetic_rebooted": false,
+    "traffic_path": "Keenetic LAN bridge to JDCloud LAN2; computer is not a traffic endpoint",
+    "results": [
+      {
+        "test": "forward-1",
+        "direction": "Keenetic to JDCloud",
+        "receiver_mbps": 1607.11,
+        "retransmits": 218
+      },
+      {
+        "test": "reverse-1",
+        "direction": "JDCloud to Keenetic",
+        "receiver_mbps": 1127.41,
+        "retransmits": 433
+      },
+      {
+        "test": "forward-2",
+        "direction": "Keenetic to JDCloud",
+        "receiver_mbps": 1618.68,
+        "retransmits": 244
+      },
+      {
+        "test": "reverse-2",
+        "direction": "JDCloud to Keenetic",
+        "receiver_mbps": 1113.84,
+        "retransmits": 952
+      }
+    ],
+    "root_cause_established": false,
+    "paced_results": [
+      {
+        "test": "paced-forward",
+        "requested_socket_pacing_mbps_per_stream": 500,
+        "receiver_mbps": 1705.41,
+        "retransmits": 108
+      },
+      {
+        "test": "paced-reverse",
+        "requested_socket_pacing_mbps_per_stream": 500,
+        "receiver_mbps": 996.06,
+        "retransmits": 0
+      }
+    ],
+    "keenetic_sender_requested_pacing_not_effective": true,
+    "temporary_jdcloud_server_removed": true,
+    "jdcloud_lan2_fcs_alignment_overflow_underrun_counters_zero": true
+  }
+}
