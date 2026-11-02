@@ -36,3 +36,14 @@ the partial-state cleanup path has already panicked on this device.
 No saved boot environment, bootloader or installed firmware needs to be
 changed to perform this experiment. Do not write `bootcmd=httpd`, erase HLOS
 or replace U-Boot just to avoid holding Reset.
+
+## First load-only hardware check
+
+The first guarded diagnostic booted and exposed the syscall and userspace
+tool. Loading an inspected raw Image failed with `Resource busy` and kernel
+message `Can't kexec: CPUs are stuck in the kernel.` No transition was
+executed, `kexec_loaded` remained zero and SSH stayed available. The source
+guard requires an available CPU `cpu_die` operation; with `HOTPLUG_CPU`
+disabled that check always fails on a multicore ARM64 machine. The optional
+build setting now selects CPU hotplug as well. This is a prerequisite fix,
+not a bypass of the safety check, and still requires hardware validation.

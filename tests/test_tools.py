@@ -195,6 +195,15 @@ class SysupgradeTests(unittest.TestCase):
 
 
 class PolicyTests(unittest.TestCase):
+    def test_arm64_file_kexec_selects_cpu_hotplug(self):
+        patch = (REPO / "patches/0008-optional-kexec-file-loader.patch").read_text()
+        fragment = (REPO / "config/ram-transition.config").read_text()
+        self.assertIn("+\tselect KERNEL_HOTPLUG_CPU if aarch64", patch)
+        self.assertIn("CONFIG_KERNEL_KEXEC_FILE=y", fragment)
+        self.assertIn("CONFIG_KERNEL_HOTPLUG_CPU=y", fragment)
+        self.assertIn("CONFIG_PACKAGE_kexec=y", fragment)
+        self.assertNotIn("cpus_are_stuck_in_kernel", patch)
+
     def test_radio_manifest_matches_verified_local_download_policy(self):
         records = json.loads((REPO / "radio-files.lock.json").read_text())["files"]
         self.assertEqual(len(records), 52)

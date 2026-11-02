@@ -1,0 +1,17 @@
+{
+  "first_diagnostic_booted": true,
+  "kernel_kexec_file_available": true,
+  "userspace_kexec_version": "2.0.32",
+  "target_image_sha256_verified_before_load": true,
+  "mmc_block_devices_present": false,
+  "root_filesystem": "tmpfs",
+  "radio_drivers_loaded": false,
+  "first_load_result": "Resource busy: Can't kexec: CPUs are stuck in the kernel.",
+  "kexec_loaded_after_attempt": 0,
+  "ssh_remained_available": true,
+  "transition_executed": false,
+  "cpu_hotplug_missing_in_first_diagnostic": true,
+  "cpu_hotplug_fix_hardware_validated": false,
+  "persistent_storage_or_boot_environment_modified": false,
+  "automatic_recovery_implemented": false
+}

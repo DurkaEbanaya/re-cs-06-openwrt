@@ -1,16 +1,20 @@
 diff --git a/config/Config-kernel.in b/config/Config-kernel.in
-index 27345499..a133d5ca 100644
+index 27345499..ce757c11 100644
 --- a/config/Config-kernel.in
 +++ b/config/Config-kernel.in
-@@ -767,6 +767,12 @@ config KERNEL_RELAY
+@@ -767,6 +767,16 @@ config KERNEL_RELAY
  config KERNEL_KEXEC
  	bool "Enable kexec support"
  
 +config KERNEL_KEXEC_FILE
 +	bool "Enable file-based kexec support"
++	select KERNEL_HOTPLUG_CPU if aarch64
 +	help
 +	  Enable the kernel-managed image loader on architectures that support it.
 +	  Required by the optional RE-CS-06 RAM transition diagnostic on ARM64.
++
++config KERNEL_HOTPLUG_CPU
++	bool
 +
  config KERNEL_PROC_VMCORE
  	bool
