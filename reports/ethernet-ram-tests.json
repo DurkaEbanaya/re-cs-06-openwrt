@@ -23,13 +23,19 @@
       "http": true
     },
     "wan": {
-      "tested": false,
-      "administratively_enabled": false
+      "carrier": true,
+      "speed_mbps": 1000,
+      "duplex": "full",
+      "ssh": true,
+      "http": true,
+      "administratively_enabled_for_isolated_ram_test_only": true,
+      "uplink_gateway_configured": false
     }
   },
   "physical_connector_label_mapping_confirmed": false,
   "two_point_five_gigabit_tested": false,
   "routing_nat_throughput_tested": false,
   "primary_host_internet_interface_modified": false,
-  "persistent_firmware_install_performed": false
+  "persistent_firmware_install_performed": false,
+  "all_four_ports_basic_connectivity_verified": true
 }

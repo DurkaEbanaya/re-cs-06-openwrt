@@ -1,0 +1,33 @@
+{
+  "environment": "v5 diagnostic RAM boot with unmatched MMC compatible",
+  "upstream_firmware_files_hash_verified": 52,
+  "own_calibration_slices_supplied_privately_in_ram": 2,
+  "radio_ap_or_client_mode_enabled": false,
+  "mmc_block_devices_present_during_ram_test": false,
+  "ahb_reprobe": {
+    "firmware_metadata_found": true,
+    "userpd_bootargs_prepared": true,
+    "qcom_scm_pas_init_image_result": -5,
+    "rootpd_started": false,
+    "phy_registered": false,
+    "root_cause_established": false
+  },
+  "pci_unbind_after_incomplete_start": {
+    "kernel_panic": true,
+    "warning_path": "qmi_txn_init / ath12k_qmi_firmware_stop",
+    "fatal_path": "ath12k_dp_rx_reo_cmd_list_cleanup / ath12k_core_hw_group_cleanup / ath12k_pci_power_down",
+    "automatic_reboot": true,
+    "older_qwrt_kernel_seen_after_reboot": "5.4.213"
+  },
+  "wifi_validated": false,
+  "persistent_install_performed": false,
+  "raw_serial_logs_public": false,
+  "return_to_qwrt_verified_over_ssh": true,
+  "post_return_backup_matches": {
+    "appsbl": true,
+    "art": true,
+    "hlos": true,
+    "primary_gpt": true,
+    "saved_environment_key_values": true
+  }
+}

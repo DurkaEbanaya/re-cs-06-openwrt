@@ -286,3 +286,23 @@ temporary firewall rule permitting management TCP only from the directly
 connected test host address. No gateway/DNS/uplink was added; no eMMC was
 present. Production defaults continue to keep WAN disabled. The WAN cable
 test has not yet been performed.
+# Latest radio-test blocker
+
+The v5 diagnostic RAM session verified basic 1 Gbit/s full-duplex SSH/HTTP
+connectivity through all three LAN ports and an isolated, temporarily enabled
+WAN port. No 2.5G external negotiation or NAT/forwarding throughput was tested.
+
+With eMMC unavailable to Linux, 52 hash-verified upstream radio files and two
+owner-specific calibration slices were copied only to RAM. No AP/client mode
+was enabled. AHB reprobe found the metadata and prepared UserPD bootargs but
+failed at `qcom_scm_pas_init_image` with error `-5`. This identifies the failing
+call, not whether firmware compatibility, secure-world state or driver setup
+is responsible. It must not be treated as proof of corrupt ART.
+
+Unbinding the PCI radio after its incomplete initial start then exposed a
+driver cleanup bug: warnings in QMI shutdown followed by a NULL dereference
+in `ath12k_dp_rx_reo_cmd_list_cleanup`, kernel panic and automatic reboot.
+UART captured the older QWRT 5.4.213 boot afterwards. Do not repeat live
+unbind/rebind as a firmware-loading recipe for this driver state. A clean
+RAM boot with any required files already present is a separate future test,
+after reviewing the secure-firmware failure. No persistent image was written.
