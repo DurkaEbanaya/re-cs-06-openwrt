@@ -100,3 +100,39 @@ handling and an early kernel failure cannot be distinguished without console
 logs. Do not claim a successful RAM boot or flash the persistent image as a
 workaround. UART capture is the next diagnostic step. No bootloader/GPT/ART
 replacement is proposed.
+
+## UART follow-up: wrapper format failure identified
+
+A CP2102 with router TX connected to adapter RX and a common GND produced
+readable receive-only logs at 115200 8N1. The initial missing GND caused
+corrupted reception; this was not evidence of an unsupported baud rate.
+Adapter TX and VCC remained disconnected. Raw logs contain hardware identity
+and remain private.
+
+Repeating the identical first RAM wrapper with serial capture established:
+
+```text
+Executing: sf probe; imgaddr=0x44000000 && source $imgaddr:script
+Failed to initialize SPI flash at 0:0
+## Executing script at 44000000
+Bad FIT image format
+HTTP ugrade is done! Rebooting...
+```
+
+The special script branch is now directly observed. Its `source` command
+rejected the wrapper before the first script echo and before any kernel
+launch. The UI's success/reboot message is therefore not script success.
+The SPI probe failure did not prevent reaching `source`.
+
+The hand-built outer FIT omitted root `description` and `timestamp`.
+Upstream U-Boot v2016.01 `fit_check_format()` requires `description` and,
+when timestamps are enabled, `timestamp`. The inner kernel FIT already had
+these fields; this failure concerns the outer recovery wrapper, not a
+demonstrated kernel/Ethernet bug. The earlier no-op wrapper omitted the same
+fields, so its reboot must not be cited as proof that its echo executed.
+
+Replacement local wrappers add the mandatory root metadata while retaining
+the recovery marker, identical scripts/payloads, hash verification and the
+disabled-eMMC test DTB. Host `mkimage -l` accepts the corrected no-op FIT.
+They are **not yet hardware-tested**. First verify the corrected no-op echo
+in UART before attempting the corrected initramfs wrapper.

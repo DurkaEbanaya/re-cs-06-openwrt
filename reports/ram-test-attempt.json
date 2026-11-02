@@ -20,8 +20,19 @@
   },
   "raw_kernel_including_initramfs_bytes": 55402504,
   "statically_observed_bootloader_decompression_limit_bytes": 67108864,
-  "failure_stage_known": false,
-  "console_output_captured": false,
+  "failure_stage_known": true,
+  "console_output_captured": true,
+  "uart_followup": {
+    "identical_wrapper_retested": true,
+    "recovery_script_branch_observed": true,
+    "error": "Bad FIT image format",
+    "failure_stage": "outer FIT rejected by source before script or kernel execution",
+    "script_first_echo_observed": false,
+    "missing_outer_root_metadata": ["description", "timestamp"],
+    "corrected_wrappers_prepared": true,
+    "corrected_wrappers_hardware_tested": false,
+    "raw_uart_log_published": false
+  },
   "persistent_install_performed": false,
-  "next_diagnostic": "UART bootloader and early kernel logs"
+  "next_diagnostic": "verify corrected no-op wrapper echo via UART before initramfs retry"
 }
