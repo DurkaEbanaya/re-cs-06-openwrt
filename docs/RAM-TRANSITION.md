@@ -18,10 +18,10 @@ kernel still passed the HLOS size gate. The local guarded RAM wrapper keeps
 the eMMC compatible unbound, removes the WSI group and disables radio
 autoload. No private firmware/calibration is embedded.
 
-**Runtime transition is not yet tested.** One more ordinary recovery entry
-is needed to start that new kernel. First validate image loading/unloading
-without executing it, then attempt a controlled RAM-to-RAM transition with
-serial capture, no eMMC devices and no radio drivers loaded. Preserve the
+**Runtime transition was attempted and failed; do not rely on it.** The
+original test plan was to validate image loading/unloading before a
+controlled RAM-to-RAM transition with serial capture, no eMMC devices and
+no radio drivers loaded. Preserve the
 runtime DTB's memory and reserved-memory properties; the kernel file loader
 derives its next DTB from the running tree rather than accepting an arbitrary
 FIT as a bootloader would. Load an inspected raw ARM64 Image, not the HTTP
@@ -46,4 +46,27 @@ executed, `kexec_loaded` remained zero and SSH stayed available. The source
 guard requires an available CPU `cpu_die` operation; with `HOTPLUG_CPU`
 disabled that check always fails on a multicore ARM64 machine. The optional
 build setting now selects CPU hotplug as well. This is a prerequisite fix,
-not a bypass of the safety check, and still requires hardware validation.
+not a bypass of the safety check.
+
+## Hotplug-enabled hardware check (RAM v10)
+
+The revised diagnostic booted from the guarded HTTP script. Kernel loading
+and unloading both succeeded (`kexec_loaded`: 0 → 1 → 0), with SSH still
+available. The checked raw Image was loaded again and `kexec -e` executed
+with no radio drivers loaded and no eMMC block devices present.
+
+The old kernel reported `Starting new kernel`, stopped CPUs 1–3 via PSCI,
+and printed `Bye!`. No new-kernel startup was observed. Instead the boot
+chain restarted and reported `System Reset Reason : NOC Error [0x6]`, then
+booted the installed QWRT. This establishes a failed handoff, not its exact
+hardware/driver cause. Do not bypass guards or repeatedly attempt the same
+jump, and do not treat successful load/unload as proof of a usable restart.
+
+Read-only checks after return found APPSBL, ART, HLOS, the primary GPT head
+and all stored U-Boot environment values equal to the backup. Normal QWRT
+boot can change its writable overlay; full rootfs equality is not claimed.
+The host's normal internet route remained on its original Ethernet link.
+
+The experiment has not provided automated recovery. Without a voltage-safe
+UART transmit path, manual Reset-held entry into the existing HTTP recovery
+remains the tested way to start another guarded RAM diagnostic from QWRT.
