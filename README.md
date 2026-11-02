@@ -4,10 +4,12 @@ Experimental, source-based build for **JDCloud RE-CS-06 / BE6500** with
 Qualcomm IPQ5322/IPQ5332. This is **not an official OpenWrt release**.
 
 **Status: diagnostic Linux 6.18.60 RAM boot, SSH and HTTP/LuCI login page
-work through one LAN port at 1 Gbit/s after correcting account-file modes.
+work through two LAN ports (`lan1`, `lan3`) at 1 Gbit/s after correcting account-file modes.
 Runtime eMMC isolation is confirmed with an unmatched MMC compatible.
 Earlier published images have a confirmed account-permissions defect;
-a corrected r1 build is in progress. Do not flash the old images.
+a clean corrected r1 build passed offline inspection, including account modes
+in both squashfs and embedded initramfs; its exact images await hardware testing.
+Do not flash the old images.
 Persistent installation and Wi-Fi remain unvalidated.**
 
 ## Goals

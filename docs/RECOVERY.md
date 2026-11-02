@@ -263,3 +263,15 @@ files; a base-files patch additionally enforces passwd/group 0644 and shadow
 0600. Local source/feed modes were restored and a clean package rebuild was
 started as `external-radio-r1` to avoid reusing mode-defective packages.
 Earlier release images remain defective and must not be flashed.
+
+The next physical cable move tested logical `lan1`: SSH and HTTP remained
+available and ethtool reported 1000/full. Together with the earlier `lan3`
+test, two LAN connectors now have basic wired access confirmed. Physical
+printed-label mapping, `lan2`, WAN, 2.5G and routed throughput remain untested.
+
+The clean r1 rebuild completed. Its actual squashfs and embedded initramfs
+both contain passwd/group mode 0644 and shadow 0600; all rootfs/FIT/cpio/
+sysupgrade checks passed and external radio blobs remain absent. This is an
+offline check of the corrected images, not a claim that those exact images
+were booted (the current router still runs diagnostic v5). Results are in
+`reports/external-radio-r1.json` and `reports/ethernet-ram-tests.json`.
