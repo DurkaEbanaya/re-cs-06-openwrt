@@ -178,3 +178,18 @@ Next: return to the saved QWRT installation and recheck critical hashes;
 prepare stronger test-only storage isolation and early runtime diagnostics
 before further RAM tests. A persistent flash is not a remedy for these
 blockers. Raw serial logs remain private because they contain identifiers.
+
+### Return verification and Ethernet-cable correction
+
+After an owner power cycle, the original QWRT kernel 5.4.213 booted again.
+The host initially reported no carrier; the owner found the Ethernet cable
+was not fully inserted. Reseating it restored carrier and SSH. Read-only
+checks then confirmed APPSBL, ART, HLOS, the primary GPT-head range and all
+saved bootloader environment values match the original backup. This is not
+a full-disk or live-overlay equality claim.
+
+The cable's exact condition during the RAM boot is unknown. Accordingly,
+the RAM test's HTTP timeout alone cannot establish a firmware Ethernet
+failure. The deferred-probe messages remain genuine observations, but
+their effect on eventual connectivity is unproven. Repeat network testing
+with a confirmed seated cable after strengthening storage isolation.

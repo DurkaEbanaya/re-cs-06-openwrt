@@ -60,8 +60,21 @@
     "write_free_boot_proven": false,
     "deferred_mdio_switch_probe_observed": true,
     "root_cause_of_missing_lan_established": false,
-    "returned_to_qwrt_and_rechecked_after_this_attempt": false
+    "returned_to_qwrt_and_rechecked_after_this_attempt": true,
+    "return_verification": {
+      "kernel": "5.4.213",
+      "appsbl_matches_backup": true,
+      "art_matches_backup": true,
+      "hlos_matches_backup": true,
+      "primary_gpt_head_matches_backup": true,
+      "saved_boot_environment_values_match": true,
+      "full_disk_or_live_overlay_equality_claimed": false,
+      "ssh_restored_after_owner_reseated_cable": true
+    },
+    "ethernet_cable_not_fully_seated_discovered_on_return": true,
+    "cable_condition_during_ram_boot_known": false,
+    "http_timeout_alone_proves_firmware_ethernet_failure": false
   },
   "persistent_install_performed": false,
-  "next_diagnostic": "return to QWRT and verify critical hashes; strengthen test storage isolation and diagnose early userspace/Ethernet"
+  "next_diagnostic": "strengthen test storage isolation and diagnose early userspace/Ethernet with confirmed cable seating"
 }
