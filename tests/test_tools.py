@@ -285,7 +285,9 @@ class ProvisionTests(unittest.TestCase):
             (root / "board").write_text("jdcloud,re-cs-06\n")
             for name in ("lan1", "lan2", "lan3", "wan"):
                 (root / name).touch()
-            (root / "functions").write_text('''config_load() { :; }
+            (root / "functions").write_text('''# Real OpenWrt libraries read unset optional variables.
+[ -z "$IPKG_INSTROOT" ] || :
+config_load() { :; }
 config_foreach() { "$1" existing_bridge; }
 config_get() { eval "$1=br-lan"; }
 ''')

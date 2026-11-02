@@ -1,0 +1,25 @@
+diff --git a/package/system/fstools/patches/0500-fallback-to-available-ext4-formatter.patch b/package/system/fstools/patches/0500-fallback-to-available-ext4-formatter.patch
+new file mode 100644
+--- /dev/null
++++ b/package/system/fstools/patches/0500-fallback-to-available-ext4-formatter.patch
+@@ -0,0 +1,20 @@
++Subject: [PATCH] fstools: use ext4 when the F2FS formatter is absent
++
++Minimal builds may include ext4 support without F2FS formatting tools.
++Do not select an unavailable formatter just because the overlay exceeds
++the automatic F2FS size threshold. An explicit kernel command-line choice
++is still honored; this only changes automatic filesystem selection.
++
++--- a/libfstools/common.c
+++++ b/libfstools/common.c
++@@ -142,6 +142,10 @@ static bool use_f2fs(struct volume *v, uint64_t offset, const char *bdev)
++ 			ULOG_ERR("unsupported overlay filesystem type: %s\n", typeparam);
++ 	}
++ 
+++	if (access("/sbin/mkfs.f2fs", X_OK) &&
+++	    access("/usr/sbin/mkfs.f2fs", X_OK))
+++		return false;
+++
++ 	fd = open(bdev, O_RDONLY);
++ 	if (fd < 0)
++ 		return false;

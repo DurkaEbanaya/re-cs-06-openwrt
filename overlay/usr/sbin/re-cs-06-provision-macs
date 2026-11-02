@@ -1,7 +1,8 @@
 #!/bin/sh
 # SPDX-License-Identifier: GPL-2.0-only
 # Configure wired MACs in UCI only; never write ART, factory, GPT or raw disks.
-set -eu
+# OpenWrt's shell library intentionally reads unset optional variables.
+set -e
 
 fail() { echo "$*" >&2; exit 1; }
 [ "$#" -eq 2 ] || fail "Usage: re-cs-06-provision-macs LAN_MAC WAN_MAC (no automatic network restart)"
