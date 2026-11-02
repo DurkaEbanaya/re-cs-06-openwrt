@@ -36,3 +36,27 @@ proof that Wi-Fi will work after compilation.
 Continue using a freshly booted guarded RAM image, install firmware and
 calibration before loading drivers, and retain serial capture. Never
 repeat PCI unbind in the known failing partial initialization state.
+
+## PAS v2 hardware result (RAM v7)
+
+The patched kernel successfully started Q6 using the same firmware and
+calibration as v6. Both AHB and PCI radios reported firmware versions:
+IPQ5332 WBE 1.7-01733 and QCN9274 WBE 1.6-01270. Thus the earlier PAS
+initialization failure was cleared; this is not yet Wi-Fi acceptance.
+
+The two-device WSI/MLO group then crashed with firmware assertion
+`platform_mlo.c:2038 Assertion !partner_chip_crash_ind failed`. During
+automatic recovery Linux panicked in `dev_addr_check` via `free_netdev`,
+`qcom_ppe_ds_unregister`, `ath12k_wifi7_ds_cleanup` and
+`ath12k_core_qmi_firmware_ready`. No user-triggered PCI unbind was involved.
+Different firmware versions are observed, not proven to cause the crash.
+
+The machine automatically returned to QWRT. Read-only verification found
+APPSBL, ART, HLOS, primary GPT head and stored U-Boot environment equal to
+their backups. This does not claim equality of the live writable overlay.
+
+The next local diagnostic removes the WSI graph from both radio DT nodes,
+letting the driver's documented single-device grouping fallback isolate
+the radios from inter-device MLO. Kernel, firmware files and calibration
+are otherwise unchanged. This is an untested diagnostic, not a published
+claim of working independent radios or a persistent firmware change.

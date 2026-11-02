@@ -42,5 +42,30 @@
     "ssh_still_accessible": true,
     "pci_unbind_attempted": false,
     "kernel_panic_observed": false
+  },
+  "v7_pas_init_v2": {
+    "q6_started": true,
+    "previous_pas_init_error_cleared": true,
+    "both_radio_firmware_versions_reported": true,
+    "ahb_firmware": "WBE 1.7-01733",
+    "pci_firmware": "WBE 1.6-01270",
+    "firmware_assertion": "platform_mlo.c:2038 !partner_chip_crash_ind",
+    "automatic_recovery_kernel_panic": true,
+    "panic_path": [
+      "dev_addr_check",
+      "free_netdev",
+      "qcom_ppe_ds_unregister",
+      "ath12k_wifi7_ds_cleanup",
+      "ath12k_core_qmi_firmware_ready"
+    ],
+    "user_triggered_unbind": false,
+    "wifi_accepted": false,
+    "return_verification": {
+      "qwrt_return_confirmed": true,
+      "appsbl_art_hlos_match_backup": true,
+      "primary_gpt_head_matches_backup": true,
+      "stored_bootloader_environment_matches_backup": true,
+      "full_rootfs_equality_claimed": false
+    }
   }
 }
