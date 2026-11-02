@@ -31,8 +31,17 @@
     "missing_outer_root_metadata": ["description", "timestamp"],
     "corrected_wrappers_prepared": true,
     "corrected_wrappers_hardware_tested": false,
+    "corrected_noop_wrapper": {
+      "bytes": 16384,
+      "sha256": "13228f593f431323ff3ec24dede8fa000505ff852ddf01b0cd861bc70bf23478",
+      "hardware_tested": true,
+      "crc32_and_sha1_verified_by_bootloader": true,
+      "exact_script_echo_observed": "JD_RAM_SCRIPT_PREFLIGHT_NO_FLASH",
+      "automatic_reboot_after_script_return": true
+    },
+    "corrected_initramfs_wrapper_hardware_tested": false,
     "raw_uart_log_published": false
   },
   "persistent_install_performed": false,
-  "next_diagnostic": "verify corrected no-op wrapper echo via UART before initramfs retry"
+  "next_diagnostic": "enter recovery again and test corrected no-eMMC initramfs wrapper with UART capture"
 }

@@ -134,5 +134,14 @@ fields, so its reboot must not be cited as proof that its echo executed.
 Replacement local wrappers add the mandatory root metadata while retaining
 the recovery marker, identical scripts/payloads, hash verification and the
 disabled-eMMC test DTB. Host `mkimage -l` accepts the corrected no-op FIT.
-They are **not yet hardware-tested**. First verify the corrected no-op echo
-in UART before attempting the corrected initramfs wrapper.
+The corrected no-op wrapper was subsequently tested on the same bootloader.
+UART directly showed:
+
+```text
+crc32+ sha1+ JD_RAM_SCRIPT_PREFLIGHT_NO_FLASH
+HTTP ugrade is done! Rebooting...
+```
+
+This confirms hash verification and execution of the no-op script, not
+Linux boot. Recovery automatically reboots after the script returns. The
+corrected initramfs wrapper still needs a separate recovery entry/test.
