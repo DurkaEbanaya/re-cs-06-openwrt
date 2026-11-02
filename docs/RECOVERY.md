@@ -239,3 +239,27 @@ guard remains unchanged. It is prepared but not hardware-tested yet. The
 rootfs inspector now rejects 0600 passwd/group and non-0600 shadow, with a
 regression test. Earlier content-only inspection passes did not check this
 functional permissions requirement and must not be interpreted as such.
+
+## Diagnostic RAM v5: successful wired userspace boot
+
+Changing only public passwd/group modes to 0644 in tmpfs before procd
+confirmed the diagnosis: procd connected to ubus and entered normal init;
+normal modules, network services, dropbear and uhttpd started. The connected
+port appeared as `lan3`, negotiated 1000/full and provided SSH and HTTP on
+192.168.76.1. LuCI returned its expected unauthenticated login-required page.
+This does not mean authenticated LuCI configuration or other ports were
+tested. WAN remains disabled. There is no Wi-Fi validation: radio blobs and
+per-device ART are deliberately unavailable in this isolated diagnostic.
+
+SSH independently confirmed an empty partition list, root on tmpfs and no
+storage mounts. `/etc/shadow` remained 0600. The persistent installation has
+not been changed. The unmatched MMC-compatible guard is only in this RAM
+test and is not a substitute for persistent firmware's MMC support.
+
+The public source checkout had been created under a restrictive host umask:
+many Git 0644/0755 tracked files were actually 0600/0700. Source preparation
+now explicitly uses umask 022 and restores Git modes for tracked regular
+files; a base-files patch additionally enforces passwd/group 0644 and shadow
+0600. Local source/feed modes were restored and a clean package rebuild was
+started as `external-radio-r1` to avoid reusing mode-defective packages.
+Earlier release images remain defective and must not be flashed.

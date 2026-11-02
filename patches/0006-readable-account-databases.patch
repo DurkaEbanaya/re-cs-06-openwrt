@@ -1,0 +1,12 @@
+diff --git a/package/base-files/Makefile b/package/base-files/Makefile
+--- a/package/base-files/Makefile
++++ b/package/base-files/Makefile
+@@ -228,6 +228,8 @@ endif
+ endif
+ 	$(LN) /tmp/resolv.conf /tmp/TZ /tmp/localtime $(1)/etc/
+ 
++	# ubusd drops privileges and must resolve client users/groups.
++	chmod 0644 $(1)/etc/passwd $(1)/etc/group
+ 	chmod 0600 $(1)/etc/shadow
+ 	chmod 1777 $(1)/tmp
+ 

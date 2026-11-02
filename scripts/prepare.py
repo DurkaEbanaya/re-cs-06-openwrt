@@ -2,6 +2,7 @@
 """Prepare pinned sources and public-only overlay; never reads device backups."""
 import argparse
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -23,9 +24,23 @@ def checkout(url, commit, destination):
     actual = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=destination, text=True).strip()
     if actual != commit:
         raise SystemExit(f"Wrong source revision at {destination}: {actual}")
+    # Existing checkouts may have been created with a restrictive umask too.
+    # Restore Git file modes, without changing tracked file contents.
+    for entry in subprocess.check_output(["git", "ls-files", "--stage", "-z"], cwd=destination).split(b"\0"):
+        if not entry:
+            continue
+        metadata, name = entry.split(b"\t", 1)
+        mode, _, stage = metadata.decode().split()
+        path = destination / name.decode()
+        if stage == "0" and mode in ("100644", "100755") and path.is_file() and not path.is_symlink():
+            path.chmod(0o755 if mode == "100755" else 0o644)
 
 
 def main():
+    # Git checkout honors umask; restrictive inherited masks can silently
+    # produce unreadable configuration files in the final firmware.
+    # Private keys/backups never enter this public-source preparation tree.
+    os.umask(0o022)
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("source", type=Path)
     args = parser.parse_args()
