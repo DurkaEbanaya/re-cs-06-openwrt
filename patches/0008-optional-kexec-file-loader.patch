@@ -1,0 +1,30 @@
+diff --git a/config/Config-kernel.in b/config/Config-kernel.in
+index 27345499..a133d5ca 100644
+--- a/config/Config-kernel.in
++++ b/config/Config-kernel.in
+@@ -767,6 +767,12 @@ config KERNEL_RELAY
+ config KERNEL_KEXEC
+ 	bool "Enable kexec support"
+ 
++config KERNEL_KEXEC_FILE
++	bool "Enable file-based kexec support"
++	help
++	  Enable the kernel-managed image loader on architectures that support it.
++	  Required by the optional RE-CS-06 RAM transition diagnostic on ARM64.
++
+ config KERNEL_PROC_VMCORE
+ 	bool
+ 
+diff --git a/package/boot/kexec-tools/Makefile b/package/boot/kexec-tools/Makefile
+index 6b2dea17..146151f6 100644
+--- a/package/boot/kexec-tools/Makefile
++++ b/package/boot/kexec-tools/Makefile
+@@ -48,7 +48,7 @@ define Package/kexec
+   TITLE:=Kernel boots kernel
+   DEPENDS:=\
+ 	@(armeb||arm||aarch64||i386||x86_64||powerpc64||mipsel||mips) \
+-	+KEXEC_ZLIB:zlib +KEXEC_LZMA:liblzma +KEXEC_ZSTD:libzstd @KERNEL_KEXEC
++	+KEXEC_ZLIB:zlib +KEXEC_LZMA:liblzma +KEXEC_ZSTD:libzstd @(KERNEL_KEXEC||KERNEL_KEXEC_FILE)
+ endef
+ 
+ define Package/kexec/description
