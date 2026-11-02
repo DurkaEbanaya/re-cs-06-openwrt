@@ -32,3 +32,33 @@ entry sequence or compatible loader has been established for this unit.
 
 No reboot, flash write, USB-role change or recovery upload was performed
 during these checks. Main Internet connectivity remained on the other router.
+
+## Follow-up: Ethernet recovery actually entered
+
+With the owner's physical assistance, powering up while holding Reset
+successfully entered the installed recovery. Read-only HTTP GET over the
+isolated USB-Ethernet interface returned:
+
+- `/` and `/index.html`: HTTP 200, uIP/0.9, `FIRMWARE UPDATE`, version
+  `uboot2.0 version:24.07.25`.
+- `/initramfs.html`, `/ram.html`, `/console.html`: HTTP 404.
+- The saved bootloader's page strings contain firmware, U-Boot, ART and
+  MIBIB update pages, but no advertised initramfs or console page.
+
+This validates recovery **entry and HTTP access**, not the correctness of
+its flash writer, restoration, or compatibility with the new kernel.
+No POST/upload, flash write, environment change or firmware test was done.
+No network RAM-boot method is established for this installed version.
+Do not upload initramfs through the generic firmware-update form.
+
+Power cycling with Reset released should leave recovery and boot the
+unchanged installed QWRT. Verify that before considering further changes.
+UART is declined by the owner. Replacing U-Boot merely to obtain a web
+RAM loader would itself be a high-risk flash operation and has not been
+performed or proposed as a risk-free prerequisite.
+
+Recovery shares the primary router's IPv4 address. Host access used a
+source-specific routing table on the dedicated USB adapter; normal Internet
+traffic remained on the primary Ethernet interface. NetworkManager's temporary
+device settings can disappear after link loss. Always recheck the interface,
+source address and route before accessing or uploading to a recovery server.

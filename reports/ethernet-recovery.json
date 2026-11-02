@@ -1,0 +1,21 @@
+{
+  "owner_assisted_reset_at_power_on": true,
+  "recovery_http_access_verified": true,
+  "server": "uIP/0.9",
+  "ui_version": "24.07.25",
+  "index_page": "FIRMWARE UPDATE",
+  "http_get_checks": {
+    "/": 200,
+    "/index.html": 200,
+    "/initramfs.html": 404,
+    "/ram.html": 404,
+    "/console.html": 404
+  },
+  "post_or_upload_performed": false,
+  "flash_write_performed": false,
+  "network_ram_boot_method_verified": false,
+  "firmware_boot_tested": false,
+  "flash_restore_tested": false,
+  "uart_declined": true,
+  "primary_internet_route_preserved": true
+}
