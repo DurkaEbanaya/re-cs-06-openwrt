@@ -1,0 +1,10 @@
+/work/
+/artifacts/
+/private/
+/local/
+__pycache__/
+*.pyc
+*.key
+*.pem
+*.partial
+.env

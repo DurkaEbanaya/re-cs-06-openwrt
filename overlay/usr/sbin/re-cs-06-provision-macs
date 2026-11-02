@@ -1,0 +1,51 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-only
+# Configure wired MACs in UCI only; never write ART, factory, GPT or raw disks.
+set -eu
+
+fail() { echo "$*" >&2; exit 1; }
+[ "$#" -eq 2 ] || fail "Usage: re-cs-06-provision-macs LAN_MAC WAN_MAC (no automatic network restart)"
+[ "$(id -u)" -eq 0 ] || fail "Run as root on the router"
+[ "$(cat /tmp/sysinfo/board_name)" = "jdcloud,re-cs-06" ] || fail "Unsupported board"
+
+validate_mac() {
+	printf '%s\n' "$1" | awk -F: '
+		NF != 6 { exit 1 }
+		{ for (i=1; i<=6; i++) if ($i !~ /^[0-9a-fA-F][0-9a-fA-F]$/) exit 1 }
+		$0 == "00:00:00:00:00:00" { exit 1 }
+		substr(tolower($1), 2, 1) !~ /^[02468ace]$/ { exit 1 }
+	' || fail "Invalid unicast MAC address"
+}
+lan=$(printf '%s' "$1" | tr A-F a-f)
+wan=$(printf '%s' "$2" | tr A-F a-f)
+validate_mac "$lan"
+validate_mac "$wan"
+[ "$lan" != "$wan" ] || fail "LAN and WAN must differ"
+
+for dev in lan1 lan2 lan3 wan; do
+	[ -e "/sys/class/net/$dev" ] || fail "Missing $dev; validate the Ethernet driver first"
+done
+
+. /lib/functions.sh
+config_load network
+find_device() {
+	local name
+	config_get name "$1" name
+	[ "$name" != "$wanted" ] || found="$1"
+}
+set_device_mac() {
+	local wanted="$1" value="$2" found=""
+	config_foreach find_device device
+	if [ -z "$found" ]; then
+		found=$(uci add network device)
+		uci set "network.$found.name=$wanted"
+	fi
+	uci set "network.$found.macaddr=$value"
+}
+for dev in lan1 lan2 lan3 br-lan; do
+	set_device_mac "$dev" "$lan"
+done
+set_device_mac wan "$wan"
+uci commit network
+echo "Wired MACs saved in UCI. Network was NOT restarted."
+echo "Keep WAN disconnected until identity, password and firewall are verified."

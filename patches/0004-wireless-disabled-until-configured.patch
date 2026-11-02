@@ -1,0 +1,31 @@
+diff --git a/package/kernel/mac80211/files/lib/wifi/mac80211.sh b/package/kernel/mac80211/files/lib/wifi/mac80211.sh
+index 79949268..ed8f20ef 100644
+--- a/package/kernel/mac80211/files/lib/wifi/mac80211.sh
++++ b/package/kernel/mac80211/files/lib/wifi/mac80211.sh
+@@ -352,7 +352,7 @@ mac80211_emit_detect() {
+ 	num_global_macaddr="$default_mac_count"
+ 
+ 	[ -n "$ssid" ] || ssid="LEDE"
+-	[ -n "$country" ] || country="US"
++	[ -n "$country" ] || country="00"
+ 
+ 	case "$band" in
+ 		6g)
+@@ -388,7 +388,7 @@ mac80211_emit_detect() {
+ 		set wireless.${section}.htmode='${htmode}'
+ 		set wireless.${section}.country='${country}'
+ 		set wireless.${section}.num_global_macaddr='${num_global_macaddr}'
+-		set wireless.${section}.disabled='0'
++		set wireless.${section}.disabled='1'
+ 
+ 		set wireless.${iface}=wifi-iface
+ 		set wireless.${iface}.device='${section}'
+@@ -397,7 +397,7 @@ mac80211_emit_detect() {
+ 		set wireless.${iface}.ssid='${ssid}'
+ 		set wireless.${iface}.encryption='${encryption}'
+ 		set wireless.${iface}.key='${key}'
+-		set wireless.${iface}.disabled='0'
++		set wireless.${iface}.disabled='1'
+ 	EOF
+ 	uci -q commit wireless
+ }

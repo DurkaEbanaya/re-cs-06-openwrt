@@ -1,0 +1,87 @@
+diff --git a/target/linux/qualcommbe/dts/ipq5322-re-cs-06.dts b/target/linux/qualcommbe/dts/ipq5322-re-cs-06.dts
+index 6baea380..94e949eb 100644
+--- a/target/linux/qualcommbe/dts/ipq5322-re-cs-06.dts
++++ b/target/linux/qualcommbe/dts/ipq5322-re-cs-06.dts
+@@ -93,26 +93,18 @@
+ 	ports {
+ 		port@1 {
+ 			label = "lan1";
+-			nvmem-cells = <&lan_macaddr 0>;
+-			nvmem-cell-names = "mac-address";
+ 		};
+ 
+ 		port@2 {
+ 			label = "lan2";
+-			nvmem-cells = <&lan_macaddr 0>;
+-			nvmem-cell-names = "mac-address";
+ 		};
+ 
+ 		port@3 {
+ 			label = "lan3";
+-			nvmem-cells = <&lan_macaddr 0>;
+-			nvmem-cell-names = "mac-address";
+ 		};
+ 
+ 		port@4 {
+ 			label = "wan";
+-			nvmem-cells = <&wan_macaddr 0>;
+-			nvmem-cell-names = "mac-address";
+ 		};
+ 	};
+ };
+@@ -176,38 +168,10 @@
+ 	pinctrl-0 = <&sdc_pins>;
+ 	pinctrl-names = "default";
+ 
+-	card@0 {
+-		compatible = "mmc-card";
+-		reg = <0>;
+-
+-		block {
+-			compatible = "block-device";
+-
+-			partitions {
+-				block-partition-factory {
+-					partname = "factory";
+-
+-					nvmem-layout {
+-						compatible = "fixed-layout";
+-						#address-cells = <1>;
+-						#size-cells = <1>;
+-
+-						lan_macaddr: macaddr@0 {
+-							compatible = "mac-base";
+-							reg = <0x0 0x6>;
+-							#nvmem-cell-cells = <1>;
+-						};
+-
+-						wan_macaddr: macaddr@6 {
+-							compatible = "mac-base";
+-							reg = <0x6 0x6>;
+-							#nvmem-cell-cells = <1>;
+-						};
+-					};
+-				};
+-			};
+-		};
+-	};
++	/* Modified layouts may lack factory. Do not defer networking on an
++	 * absent provider or read identity remnants from inside live rootfs.
++	 * Provision MACs in userspace after an isolated first boot instead.
++	 */
+ };
+ 
+ &tlmm {
+@@ -228,12 +192,8 @@
+ 
+ &wifi0 {
+ 	qcom,board-id = <22>;
+-	nvmem-cells = <&lan_macaddr 2>;
+-	nvmem-cell-names = "mac-address";
+ };
+ 
+ &wifi1 {
+ 	qcom,board-id = <2>;
+-	nvmem-cells = <&lan_macaddr 3>;
+-	nvmem-cell-names = "mac-address";
+ };

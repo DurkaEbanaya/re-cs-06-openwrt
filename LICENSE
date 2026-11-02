@@ -1,0 +1,23 @@
+SPDX-License-Identifier: GPL-2.0-only
+
+Unless a file states otherwise, original scripts and documentation in this
+repository are licensed under the GNU General Public License, version 2 only.
+The complete license text is available at:
+https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
+
+Copyright (C) 2026 DurkaEbanaya
+
+This program is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License version 2 as published by
+the Free Software Foundation.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+more details.
+
+Patches retain the original authorship and licenses of the files they modify.
+The source project, feeds, Linux kernel and chipset firmware have their own
+licenses; this file does not relicense any third-party material or grant
+additional rights to proprietary firmware. No device backup or proprietary
+firmware blob is included in this repository.

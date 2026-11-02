@@ -1,0 +1,14 @@
+diff --git a/target/linux/qualcommbe/image/ipq53xx.mk b/target/linux/qualcommbe/image/ipq53xx.mk
+index 89c808c4..bc5ece40 100644
+--- a/target/linux/qualcommbe/image/ipq53xx.mk
++++ b/target/linux/qualcommbe/image/ipq53xx.mk
+@@ -80,6 +80,9 @@ TARGET_DEVICES += glinet_gl-be9300
+ define Device/jdcloud_re-cs-06
+ 	$(call Device/FitImage)
+ 	$(call Device/EmmcImage)
++	# Persistent kernel must fit HLOS. RAM-only initramfs is exempt.
++	KERNEL := kernel-bin | libdeflate-gzip | fit gzip $$(KDIR)/image-$$(DEVICE_DTS).dtb | check-size $$(KERNEL_SIZE)
++	KERNEL_INITRAMFS := kernel-bin | libdeflate-gzip | fit gzip $$(KDIR)/image-$$(DEVICE_DTS).dtb
+ 	DEVICE_VENDOR := JDCloud
+ 	DEVICE_MODEL := BE6500
+ 	DEVICE_DTS_CONFIG := config@mi01.6

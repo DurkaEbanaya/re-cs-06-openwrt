@@ -1,0 +1,30 @@
+diff --git a/include/target.mk b/include/target.mk
+index f046f956..e4f8841d 100644
+--- a/include/target.mk
++++ b/include/target.mk
+@@ -61,6 +61,12 @@ DEFAULT_PACKAGES.router:=\
+ 	luci-app-accesscontrol luci-app-nlbwmon luci-app-turboacc luci-app-wol curl ca-certificates \
+ 	kmod-sched-core kmod-sched-bpf kmod-xdp-sockets-diag kmod-veth
+ 
++ifeq ($(BOARD),qualcommbe)
++DEFAULT_PACKAGES.router:=\
++	dnsmasq firewall4 nftables-json ppp ppp-mod-pppoe \
++	odhcp6c odhcpd-ipv6only luci luci-proto-ipv6 ca-bundle
++endif
++
+ ifneq ($(DUMP),)
+   all: dumpinfo
+ endif
+diff --git a/target/linux/qualcommbe/Makefile b/target/linux/qualcommbe/Makefile
+index bb41f751..0a63b74c 100644
+--- a/target/linux/qualcommbe/Makefile
++++ b/target/linux/qualcommbe/Makefile
+@@ -15,7 +15,7 @@ DEFAULT_PACKAGES += \
+ 	kmod-usb3 kmod-usb-dwc3 kmod-usb-dwc3-qcom \
+ 	kmod-leds-gpio kmod-gpio-button-hotplug \
+ 	kmod-qcom-ppe \
+-	wpad-basic-mbedtls uboot-envtools \
++	wpad-openssl uboot-envtools \
+ 	e2fsprogs kmod-fs-ext4 losetup
+ 
+ $(eval $(call BuildTarget))

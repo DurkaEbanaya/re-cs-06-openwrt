@@ -1,0 +1,9 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-only
+set -eu
+[ "$#" -ge 2 ] || { echo "Usage: container-run SOURCE_DIR COMMAND [ARGS...]" >&2; exit 1; }
+source=$(realpath "$1")
+shift
+exec podman run --rm --userns=keep-id --security-opt label=disable \
+	-v "$source:/work" -w /work \
+	"${BUILDER_IMAGE:-localhost/re-cs-06-builder:ubuntu24.04}" "$@"
