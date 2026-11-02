@@ -1,0 +1,28 @@
+diff --git a/target/linux/qualcommbe/patches-6.18/2016-net-dsa-qca8k-idempotent-fdb-delete.patch b/target/linux/qualcommbe/patches-6.18/2016-net-dsa-qca8k-idempotent-fdb-delete.patch
+new file mode 100644
+index 00000000..2f928069
+--- /dev/null
++++ b/target/linux/qualcommbe/patches-6.18/2016-net-dsa-qca8k-idempotent-fdb-delete.patch
+@@ -0,0 +1,22 @@
++From: DurkaEbanaya <287994592+DurkaEbanaya@users.noreply.github.com>
++Subject: [PATCH] net: dsa: qca8k: make shared FDB deletion idempotent
++
++An aged or already removed entry is already in the requested state. Do not
++report EINVAL to DSA in that case. Similarly, preserve an existing entry if
++the requested port is not a member. Keep register/MDIO errors visible.
++
++--- a/drivers/net/dsa/qca/qca8k-common.c
+++++ b/drivers/net/dsa/qca/qca8k-common.c
++@@ -298,9 +298,9 @@ static int qca8k_fdb_search_and_del(struct qca8k_priv *priv, u8 port_mask,
++ 	if (ret < 0)
++ 		goto exit;
++ 
++-	/* Rule doesn't exist. Why delete? */
++-	if (!fdb.aging) {
++-		ret = -EINVAL;
+++	/* Missing entry or membership: deletion is already complete. */
+++	if (!fdb.aging || !(fdb.port_mask & port_mask)) {
+++		ret = 0;
++ 		goto exit;
++ 	}
++ 

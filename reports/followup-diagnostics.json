@@ -1,0 +1,22 @@
+{
+  "running_firmware_changed": false,
+  "he_ap_beacon_advertisement_observed": true,
+  "test_client": "Intel AX201",
+  "client_self_managed_test_channels_no_he": true,
+  "he_data_path_validated": false,
+  "regulatory_bypass_performed": false,
+  "pcie_corrected_rxerr_before": 1,
+  "pcie_corrected_rxerr_after": 1,
+  "pcie_warning_fixed": false,
+  "fdb_idempotent_delete_patch_prepared": true,
+  "fdb_patch_deployed": false,
+  "tcp_reverse_retransmits_reproduced": true,
+  "tcp_root_cause_established": false,
+  "tcp_pacing_is_a_fix": false,
+  "temporary_tuning_restored": true,
+  "temporary_access_points_removed": true,
+  "wifi_disabled_after_tests": true,
+  "wan_disabled_after_tests": true,
+  "normal_host_internet_preserved": true,
+  "offline_tests_passed": 27
+}
