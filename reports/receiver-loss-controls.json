@@ -1,0 +1,249 @@
+{
+  "installed_firmware_changed": false,
+  "wan_link_mbps": 2500,
+  "both_jd_links_full_duplex": true,
+  "udp_initial_runs": [
+    {
+      "run": 0,
+      "reverse": false,
+      "receiver_mbps": 310.98,
+      "lost_packets": 236274,
+      "lost_percent": 37.8005,
+      "keenetic_rcvbuf_errors_delta": 19835
+    },
+    {
+      "run": 1,
+      "reverse": false,
+      "receiver_mbps": 490.22,
+      "lost_packets": 625811,
+      "lost_percent": 50.0643,
+      "keenetic_rcvbuf_errors_delta": 29762
+    },
+    {
+      "run": 2,
+      "reverse": false,
+      "receiver_mbps": 494.81,
+      "lost_packets": 1868261,
+      "lost_percent": 74.7258,
+      "keenetic_rcvbuf_errors_delta": 37988
+    },
+    {
+      "run": 3,
+      "reverse": true,
+      "receiver_mbps": 729.26,
+      "lost_packets": 0,
+      "lost_percent": 0,
+      "keenetic_rcvbuf_errors_delta": 0
+    },
+    {
+      "run": 4,
+      "reverse": false,
+      "receiver_mbps": 491.45,
+      "lost_packets": 10629,
+      "lost_percent": 1.7006,
+      "keenetic_rcvbuf_errors_delta": 10629
+    }
+  ],
+  "udp_pacing_controls": [
+    {
+      "run": 0,
+      "pacing_timer_us": 1000,
+      "receiver_mbps": 476.9605700889127,
+      "lost_packets": 28769,
+      "lost_percent": 4.602612877524965
+    },
+    {
+      "run": 1,
+      "pacing_timer_us": 100,
+      "receiver_mbps": 483.3461868408967,
+      "lost_packets": 20777,
+      "lost_percent": 3.3240221676137818
+    },
+    {
+      "run": 2,
+      "pacing_timer_us": 1000,
+      "receiver_mbps": 483.00050140999684,
+      "lost_packets": 21199,
+      "lost_percent": 3.391525266455273
+    },
+    {
+      "run": 3,
+      "pacing_timer_us": 100,
+      "receiver_mbps": 483.57810200294364,
+      "lost_packets": 20485,
+      "lost_percent": 3.277416464677978
+    }
+  ],
+  "udp_socket_buffer_controls": [
+    {
+      "run": 0,
+      "socket_buffer": "default",
+      "receiver_mbps": 486.0999766613304,
+      "lost_packets": 17346,
+      "lost_percent": 2.77514242883358
+    },
+    {
+      "run": 1,
+      "socket_buffer": "1M",
+      "receiver_mbps": 497.43505442559734,
+      "lost_packets": 3152,
+      "lost_percent": 0.50427320344672
+    },
+    {
+      "run": 2,
+      "socket_buffer": "default",
+      "receiver_mbps": 481.6820061454534,
+      "lost_packets": 22644,
+      "lost_percent": 3.622779159900487
+    },
+    {
+      "run": 3,
+      "socket_buffer": "1M",
+      "receiver_mbps": 499.96306265808045,
+      "lost_packets": 0,
+      "lost_percent": 0
+    }
+  ],
+  "tcp_socket_buffer_controls": [
+    {
+      "run": 0,
+      "socket_buffer": "autotuned",
+      "receiver_mbps": 2314.7545890825954,
+      "retransmits": 29
+    },
+    {
+      "run": 1,
+      "socket_buffer": "1M",
+      "receiver_mbps": 2316.17250304115,
+      "retransmits": 7
+    },
+    {
+      "run": 2,
+      "socket_buffer": "autotuned",
+      "receiver_mbps": 2316.754558601662,
+      "retransmits": 48
+    },
+    {
+      "run": 3,
+      "socket_buffer": "1M",
+      "receiver_mbps": 2276.005678429188,
+      "retransmits": 60
+    }
+  ],
+  "udp_socket_buffer_error_deltas": [
+    17346,
+    3152,
+    22644,
+    0
+  ],
+  "specific_udp_run_loss_matches_receiver_socket_errors": true,
+  "all_tcp_retransmissions_explained": false,
+  "persistent_receiver_tuning_applied": false,
+  "gpt_modified": false,
+  "direct_wan_udp_controls": [
+    {
+      "run": 0,
+      "socket_buffer": "default",
+      "receiver_mbps": 477.1301115006228,
+      "lost_packets": 28560,
+      "lost_percent": 4.569205220668934
+    },
+    {
+      "run": 1,
+      "socket_buffer": "1M",
+      "receiver_mbps": 498.825126716601,
+      "lost_packets": 1357,
+      "lost_percent": 0.21710124245265208
+    },
+    {
+      "run": 2,
+      "socket_buffer": "default",
+      "receiver_mbps": 456.7624181825148,
+      "lost_packets": 53844,
+      "lost_percent": 8.614309506553845
+    },
+    {
+      "run": 3,
+      "socket_buffer": "1M",
+      "receiver_mbps": 453.3563034393668,
+      "lost_packets": 58280,
+      "lost_percent": 9.323979489804897
+    }
+  ],
+  "direct_wan_receiver_socket_error_deltas": [
+    28560,
+    1357,
+    53731,
+    46002
+  ],
+  "keenetic_local_udp_controls": [
+    {
+      "run": 0,
+      "socket_buffer": "default",
+      "receiver_mbps": 319.5618367998395,
+      "lost_packets": 4538,
+      "lost_percent": 1.1231672425229435
+    },
+    {
+      "run": 1,
+      "socket_buffer": "1M",
+      "receiver_mbps": 344.155108958394,
+      "lost_packets": 0,
+      "lost_percent": 0
+    },
+    {
+      "run": 2,
+      "socket_buffer": "default",
+      "receiver_mbps": 321.2671282613907,
+      "lost_packets": 4072,
+      "lost_percent": 1.0036874174274841
+    },
+    {
+      "run": 3,
+      "socket_buffer": "1M",
+      "receiver_mbps": 340.69952179399036,
+      "lost_packets": 0,
+      "lost_percent": 0
+    }
+  ],
+  "keenetic_local_socket_error_deltas": [
+    4538,
+    0,
+    4072,
+    0
+  ],
+  "receiver_local_udp_loss_reproduced_without_jdcloud_or_external_link": true,
+  "local_control_sender_did_not_achieve_requested_rate": true,
+  "keenetic_local_tcp_controls": [
+    {
+      "run": 0,
+      "receiver_mbps": 4406.50505842769,
+      "retransmits": 2
+    },
+    {
+      "run": 1,
+      "receiver_mbps": 4443.996746968846,
+      "retransmits": 1
+    }
+  ],
+  "local_tcp_result_explains_external_tcp_retransmissions": false,
+  "owner_supplied_independent_investigation": {
+    "provenance": "User-provided summary of a separate investigation; not rerun here",
+    "reported_runs": 48,
+    "referenced_report_and_csv_available_in_workspace": false,
+    "raw_results_independently_verified": false,
+    "reported_receive_only_udp_buffer_control": true,
+    "reported_loopback_udp_loss_alternating_default_and_2mib_receive_buffer": [431, 0, 1621, 0],
+    "reported_external_udp_loss_alternating_default_and_2mib_receive_buffer": [473, 0, 5341, 0],
+    "reported_external_udp_actual_sender_mbps": 500,
+    "reported_cpu1_utilization_percent_range": [97, 99],
+    "reported_cpu1_softirq_percent_range": [93, 95],
+    "reported_tcp_receive_backlog_drop_episode_localized_to_keenetic": true,
+    "reported_reordering_between_software_capture_points": true,
+    "reordering_cause_established": false,
+    "jdcloud_tx_nic_entirely_exonerated": false,
+    "hincyray_or_mihomo_fault_established": false,
+    "applies_directly_to_vpn_or_ordinary_forwarding_limits": false,
+    "jdcloud_firmware_change_justified_by_receiver_socket_drops": false
+  }
+}

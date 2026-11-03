@@ -21,6 +21,17 @@ builds; an item is not resolved merely because a candidate patch exists.
 
 ## Additional routed protocol tests
 
+[RECEIVER-LOSS-CONTROLS.md](RECEIVER-LOSS-CONTROLS.md) adds receiver-local
+controls: UDP losses reproduced entirely within Keenetic and matched its
+socket receive-buffer error increments. This localizes those particular
+UDP drops independently of JDCloud. A separately supplied 48-run investigation
+also reports receive-only buffer controls, CPU1 softirq saturation and a TCP
+backlog-drop episode localized to Keenetic receive processing. Its raw report
+and CSV have not been independently inspected here. These receiver limits
+must not be treated as evidence that JDCloud forwarding requires a speculative
+fix. The cause of reordering between software capture points and of every
+earlier TCP retransmission remains unproven. No permanent tuning is applied.
+
 [PROTOCOL-OFFLOAD-TESTS.md](PROTOCOL-OFFLOAD-TESTS.md) records actual IPv6,
 PPPoE, tagged LAN VLAN and routed wireless traffic, including negative
 results. Direct Switch's short-refill counter is not a packet-drop counter;
