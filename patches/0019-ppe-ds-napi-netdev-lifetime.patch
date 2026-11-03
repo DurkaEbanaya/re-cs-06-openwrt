@@ -1,0 +1,48 @@
+From: RE-CS-06 minimal build
+Subject: [PATCH] net: preserve allocated dummy NAPI netdev state
+
+Fix the common allocator, used by PPE Direct Switch and ath12k NAPI.
+Keep init_dummy_netdev() behavior for embedded dummy devices unchanged.
+
+diff --git a/target/linux/qualcommbe/patches-6.18/0677-net-preserve-allocated-dummy-netdev-state.patch b/target/linux/qualcommbe/patches-6.18/0677-net-preserve-allocated-dummy-netdev-state.patch
+new file mode 100644
+--- /dev/null
++++ b/target/linux/qualcommbe/patches-6.18/0677-net-preserve-allocated-dummy-netdev-state.patch
+@@ -0,0 +1,37 @@
++From: RE-CS-06 minimal build
++Subject: [PATCH] net: do not clear allocated resources in dummy netdev setup
++
++alloc_netdev() allocates the address list and reference tracking before
++invoking its setup callback. init_dummy_netdev() clears the entire object,
++losing those allocations and leaving dev_addr NULL. free_netdev() then
++crashes in dev_addr_check(). Use a non-destructive callback for allocated
++dummy devices, retaining the existing initialization for embedded devices.
++This affects both PPE Direct Switch and ath12k NAPI netdev teardown.
++The destructive setup was restored by generic/hack-6.18/991-revert-
++init_dummy_netdev.patch without splitting the allocated-device callback.
++
++--- a/net/core/dev.c
+++++ b/net/core/dev.c
++@@ -12323,6 +12323,14 @@ void free_netdev(struct net_device *dev)
++ }
++ EXPORT_SYMBOL(free_netdev);
++ 
+++static void setup_allocated_dummy_netdev(struct net_device *dev)
+++{
+++	/* alloc_netdev() has already initialized the core allocation state. */
+++	dev->reg_state = NETREG_DUMMY;
+++	set_bit(__LINK_STATE_PRESENT, &dev->state);
+++	set_bit(__LINK_STATE_START, &dev->state);
+++}
+++
++ /**
++  * alloc_netdev_dummy - Allocate and initialize a dummy net device.
++  * @sizeof_priv: size of private data to allocate space for
++@@ -12332,6 +12340,6 @@ struct net_device *alloc_netdev_dummy(int sizeof_priv)
++ {
++ 	return alloc_netdev(sizeof_priv, "dummy#", NET_NAME_UNKNOWN,
++-			    init_dummy_netdev);
+++			    setup_allocated_dummy_netdev);
++ }
++ EXPORT_SYMBOL_GPL(alloc_netdev_dummy);
++ 

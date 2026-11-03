@@ -1,0 +1,54 @@
+{
+  "build": "experimental-2026.11.03-pcie-diag-r10",
+  "kernel": "6.18.60",
+  "device": "second RE-CS-06 with retained stock bootloader and 29-partition GPT",
+  "initial_r9_cold_boot_observation": {
+    "root_port_rxerr": 1,
+    "radio_endpoint_rxerr": 1,
+    "nonfatal_and_fatal_totals": 0,
+    "same_link_two_reporting_locations": true,
+    "no_counter_growth_in_idle_samples_at_seconds": [82, 280, 450],
+    "gen3_x2": true
+  },
+  "separate_teardown_defect": {
+    "r9_explicit_pci_radio_unbind_panicked": true,
+    "ppe_only_fix_insufficient": true,
+    "cause": "Compatibility init_dummy_netdev memset destroyed allocator-owned state in alloc_netdev_dummy setup",
+    "fix": "Separate non-destructive setup for allocated dummy devices; preserve embedded init_dummy_netdev behavior",
+    "public_patch": "patches/0019-ppe-ds-napi-netdev-lifetime.patch",
+    "consecutive_instrumented_unbind_rebind_cycles_passed": 3,
+    "register_trace_event_counts": [2698, 2701, 2699],
+    "trace_loss_reported": false,
+    "both_radio_phys_returned": true,
+    "direct_switch_rings_registered_again": true,
+    "panic_warning_or_initialization_failure_in_collected_r10_logs": false
+  },
+  "r10_installation_checks": {
+    "kernel_rootfs_readback_verified": true,
+    "protected_bootloader_calibration_and_stock_partitions_unchanged": true,
+    "private_password_authorized_key_host_keys_and_markers_preserved": true,
+    "temporary_ppe_only_overlay_not_carried_over": true,
+    "primary_root_slot_and_ext4_overlay_retained": true,
+    "boot_counter_zero": true,
+    "wan_wifi_and_persistent_flow_offloading_disabled": true,
+    "host_wifi_internet_route_preserved": true
+  },
+  "r10_warm_boot_and_rebind_samples": {
+    "ordinary_post_test_reboot_and_full_readback_passed": true,
+    "root_port_and_endpoint_rxerr_counts": 0,
+    "correctable_nonfatal_and_fatal_totals": 0,
+    "gen3_x2_retained": true,
+    "wireless_traffic_acceptance_claimed": false
+  },
+  "offline_regression_tests_passed": 50,
+  "aer_masking_or_speed_cap_applied": false,
+  "cold_start_rxerr_root_cause_established": false,
+  "cold_start_rxerr_claimed_fixed": false,
+  "r10_physical_cold_start_test_completed": false,
+  "remaining": [
+    "Controlled physical cold-start observation",
+    "Further isolation if intermittent RxErr recurs",
+    "Wireless traffic and existing EHT/MLO acceptance limits",
+    "Other second-device port and routed acceleration gates"
+  ]
+}

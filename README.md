@@ -17,7 +17,9 @@ see [stock installation boundaries](docs/STOCK-INSTALLATION.md). No bootloader
 replacement or copied first-device calibration is required. One owner-performed
 cold power start with UART disconnected also passed network/persistence checks.
 All-port and broader second-device traffic acceptance remain separate gates;
-a corrected PCIe RxErr at cold boot remains documented.
+a correctable PCIe RxErr at cold boot remains documented. The later
+[r10 PCIe investigation](docs/PCIE-RXERR.md) fixed a separate reproducible
+NAPI teardown panic; it does not claim to have eliminated that RxErr.
 
 **По-русски: [как перейти со стока на нашу систему](docs/INSTALL-STOCK-RU.md)** —
 пошаговая подготовка, доступ, бэкапы, первый вход и честные ограничения текущего

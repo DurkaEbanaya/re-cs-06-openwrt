@@ -15,7 +15,11 @@ SSH-only persistence reboots and local LAN endpoint traffic. See
 [the detailed record](SECOND-DEVICE.md) and
 [stock installation boundaries](STOCK-INSTALLATION.md). One cold power start
 with UART disconnected passed SSH, persistence and Ethernet checks; boot-time
-correctable PCIe RxErr was observed (fatal/nonfatal AER zero). All-port traffic
+correctable PCIe RxErr was observed (fatal/nonfatal AER zero). A later explicit
+PCI radio unbind exposed a separate dummy-NAPI cleanup panic; r10's common
+allocator fix passed three consecutive instrumented unbind/rebind cycles.
+This does not resolve the original intermittent cold-start RxErr. See
+[the PCIe investigation](PCIE-RXERR.md). All-port traffic
 and second-device routed offload remain pending. The table
 below primarily records historical first-device acceptance, not those gates.
 
