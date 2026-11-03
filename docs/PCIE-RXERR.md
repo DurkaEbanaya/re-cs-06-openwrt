@@ -66,4 +66,18 @@ boot counter zero and Gen3 x2. Both ends again reported zero AER totals.
 
 The teardown panic is **not** the original correctable PCIe event. Successful
 warm reinitialization must not be described as resolving the intermittent
-cold-start RxErr. Further cold-start isolation remains pending.
+cold-start RxErr.
+
+## r10 physical cold start
+
+An owner-performed 15–20-second power-off/on cycle reproduced the original
+event: root port and radio endpoint each reported `RxErr 1`, with nonfatal
+and fatal totals zero. UART and the kernel log agree on the event around
+8.27 seconds, after MSI setup and before the MHI firmware-selection and
+power-on messages. The device nevertheless returned with Gen3 x2, both
+radio PHYs, unchanged private access, verified firmware/protected partitions
+and boot counter zero. No UART commands were needed for that boot.
+
+This establishes that r10's NAPI fix did **not** eliminate the cold-start
+RxErr. A temporary early-boot trace is being used to narrow the interval;
+no permanent PCIe behavior change has been made.

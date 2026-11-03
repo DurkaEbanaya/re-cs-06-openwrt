@@ -44,9 +44,18 @@
   "aer_masking_or_speed_cap_applied": false,
   "cold_start_rxerr_root_cause_established": false,
   "cold_start_rxerr_claimed_fixed": false,
-  "r10_physical_cold_start_test_completed": false,
+  "r10_physical_cold_start_test_completed": true,
+  "r10_physical_cold_start": {
+    "samples": 1,
+    "root_port_and_endpoint_rxerr_each": 1,
+    "nonfatal_and_fatal_totals": 0,
+    "gen3_x2_and_both_radio_phys_retained": true,
+    "network_and_full_readback_checks_passed": true,
+    "uart_commands_used": false,
+    "original_rxerr_reproduced": true
+  },
   "remaining": [
-    "Controlled physical cold-start observation",
+    "Early-boot isolation of reproduced cold-start RxErr",
     "Further isolation if intermittent RxErr recurs",
     "Wireless traffic and existing EHT/MLO acceptance limits",
     "Other second-device port and routed acceleration gates"
