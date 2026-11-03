@@ -1,0 +1,344 @@
+{
+  "installed_build": "experimental-2026.11.03-resources-r6",
+  "hardware_offload_evidence": {
+    "ipv6_routing": true,
+    "ipv4_pppoe": true,
+    "tagged_lan_vlan_to_untagged_wan_nat": true,
+    "routed_he80_wifi_direct_switch": true
+  },
+  "tests": {
+    "ipv6": [
+      {
+        "mode": "off",
+        "direction": "out",
+        "mbps": 1099.87,
+        "retransmits": 2851
+      },
+      {
+        "mode": "off",
+        "direction": "in",
+        "mbps": 1745.28,
+        "retransmits": 161
+      },
+      {
+        "mode": "software",
+        "direction": "out",
+        "mbps": 1015.17,
+        "retransmits": 3153
+      },
+      {
+        "mode": "software",
+        "direction": "in",
+        "mbps": 1602.46,
+        "retransmits": 377
+      },
+      {
+        "mode": "hardware",
+        "direction": "out",
+        "mbps": 1876.65,
+        "retransmits": 834
+      },
+      {
+        "mode": "hardware",
+        "direction": "in",
+        "mbps": 2103.51,
+        "retransmits": 0
+      }
+    ],
+    "pppoe": [
+      {
+        "mode": "off",
+        "direction": "out",
+        "mbps": 685.01,
+        "retransmits": 486
+      },
+      {
+        "mode": "off",
+        "direction": "in",
+        "mbps": 532.64,
+        "retransmits": 0
+      },
+      {
+        "mode": "software",
+        "direction": "out",
+        "mbps": 752.43,
+        "retransmits": 517
+      },
+      {
+        "mode": "software",
+        "direction": "in",
+        "mbps": 779.78,
+        "retransmits": 0
+      },
+      {
+        "mode": "hardware",
+        "direction": "out",
+        "mbps": 755.25,
+        "retransmits": 773
+      },
+      {
+        "mode": "hardware",
+        "direction": "in",
+        "mbps": 914.65,
+        "retransmits": 0
+      }
+    ],
+    "vlan": [
+      {
+        "mode": "off",
+        "direction": "out",
+        "mbps": 1649.42,
+        "retransmits": 295
+      },
+      {
+        "mode": "off",
+        "direction": "in",
+        "mbps": 1665.86,
+        "retransmits": 146
+      },
+      {
+        "mode": "software",
+        "direction": "out",
+        "mbps": 1531.7,
+        "retransmits": 217
+      },
+      {
+        "mode": "software",
+        "direction": "in",
+        "mbps": 1971.82,
+        "retransmits": 243
+      },
+      {
+        "mode": "hardware",
+        "direction": "out",
+        "mbps": 2311.18,
+        "retransmits": 7
+      },
+      {
+        "mode": "hardware",
+        "direction": "in",
+        "mbps": 2333.2,
+        "retransmits": 0
+      }
+    ],
+    "wifi-routed": [
+      {
+        "mode": "off",
+        "direction": "out",
+        "mbps": 508.67,
+        "retransmits": 29
+      },
+      {
+        "mode": "off",
+        "direction": "in",
+        "mbps": 831.27,
+        "retransmits": 529
+      },
+      {
+        "mode": "hardware",
+        "direction": "out",
+        "mbps": 752.67,
+        "retransmits": 43
+      },
+      {
+        "mode": "hardware",
+        "direction": "in",
+        "mbps": 894.98,
+        "retransmits": 0
+      }
+    ]
+  },
+  "pppoe_reconnected": true,
+  "pppoe_mtu_1492_passed": true,
+  "pppoe_df_packet_1493_rejected": true,
+  "remaining_outbound_retransmission_cause_established": false,
+  "receiver_affinity_is_a_fix": false,
+  "refill_fail_is_packet_drop_counter": false,
+  "wan_vlan_or_qinq_tested": false,
+  "pppoe_ipv6_tested": false,
+  "eht_mlo_tested": false,
+  "receiver_affinity_controls": [
+    {
+      "receiver_cpu": 0,
+      "receiver_mbps": 2186.47,
+      "retransmits": 2
+    },
+    {
+      "receiver_cpu": 1,
+      "receiver_mbps": 2182.02,
+      "retransmits": 29
+    },
+    {
+      "receiver_cpu": 0,
+      "receiver_mbps": 2193.17,
+      "retransmits": 2
+    },
+    {
+      "receiver_cpu": 1,
+      "receiver_mbps": 2180.02,
+      "retransmits": 3
+    }
+  ],
+  "repeated_traffic": {
+    "runs": [
+      {
+        "cycle": 0,
+        "protocol": "ipv4",
+        "direction": "out",
+        "seconds": 30,
+        "receiver_mbps": 2307.97,
+        "retransmits": 414
+      },
+      {
+        "cycle": 0,
+        "protocol": "ipv4",
+        "direction": "in",
+        "seconds": 30,
+        "receiver_mbps": 2340.63,
+        "retransmits": 0
+      },
+      {
+        "cycle": 0,
+        "protocol": "ipv6",
+        "direction": "out",
+        "seconds": 30,
+        "receiver_mbps": 1923.3,
+        "retransmits": 653
+      },
+      {
+        "cycle": 0,
+        "protocol": "ipv6",
+        "direction": "in",
+        "seconds": 30,
+        "receiver_mbps": 2307.65,
+        "retransmits": 0
+      },
+      {
+        "cycle": 0,
+        "protocol": "vlan",
+        "direction": "out",
+        "seconds": 30,
+        "receiver_mbps": 2314.86,
+        "retransmits": 387
+      },
+      {
+        "cycle": 0,
+        "protocol": "vlan",
+        "direction": "in",
+        "seconds": 30,
+        "receiver_mbps": 2333.86,
+        "retransmits": 0
+      },
+      {
+        "cycle": 0,
+        "protocol": "pppoe",
+        "direction": "out",
+        "seconds": 30,
+        "receiver_mbps": 752.9,
+        "retransmits": 1477
+      },
+      {
+        "cycle": 0,
+        "protocol": "pppoe",
+        "direction": "in",
+        "seconds": 30,
+        "receiver_mbps": 935.61,
+        "retransmits": 0
+      },
+      {
+        "cycle": 1,
+        "protocol": "ipv4",
+        "direction": "out",
+        "seconds": 30,
+        "receiver_mbps": 2313.26,
+        "retransmits": 766
+      },
+      {
+        "cycle": 1,
+        "protocol": "ipv4",
+        "direction": "in",
+        "seconds": 30,
+        "receiver_mbps": 2340.3,
+        "retransmits": 0
+      },
+      {
+        "cycle": 1,
+        "protocol": "ipv6",
+        "direction": "out",
+        "seconds": 30,
+        "receiver_mbps": 2219.72,
+        "retransmits": 645
+      },
+      {
+        "cycle": 1,
+        "protocol": "ipv6",
+        "direction": "in",
+        "seconds": 30,
+        "receiver_mbps": 2304.15,
+        "retransmits": 0
+      },
+      {
+        "cycle": 1,
+        "protocol": "vlan",
+        "direction": "out",
+        "seconds": 30,
+        "receiver_mbps": 2309.81,
+        "retransmits": 740
+      },
+      {
+        "cycle": 1,
+        "protocol": "vlan",
+        "direction": "in",
+        "seconds": 30,
+        "receiver_mbps": 2334.54,
+        "retransmits": 0
+      },
+      {
+        "cycle": 1,
+        "protocol": "pppoe",
+        "direction": "out",
+        "seconds": 30,
+        "receiver_mbps": 754.78,
+        "retransmits": 551
+      },
+      {
+        "cycle": 1,
+        "protocol": "pppoe",
+        "direction": "in",
+        "seconds": 30,
+        "receiver_mbps": 948.19,
+        "retransmits": 0
+      }
+    ],
+    "traffic_seconds": 480,
+    "simultaneous_mixed_traffic": false,
+    "boot_id_unchanged": true,
+    "sampled_temperature_celsius_range": [
+      50.6,
+      59.8
+    ],
+    "panic_radio_crash_storage_io_error_observed": false,
+    "telemetry_script_debugfs_path_error_corrected": true
+  },
+  "final_checks": {
+    "cpu_memory_192_mib_90_seconds_four_cores_passed": true,
+    "usb_unmounted_ext4_readonly_fsck_passed": true,
+    "bootloader_art_primary_gpt_match_backup": true,
+    "ipv6_wan_management_ports_rejected": [
+      22,
+      80,
+      443
+    ],
+    "temporary_servers_pppoe_vlan_routes_firewall_rules_removed": true,
+    "jdcloud_uncommitted_configuration_reverted": true,
+    "wan_and_wifi_disabled": true,
+    "firewall_syntax_valid": true,
+    "ppe_resource_failure_stages_zero": true,
+    "phone_test_profile_removed": true,
+    "phone_final_home_wifi_reconnection_verified": false,
+    "phone_no_longer_available_over_adb": true,
+    "main_pc_wifi_internet_route_preserved": true,
+    "all_issues_resolved": false,
+    "owner_requested_pc_poweroff": true
+  }
+}
