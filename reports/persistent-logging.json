@@ -1,0 +1,21 @@
+{
+  "installed_build": "experimental-2026.11.03-resources-r6",
+  "file_logging_enabled": true,
+  "log_path": "/overlay/jd-logs/system.log",
+  "per_file_rotation_kib": 8192,
+  "retained_rotated_files": 1,
+  "ram_log_buffer_kib": 256,
+  "file_permissions": "0600",
+  "directory_permissions": "0700",
+  "startup_kernel_snapshot_recorded": true,
+  "health_interval_seconds": 60,
+  "service_worker_separated_from_rc_common": true,
+  "repeated_service_restart_checked": true,
+  "service_and_worker_added_to_sysupgrade_preservation": true,
+  "new_service_reboot_upgrade_persistence_tested": false,
+  "logs_survive_rootfs_formatting_promised": false,
+  "ramoops_backend_enabled": false,
+  "partition_table_changed": false,
+  "estimated_unallocated_emmc_gib": 114.42,
+  "data_partition_creation_authorized": false
+}

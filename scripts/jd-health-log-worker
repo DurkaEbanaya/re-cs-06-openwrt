@@ -1,0 +1,23 @@
+#!/bin/sh
+# Separate worker: do not source rc.common/procd and retain its service lock.
+logger -t jd-health "diagnostic service started; boot=$(cat /proc/sys/kernel/random/boot_id)"
+dmesg | logger -t jd-boot
+while :; do
+	{
+		printf 'uptime='; cat /proc/uptime
+		printf 'load='; cat /proc/loadavg
+		awk '/MemAvailable:/ { print "memory_available_kib=" $2 }' /proc/meminfo
+		for dev in switch lan1 lan2 lan3 wan; do
+			for key in carrier rx_errors tx_errors rx_dropped tx_dropped; do
+				file="/sys/class/net/$dev/$key"
+				[ "$key" = carrier ] || file="/sys/class/net/$dev/statistics/$key"
+				value=$(cat "$file" 2>/dev/null) || value=unavailable
+				printf '%s_%s=%s\n' "$dev" "$key" "$value"
+			done
+		done
+		for file in /sys/class/thermal/thermal_zone*/temp; do
+			[ -r "$file" ] && printf '%s=%s\n' "${file%/temp}" "$(cat "$file")"
+		done
+	} | tr '\n' ' ' | logger -t jd-health
+	sleep 60
+done

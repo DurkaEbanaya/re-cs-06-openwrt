@@ -1,0 +1,12 @@
+#!/bin/sh /etc/rc.common
+# Optional on-device diagnostic service; not enabled in generic images.
+START=99
+STOP=10
+USE_PROCD=1
+
+start_service() {
+	procd_open_instance
+	procd_set_param command /usr/libexec/jd-health-log
+	procd_set_param respawn 5 10 0
+	procd_close_instance
+}
