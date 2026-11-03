@@ -12,6 +12,12 @@ REPO = Path(__file__).resolve().parents[1]
 
 
 class UpgradeTests(unittest.TestCase):
+    def test_stage2_includes_temporary_directory_tool(self):
+        patch = (REPO / 'patches/0010-re-cs-06-checked-upgrade.patch').read_text()
+        copy_line = next(line for line in patch.splitlines() if line.startswith('+RAMFS_COPY_BIN='))
+        for binary in ('sha256sum', 'head', 'mktemp'):
+            self.assertIn(binary, copy_line.split("'")[1].split())
+
     def fixture(self, directory, extra=False):
         root = Path(directory)
         prefix = 'sysupgrade-jdcloud_re-cs-06'
