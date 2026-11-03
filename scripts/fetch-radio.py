@@ -28,5 +28,8 @@ def fetch(lock, output):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("output", type=Path, help="New local directory, NOT a running router root")
+    parser.add_argument("--lock", type=Path, help="Explicit pinned manifest (for standalone release assets)")
     args = parser.parse_args()
-    print(json.dumps(fetch(Path(__file__).resolve().parents[1] / "radio-files.lock.json", args.output), indent=2))
+    default = Path(__file__).resolve().parents[1] / "radio-files.lock.json"
+    lock = args.lock if args.lock else default
+    print(json.dumps(fetch(lock, args.output), indent=2))

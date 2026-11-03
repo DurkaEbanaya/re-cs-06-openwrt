@@ -22,10 +22,10 @@ packages. Diagnose a failed step using a serial `make -j1 V=s` invocation.
 Feed revision checks are pinned; `feeds update -i` only indexes local feeds.
 `prepare.py` refuses to overwrite a config or merge an unreviewed overlay.
 To resume a prepared tree, rerun make rather than rerunning preparation.
-`config/resolved.config` records the final first-build configuration;
+`config/resolved.config` records the current public release configuration;
 `minimal.config` is the smaller seed used to derive it.
 
-Follow-up: `resolved.config` now records the public `external-radio` build.
+Follow-up: `resolved.config` now records the public `r12-external` build.
 Original complete-build hashes remain in the historical first-build reports.
 The public seed excludes the radio firmware/BDF packages and keeps ath12k;
 see [external dependencies](EXTERNAL-RADIO.md) for full local reconstruction.
@@ -94,9 +94,17 @@ use. A gzip/tar roundtrip alone does not prove first-boot recognition or restore
 see [stock installation boundaries](STOCK-INSTALLATION.md).
 
 The locally tested second-device full build identifies as
-`experimental-2026.11.03-stock-ready-r9` (set `CONFIG_VERSION_NUMBER` before
-`make defconfig`). It includes patches 0016–0018 and the current public
-overlay. Earlier resolved configurations/reports retain their historical
-version labels; they are not evidence that an older binary includes these
-fixes. Full local radio dependencies remain subject to the separate workflow
-and licensing restrictions above.
+`experimental-2026.11.03-radio-sequence-r12`. The public seed/resolved config
+selects `experimental-2026.11.03-radio-sequence-r12-external`, excludes the
+three radio firmware/BDF packages and contains no local firmware overlay.
+Patches 0001–0020 and the current public overlay are required. Do not mix an
+old resolved configuration/source archive with a new binary's provenance.
+Full local radio dependencies remain subject to the separate workflow and
+licensing restrictions above. See [r12 notes](RELEASE-R12.md).
+
+The binary release includes its patched source tree/feed snapshots, downloaded
+source archives, exact configuration and recipe as `corresponding-source.tar.zst`.
+`scripts/package-source.py` includes new files introduced by the public patches,
+not only paths already tracked in upstream Git; unrelated untracked diagnostics
+are not part of that archive. Extract into a new directory and build in the
+documented container, without reapplying prepare.py to the already patched tree.

@@ -1,0 +1,103 @@
+{
+  "build": "experimental-2026.11.03-radio-sequence-r12-external",
+  "kernel": "6.18.60",
+  "build_succeeded": true,
+  "hardware_boot_tested": false,
+  "full_local_variant_tested_separately": true,
+  "radio_blobs_embedded": false,
+  "radio_sequence_dt_verified": true,
+  "rootfs": {
+    "regular_files_checked": 1436,
+    "regular_bytes_checked": 34908457,
+    "default_file_sha256": {
+      "etc/opkg.conf": "f38c19f696ea87c0b30eb5bfeb8657237f4625e1a749c58b99f01595edfb6446",
+      "etc/shadow": "53ebc3912b36fb6c0b64b9cbf6c0d83bc5d16c688a89d0e767fbb9acad43ade5",
+      "etc/uci-defaults/90-minimal-defaults": "00efa95aded474a1af6a18b4d4ff7b3ffe2ec68578f5f1e0fd2468eee0179987",
+      "usr/sbin/re-cs-06-provision-macs": "7558de71e5d795b891d591c229d26aceef1b51265780fc103c1a4d52d98be4b4"
+    },
+    "embedded_root_password": false,
+    "embedded_host_private_keys": false,
+    "private_literals_checked": true,
+    "image_defaults_are_first_boot_instructions_not_runtime_test": true,
+    "rootfs_offline_policy_passed": true,
+    "hardware_boot_tested": false
+  },
+  "sysupgrade": {
+    "tar_members_verified": 4,
+    "persistent_kernel": {
+      "fit_bytes": 6857724,
+      "file_bytes": 6857724,
+      "default_config": "config@mi01.6",
+      "images": [
+        {
+          "role": "kernel",
+          "bytes": 6825898,
+          "hash_algorithms_verified": [
+            "crc32",
+            "sha1"
+          ],
+          "sha256": "f1209cc61f90fdba1498c047af9824a6a9dffc51e4cbf8d9686ddd49ff2d1a50",
+          "compression": "gzip",
+          "uncompressed_bytes": 18964488,
+          "load": 1090519040,
+          "entry": 1090519040
+        },
+        {
+          "role": "fdt",
+          "bytes": 29909,
+          "hash_algorithms_verified": [
+            "crc32",
+            "sha1"
+          ],
+          "sha256": "2914d75b65aad6ee1cbaab8139e4cd4b3f841b679edb384b2b21cd132b442a7e",
+          "soc_efuse_consumers_checked": 2,
+          "device_tree_model": "JDCloud RE-CS-06",
+          "no_nvmem_mac_dependency": true
+        }
+      ],
+      "hardware_boot_tested": false,
+      "persistent_slot_limit_checked": true
+    },
+    "rootfs_bytes": 8585216,
+    "rootfs_padding_bytes": 0,
+    "rootfs_sha256": "a87cdd148517031590dc09f59057f4096fbd3b50647d4fe882d10a0c88a10d2d",
+    "sysupgrade_offline_check_passed": true,
+    "hardware_boot_tested": false,
+    "old_qwrt_direct_upgrade_approved": false
+  },
+  "initramfs": {
+    "embedded_cpio_offset": 15241360,
+    "embedded_cpio_bytes": 35173920,
+    "embedded_entries_checked": 1820,
+    "default_file_sha256": {
+      "etc/shadow": "53ebc3912b36fb6c0b64b9cbf6c0d83bc5d16c688a89d0e767fbb9acad43ade5",
+      "etc/opkg.conf": "f38c19f696ea87c0b30eb5bfeb8657237f4625e1a749c58b99f01595edfb6446",
+      "etc/uci-defaults/90-minimal-defaults": "00efa95aded474a1af6a18b4d4ff7b3ffe2ec68578f5f1e0fd2468eee0179987",
+      "usr/sbin/re-cs-06-provision-macs": "7558de71e5d795b891d591c229d26aceef1b51265780fc103c1a4d52d98be4b4",
+      "lib/wifi/mac80211.sh": "2e2db1a7164c91cf3927aea2358c4b32a464ca423996c936213118e3155df953"
+    },
+    "ram_init_exports_initramfs_and_switches_to_tmpfs": true,
+    "private_literals_checked": true,
+    "initramfs_offline_check_passed": true,
+    "write_free_boot_proven": false,
+    "hardware_boot_tested": false
+  },
+  "images": [
+    {
+      "file": "re-cs-06-minimal-lede-experimental-2026.11.03-radio-sequence-r12-external-qualcommbe-ipq53xx-jdcloud_re-cs-06-squashfs-sysupgrade.bin",
+      "bytes": 15453037,
+      "sha256": "a6abfb376029b47a7ffac096db37d70f071c5eba7cf434f19a48fa379c6dd933"
+    },
+    {
+      "file": "re-cs-06-minimal-lede-experimental-2026.11.03-radio-sequence-r12-external-qualcommbe-ipq53xx-jdcloud_re-cs-06-initramfs-uImage.itb",
+      "bytes": 17344668,
+      "sha256": "9857e1949de16ed924af6b5e3922a9a4cd1bd70eee9b75f930676e58aab89be6"
+    },
+    {
+      "file": "re-cs-06-minimal-lede-experimental-2026.11.03-radio-sequence-r12-external-qualcommbe-ipq53xx-jdcloud_re-cs-06-squashfs-factory.bin",
+      "bytes": 15897183,
+      "sha256": "8945019c89ab1d94951fc496698169897ddeabad3d949938d7812486ca86f64b"
+    }
+  ],
+  "config_sha256": "6d02daea10d9d41947ba1aee4a0d9d5c135296adcf0231ebc207333491c536a2"
+}

@@ -4,8 +4,21 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import re
 import subprocess
 import tarfile
+
+
+def patched_paths(repo):
+    """Include new source files created by public patches, not arbitrary untracked work."""
+    names = set()
+    for patch in (repo / 'patches').glob('*.patch'):
+        for name in re.findall(r'^\+\+\+ b/(.+)$', patch.read_text(), re.M):
+            path = Path(name)
+            assert not path.is_absolute() and '..' not in path.parts
+            assert path.parts[0] not in ('.git', 'files', 'tmp', 'build_dir', 'staging_dir')
+            names.add(name)
+    return names
 
 
 def package(source, output):
@@ -16,10 +29,11 @@ def package(source, output):
     trees = [(source, "lede"), (repo, "recipe")]
     trees += [(source / "feeds" / name, "lede/feeds/" + name) for name in ("packages", "luci", "routing")]
     for tree, prefix in trees:
-        for raw in subprocess.check_output(["git", "ls-files", "-z"], cwd=tree).split(b"\0"):
-            if not raw:
-                continue
-            name = raw.decode()
+        names = {raw.decode() for raw in subprocess.check_output(
+            ["git", "ls-files", "-z"], cwd=tree).split(b"\0") if raw}
+        if tree == source:
+            names |= patched_paths(repo)
+        for name in sorted(names):
             path = tree / name
             assert path.is_file() or path.is_symlink(), name
             if not path.is_symlink():
@@ -39,6 +53,8 @@ def package(source, output):
     for path in (source / "files").rglob("*"):
         if path.is_file():
             assert path.suffix not in (".key", ".pem")
+            assert 'lib/firmware/' not in path.relative_to(source / 'files').as_posix(), \
+                "External-radio source bundle must not include a local firmware overlay"
             inputs.append((path, "lede/" + path.relative_to(source).as_posix()))
     process = subprocess.Popen(["zstd", "-T2", "-3", "-o", str(output)], stdin=subprocess.PIPE)
     manifest = []

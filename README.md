@@ -3,8 +3,15 @@
 Experimental, source-based build for **JDCloud RE-CS-06 / BE6500** with
 Qualcomm IPQ5322/IPQ5332. This is **not an official OpenWrt release**.
 
-**Status: first-device resources-r6 is conditionally complete for the tested
-scope; a second RE-CS-06 will provide independent validation.** Linux 6.18.60
+**Current: radio-sequence-r12, Linux 6.18.60.** The full local build runs on
+the second RE-CS-06 with its stock bootloader, persistent ext4 and preserved
+private access. The separately built public **r12-external** variant omits
+radio firmware/BDF blobs: see [release notes](docs/RELEASE-R12.md) and
+[external dependencies](docs/EXTERNAL-RADIO.md). It is not the byte-identical
+hardware-tested full image, and is not a universal stock installer.
+
+First-device resources-r6 is conditionally complete for its tested scope.
+Linux 6.18.60
 boots from eMMC with persistent ext4 and checked upgrade/configuration
 carryover. Hardware IPv4 NAT, IPv6 forwarding, PPPoE IPv4, tagged LAN VLAN
 NAT, routed 5 GHz HE80 PCI-radio Direct Switch and ARMv8 CryptoAPI CE paths
@@ -16,14 +23,20 @@ boots with its existing stock U-Boot and restores private setup automatically;
 see [stock installation boundaries](docs/STOCK-INSTALLATION.md). No bootloader
 replacement or copied first-device calibration is required. One owner-performed
 cold power start with UART disconnected also passed network/persistence checks.
-All-port and broader second-device traffic acceptance remain separate gates;
-a correctable PCIe RxErr at cold boot remains documented. The later
-[r10 PCIe investigation](docs/PCIE-RXERR.md) fixed a separate reproducible
-NAPI teardown panic; it does not claim to have eliminated that RxErr.
+The [PCIe investigation](docs/PCIE-RXERR.md) fixed a separate NAPI teardown
+panic in r10 and localized cold RxErr to integrated-radio startup. r12
+sequences PCI host initialization after AHB PHY registration, without AER
+masking or reducing Gen3 x2. Its missing-helper 60-second kernel fallback
+was tested. Two r11 diagnostic cold starts were clean; full r12 results and
+the pending physical-cycle confirmation are recorded separately. All-port,
+second-device routed traffic and wireless EHT/MLO remain separate gates.
 
 **По-русски: [как перейти со стока на нашу систему](docs/INSTALL-STOCK-RU.md)** —
 пошаговая подготовка, доступ, бэкапы, первый вход и честные ограничения текущего
 установочного процесса. Это пока не универсальный установщик «в один клик».
+
+**[Что нового в r12](docs/RELEASE-R12.md)** ·
+**[Стенд из двух роутеров, включая Wi-Fi 7](docs/TWO-ROUTER-LAB-RU.md)**
 
 This is not universal hardware certification: EHT/MLO, provider WAN VLANs,
 PPPoE IPv6, VPN throughput and power-loss safety remain outside acceptance.
@@ -34,7 +47,7 @@ owner provisioning is still required before ordinary use.
 **Do not flash the older published images with the account-permissions defect.**
 
 See [persistent installation results and follow-up fixes](docs/INSTALL-CANDIDATE.md).
-Latest: [queuefix-r3 installation and hardware comparison](docs/QUEUEFIX-R3.md).
+Historical: [queuefix-r3 installation and hardware comparison](docs/QUEUEFIX-R3.md).
 Current: [acceptance tracker](docs/KNOWN-ISSUES.md),
 [r5 hardware report](reports/peripherals-r5-hardware.json),
 [phone HE test](docs/PHONE-HE-TEST.md), [USB storage test](docs/USB-SSD-TEST.md)
@@ -48,7 +61,8 @@ Evidence: [resource audit and r6 results](docs/RESOURCE-AUDIT.md),
 - Minimal router services, SSH and standard LuCI in English/Russian.
 - No optional proxy/cloud/download/file-server bundles or vendor UI themes.
 - Preserve the existing eMMC GPT, ART calibration and bootloader.
-- Support an already-modified 23-partition layout without a `factory` partition.
+- Support the inspected stock 29-partition and modified 23-partition layouts,
+  without treating their first-install or recovery procedures as interchangeable.
 - Keep all per-device identity, keys and backups out of the public repository
   and out of any public firmware images.
 
@@ -95,8 +109,10 @@ or vendored chipset firmware. Generated binary redistribution additionally
 requires review of the applicable third-party notices; source availability
 does not by itself grant rights to redistribute every firmware blob.
 
-The follow-up `external-radio` prerelease provides binary images without the
+The current `r12-external` prerelease provides binary images without the
 disputed radio files and a pinned, SHA256-verified downloader for those external
 dependencies. Wi-Fi needs these files; this is not an all-in-one Wi-Fi image.
 Earlier reports describe the original full local build, while
-`reports/external-radio.json` describes the separately built public candidate.
+`reports/external-radio-r12.json` describes the current public candidate.
+The November 2 releases remain explicitly marked **DO NOT FLASH** historical
+prototypes; their binaries are not silently replaced under the same names.

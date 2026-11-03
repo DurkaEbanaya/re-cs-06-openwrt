@@ -18,8 +18,13 @@ with UART disconnected passed SSH, persistence and Ethernet checks; boot-time
 correctable PCIe RxErr was observed (fatal/nonfatal AER zero). A later explicit
 PCI radio unbind exposed a separate dummy-NAPI cleanup panic; r10's common
 allocator fix passed three consecutive instrumented unbind/rebind cycles.
-This does not resolve the original intermittent cold-start RxErr. See
-[the PCIe investigation](PCIE-RXERR.md). All-port traffic
+That allocator fix alone did not resolve cold-start RxErr. The current full
+**r12** adds board-scoped PCI/AHB startup sequencing; normal boots and the
+60-second missing-helper kernel fallback passed with Gen3 x2 and zero AER.
+Two owner-confirmed r11 diagnostic cold starts were clean; full r12's latest
+network return is clean but its physical-cycle/UART details remain confirmation
+pending. See [the PCIe investigation](PCIE-RXERR.md) and
+[r12 release notes](RELEASE-R12.md). All-port traffic
 and second-device routed offload remain pending. The table
 below primarily records historical first-device acceptance, not those gates.
 
@@ -32,7 +37,7 @@ below primarily records historical first-device acceptance, not those gates.
 | FDB deletion | Idempotent missing-entry patch installed in r3; no errors in collected boot | Repeated bridge/AP changes and sustained traffic |
 | PCIe AER | Earlier single corrected boot RxErr; latest r3 boot counter zero | More boot/load samples; do not hide AER |
 | HE | Independent Android phone negotiated 11ax/HE80 on 5 GHz; 441/559 Mbit/s actual traffic | 2.4 GHz HE, 160 MHz and extended stability; Intel client still reports NO-HE |
-| EHT / MLO | Current firmware regulatory bitmap reports NO-EHT; grouped radio path previously crashed; owner has no Wi-Fi 7 client | Not accepted or fully testable with current clients; no regulatory bypass |
+| EHT / MLO | Earlier regulatory bitmap reported NO-EHT; grouped radio path previously crashed; single-link EHT has not been accepted | Two-router AP/STA test planned, not performed; check actual EHT capability/negotiation, no regulatory bypass; MLO separate |
 | WAN / NAT / IPv6 routing | r6: IPv4/IPv6 PPE counters and HW_OFFLOAD confirmed; real PPPoE session/reconnect/1492 MTU, tagged LAN VLAN NAT and routed HE80 Direct Switch tested | Remaining outbound TCP retransmits; WAN-tag insertion/QinQ, PPPoE IPv6 and provider interoperability not accepted |
 | Crypto resources | r6 installed: ARMv8 CE AES/GCM registered, reported selftests pass; AF_ALG AES-CTR known-answer sample, 487 vs 51.5 MiB/s generic | VPN-specific tests; limited known-answer sample is not full crypto validation |
 | USB / LEDs / buttons | r5: external UAS SSD at USB 5G; 512 MiB direct-I/O pattern and remount/fsck passed | Extended storage/power tests; physical LEDs/buttons, no destructive reset test |
