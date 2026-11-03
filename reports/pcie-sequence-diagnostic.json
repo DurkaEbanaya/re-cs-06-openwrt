@@ -1,0 +1,58 @@
+{
+  "status": "local diagnostic, not an accepted production fix",
+  "device": "second JDCloud RE-CS-06",
+  "kernel_candidate": "experimental-2026.11.03-pcie-sequence-r11",
+  "rootfs_retained": "experimental-2026.11.03-pcie-diag-r10",
+  "rootfs_and_private_configuration_reflashed": false,
+  "method": "Opt-in host probe deferral, declared polarity-aware PERST hold, bounded local release after integrated AHB PHY readiness",
+  "permanent_public_firmware_behavior_changed": false,
+  "aer_masking_or_speed_cap_used": false,
+  "warm_start": {
+    "samples": 1,
+    "both_radio_phys_returned": true,
+    "gen3_x2": true,
+    "rxerr_at_root_and_endpoint_each": 0
+  },
+  "physical_cold_start": {
+    "samples": 1,
+    "integrated_firmware_version_message_seconds": 7.854,
+    "normal_host_probe_requested_seconds": 10.64,
+    "pcie_gen3_x2_link_up_seconds": 11.005,
+    "aer_normally_enabled_seconds": 11.164,
+    "both_radio_phys_returned": true,
+    "rxerr_at_root_and_endpoint_each": 0,
+    "nonfatal_and_fatal_totals": 0,
+    "kernel_rootfs_readback_passed": true,
+    "protected_partitions_unchanged": true,
+    "same_device_private_access_preserved": true,
+    "boot_counter_zero": true,
+    "wan_radios_and_persistent_flowoff_disabled": true,
+    "host_wifi_internet_preserved": true
+  },
+  "kernel_only_compatibility_check": {
+    "byte_identical_module_files": 94,
+    "candidate_rollback_and_configuration_independently_copied_before_write": true
+  },
+  "post_cold_lan_endpoint_regression": {
+    "streams": 2,
+    "seconds_per_direction": 20,
+    "pc_to_router_receiver_mbps": 2345.55,
+    "router_to_pc_receiver_mbps": 1986.13,
+    "tcp_retransmits_each_direction": 0,
+    "root_and_endpoint_rxerr_after_load_each": 0,
+    "all_aer_totals_after_load": 0,
+    "temporary_server_removed": true,
+    "routed_ppe_or_wireless_traffic_test": false
+  },
+  "offline_regression_tests_passed": 50,
+  "rejected_live_link_disable_sequences": {
+    "link_disabled_successfully": true,
+    "clear_link_disable_and_rescan_restored_endpoint": false,
+    "additional_secondary_bus_reset_restored_endpoint": false,
+    "ordinary_reboots_restored_both_radios_and_gen3_x2": true,
+    "persistent_module_installed": false
+  },
+  "exact_firmware_or_analog_root_cause_established": false,
+  "repeat_cold_start_and_wireless_traffic_acceptance_pending": true,
+  "production_integration_and_failure_handling_pending": true
+}

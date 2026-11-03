@@ -162,3 +162,59 @@ was retained, all firmware/protected-partition checks passed, and temporary
 trace/hold hooks and overrides were removed. This is still **not an RxErr
 fix**. There is insufficient evidence for a permanent PCIe/clock/calibration
 change, and no such change is included in r10.
+
+## Hardware-sequencing experiment, not yet an accepted fix
+
+Holding only the PCI radio driver does not hold the already trained PCIe
+link in reset. A temporary board-scoped module therefore tested the standard
+root-port Link Disable bit, after unbinding and removing the endpoint. It
+successfully disabled the link, but clearing Link Disable and rescanning
+did not rediscover the endpoint. A second warm rehearsal including the
+standard secondary-bus reset also failed to rediscover it. Both tests were
+reversed by ordinary reboots, restoring both radio PHYs and Gen3 x2; no
+module, AER masking or speed cap was installed persistently. These failed
+recovery sequences are **not candidates for deployment**.
+
+The next local diagnostic instead defers the PCIe host's normal probe and
+uses its declared, polarity-aware PERST descriptor to hold the endpoint
+before host initialization. A bounded userspace diagnostic waits for the
+integrated radio PHY and then requests the normal controller probe. A
+timeout must also release it rather than leave PCIe disabled indefinitely.
+This requires a separate opt-in diagnostic kernel/DT and is not part of
+the published r10 source patch set. The first kernel-only warm rehearsal
+passed: integrated-radio firmware initialized first, host probing was
+requested at 10.65 seconds, the PCIe link trained Gen3 x2 at 11.02 seconds,
+and both PHYs returned with RxErr zero. Kernel/module compatibility (94
+module files byte-identical), kernel/rootfs and protected-partition readback,
+private access carryover and boot counter zero were verified. The unchanged
+r10 rootfs/release label remains, so it must not be confused with a full r11
+release. A known-good r10 kernel and this diagnostic were independently
+copied and verified before writing only the custom kernel partition.
+
+The first owner-performed physical cold start with the same diagnostic
+also passed: integrated-radio firmware was reported at 7.85 seconds, host
+probing was requested at 10.64 seconds, and PCIe trained Gen3 x2 at 11.01
+seconds. AER was enabled normally at 11.16 seconds; both radio PHYs returned
+with correctable/nonfatal/fatal counts zero. Kernel/rootfs and protected
+readbacks, private access, disabled WAN/radios/offloading and boot counter
+zero passed. The rootfs remains the unchanged r10 root; only the diagnostic
+kernel and local bounded release hook differ.
+
+This is a **first positive cold sample**, not repeated acceptance or proof
+of the exact analog/firmware cause. The link is intentionally not operating
+while AHB initializes; this avoids exposing an active link to that stage
+rather than masking an error on an active link. Cold repeatability, real
+wireless traffic and robust integration/failure handling are still pending.
+This remains a local diagnostic, not a production synchronization design or
+an accepted RxErr fix. The bounded release hook is temporary and must be
+removed on restoration or replaced by a reviewed implementation if the
+hypothesis survives testing.
+
+After that first cold boot, a bidirectional LAN endpoint regression measured
+2345.55 Mbit/s PC→router and 1986.13 Mbit/s router→PC (two TCP streams,
+20 seconds per direction, zero retransmits). A subsequent snapshot still
+had zero correctable/nonfatal/fatal AER totals at both PCIe reporting
+locations. The temporary server was removed. This is an Ethernet endpoint
+regression, **not** routed PPE acceptance or a Wi-Fi traffic test. All 50
+offline regression tests also passed. The sanitized diagnostic record is
+[`reports/pcie-sequence-diagnostic.json`](../reports/pcie-sequence-diagnostic.json).
