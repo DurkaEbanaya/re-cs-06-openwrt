@@ -3,6 +3,12 @@
 This is the current working checklist. Historical reports describe older
 builds; an item is not resolved merely because a candidate patch exists.
 
+**First-device development is conditionally complete for the tested scope.**
+The [completion matrix](CONDITIONAL-COMPLETION.md) defines that scope and
+the second-device acceptance plan. The open items below remain visible;
+they are not silently marked fixed by this milestone. Historical r3/r4
+overlay implementation notes do not describe the newer r6 squashfs.
+
 | Area | Latest established result | Remaining acceptance |
 | --- | --- | --- |
 | TX queue ordering | r3: seven reverse-direction tests without retransmissions | Longer mixed traffic and forwarding, not just endpoints |

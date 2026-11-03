@@ -3,19 +3,21 @@
 Experimental, source-based build for **JDCloud RE-CS-06 / BE6500** with
 Qualcomm IPQ5322/IPQ5332. This is **not an official OpenWrt release**.
 
-**Status: local resources-r6 boots Linux 6.18.60 from eMMC with automatically
-created ext4. Its checked upgrade retained settings and the original SSH key;
-kernel/root readback passed. The earlier r4 TX/RX fixes yielded 2.346–2.348
-Gbit/s RX and 1.961–2.034 Gbit/s TX, with zero retransmissions in four
-30-second direct 2.5G runs. r5 includes the corrected RX scripts and USB
-storage/UAS. Independent phone tests confirmed 5 GHz HE/802.11ax traffic;
-an external UAS SSD passed direct-I/O verification and remount/fsck checks.
-r6 adds ARMv8 CryptoAPI AES/GCM and fixes software-flowtable DSA ingress.
-Routed IPv4 hardware NAT reached 2.19/2.31 Gbit/s with ~0.3% aggregate CPU;
-PPE counters and HW_OFFLOAD confirmed the hardware path. This is not full
-acceptance of IPv6, VPNs, EHT/MLO or broader upgrade/power-loss scenarios;
-the current PHYs advertise no 6 GHz band.
-Do not flash the older published images with the account-permissions defect.**
+**Status: first-device resources-r6 is conditionally complete for the tested
+scope; a second RE-CS-06 will provide independent validation.** Linux 6.18.60
+boots from eMMC with persistent ext4 and checked upgrade/configuration
+carryover. Hardware IPv4 NAT, IPv6 forwarding, PPPoE IPv4, tagged LAN VLAN
+NAT, routed 5 GHz HE80 PCI-radio Direct Switch and ARMv8 CryptoAPI CE paths
+have been exercised. Software-flowtable ingress and TX/RX queue fixes are
+included. See the [acceptance matrix and second-device plan](docs/CONDITIONAL-COMPLETION.md).
+
+This is not universal hardware certification: EHT/MLO, provider WAN VLANs,
+PPPoE IPv6, VPN throughput and power-loss safety remain outside acceptance.
+The earlier unexplained Ethernet outage and remaining inter-capture-point
+reordering are not claimed fixed. Current PHYs advertise no 6 GHz band.
+WAN/radios and persistent flow offloading remain disabled after test cleanup;
+owner provisioning is still required before ordinary use.
+**Do not flash the older published images with the account-permissions defect.**
 
 See [persistent installation results and follow-up fixes](docs/INSTALL-CANDIDATE.md).
 Latest: [queuefix-r3 installation and hardware comparison](docs/QUEUEFIX-R3.md).
@@ -23,7 +25,9 @@ Current: [acceptance tracker](docs/KNOWN-ISSUES.md),
 [r5 hardware report](reports/peripherals-r5-hardware.json),
 [phone HE test](docs/PHONE-HE-TEST.md), [USB storage test](docs/USB-SSD-TEST.md)
 and [acceleration implementation versus validation](docs/ACCELERATION.md).
-Latest: [resource audit and r6 results](docs/RESOURCE-AUDIT.md).
+Evidence: [resource audit and r6 results](docs/RESOURCE-AUDIT.md),
+[protocol offload tests](docs/PROTOCOL-OFFLOAD-TESTS.md),
+[receiver-loss controls](docs/RECEIVER-LOSS-CONTROLS.md).
 
 ## Goals
 
@@ -67,10 +71,10 @@ is embedded. WAN and Wi-Fi stay disabled for isolated first setup; LAN is
 `192.168.76.1/24`. Set a new root password and configure proper owner-specific
 MACs, country and Wi-Fi encryption before connecting uplinks.
 
-Compilation is not hardware acceptance. In particular, all four Ethernet
-ports, both radios, MAC fallback/provisioning, firmware compatibility and
-recovery still need testing. Do not force this image through an older QWRT's
-different board-ID check or assume an untested U-Boot recovery page works.
+Compilation is not hardware acceptance. The documented first-device tests
+do not replace checking a second unit's bootloader, geometry, calibration
+and provisioning. Do not force an image through an older QWRT's different
+board-ID check or assume a different U-Boot recovery page behaves identically.
 
 This public repository contains build recipes and tests, not private backups
 or vendored chipset firmware. Generated binary redistribution additionally

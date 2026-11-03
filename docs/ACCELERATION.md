@@ -58,3 +58,13 @@ working tested native hardware path, not NSS feature parity or acceptance
 of every tunnel/protocol. Software-only ingress selection needed a separate
 board-scoped fix. Both offload settings and WAN were returned to disabled
 after diagnostics; see the audit for retransmissions and remaining gates.
+
+## Current scoped completion
+
+Subsequent r6 tests confirmed IPv6 PPE forwarding, actual PPPoE IPv4, tagged
+LAN VLAN NAT and routed HE80 with PCI-radio Direct Switch. ARMv8 CryptoAPI
+CE drivers are installed and kernel selftests report success. See the
+[conditional-completion matrix](CONDITIONAL-COMPLETION.md) for accepted paths,
+evidence and exclusions. This supersedes the earlier pending protocol gates
+above without changing the historical measurements. The accepted scope is
+not “every hardware feature”, NSS parity, VPN line rate or EHT/MLO support.

@@ -1,5 +1,7 @@
 {
   "installed_test_build": "experimental-2026.11.03-peripherals-r5",
+  "report_scope": "Historical r5/r6 resource audit; pending items here describe that stage, not the final acceptance status",
+  "superseding_acceptance_report": "reports/conditional-completion.json",
   "transport": "IPv4 TCP NAT",
   "streams": 2,
   "seconds_per_run": 15,

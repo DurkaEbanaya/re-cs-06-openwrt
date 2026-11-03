@@ -1,0 +1,94 @@
+{
+  "installed_build": "experimental-2026.11.03-resources-r6",
+  "kernel": "6.18.60",
+  "milestone": "first-device conditional completion for tested scope",
+  "firmware_reflashed_for_closure": false,
+  "accepted_tested_paths": {
+    "ipv4_nat_native_ppe": true,
+    "ipv6_routing_native_ppe": true,
+    "ipv4_pppoe_untagged_test_service": true,
+    "tagged_lan_vlan_to_untagged_wan_nat": true,
+    "routed_5ghz_he80_pci_radio_direct_switch": true,
+    "software_flowtable_dsa_ingress": true,
+    "armv8_cryptoapi_ce_tested_algorithms": true,
+    "board_scoped_rps_and_socket_stable_tx_queues": true
+  },
+  "final_ipv4_checks": [
+    {
+      "mode": "software",
+      "direction": "out",
+      "receiver_mbps": 1601.86,
+      "retransmits": 267,
+      "hw_offload_observed": false,
+      "software_offload_observed": true
+    },
+    {
+      "mode": "software",
+      "direction": "in",
+      "receiver_mbps": 1607.14,
+      "retransmits": 381,
+      "hw_offload_observed": false,
+      "software_offload_observed": true
+    },
+    {
+      "mode": "hardware",
+      "direction": "out",
+      "receiver_mbps": 2317.13,
+      "retransmits": 9,
+      "hw_offload_observed": true,
+      "software_offload_observed": false
+    },
+    {
+      "mode": "hardware",
+      "direction": "in",
+      "receiver_mbps": 2340.17,
+      "retransmits": 0,
+      "hw_offload_observed": true,
+      "software_offload_observed": false
+    }
+  ],
+  "final_check_streams": 2,
+  "final_check_seconds_per_run": 15,
+  "final_check_transport": "IPv4 TCP through NAT to Keenetic system iperf3",
+  "software_mode_hardware_bind_absent": true,
+  "hardware_mode_valid_ppe_flows_observed": true,
+  "ppe_bind_replace_readback_resource_errors_observed": false,
+  "cryptoapi_ce_registration_and_passed_kernel_selftests_rechecked": true,
+  "runtime_direct_switch_idle_when_wifi_disabled": true,
+  "earlier_direct_switch_active_traffic_evidence_retained": true,
+  "offline_regression_tests_passed": 35,
+  "final_cleanup": {
+    "temporary_keenetic_iperf_server_removed": true,
+    "temporary_host_test_route_removed": true,
+    "jdcloud_uncommitted_configuration_absent": true,
+    "wan_auto_enabled": false,
+    "wifi_enabled": false,
+    "persistent_software_flow_offloading_enabled": false,
+    "persistent_hardware_flow_offloading_enabled": false,
+    "firewall_syntax_check_passed": true,
+    "persistent_diagnostic_logging_retained": true,
+    "pc_main_wifi_internet_route_preserved": true
+  },
+  "open_boundaries": [
+    "EHT and MLO are not accepted; independent-radio operation only",
+    "No Wi-Fi 7 client and no advertised 6 GHz band",
+    "AHB-radio Direct Switch was not established by PCI-radio testing",
+    "WAN VLAN insertion, QinQ and PPPoE IPv6 not accepted",
+    "VPN throughput, SQM interactions and NSS feature parity not established",
+    "Separate QCE engine binding not established; native ARM CE is tested",
+    "Remaining inter-capture-point reordering is not fully localized",
+    "Earlier Ethernet outage cause remains unknown",
+    "Root password and owner uplink/Wi-Fi provisioning still required",
+    "Non-atomic upgrade and power-loss limitations remain",
+    "Unallocated eMMC space and GPT remain unchanged"
+  ],
+  "universal_hardware_acceptance_claimed": false,
+  "all_retransmissions_explained": false,
+  "second_device_tested": false,
+  "next_stage": "independent inventory, verified per-device backup, installation and controlled comparison on second RE-CS-06",
+  "evidence_reports": [
+    "reports/resource-audit.json",
+    "reports/protocol-offload-tests.json",
+    "reports/receiver-loss-controls.json"
+  ]
+}
