@@ -18,7 +18,7 @@ REQUIRED = {
     "base-files", "busybox", "dropbear", "dnsmasq", "firewall4", "netifd",
     "luci", "luci-theme-bootstrap", "luci-ssl-openssl", "wpad-openssl",
     "kmod-qcom-ppe", "kmod-dsa-qca8k", "kmod-phy-qca83xx", "kmod-ath12k",
-    "kmod-fs-ext4", "e2fsprogs", "opkg",
+    "kmod-fs-ext4", "e2fsprogs", "opkg", "kmod-usb-storage", "kmod-usb-storage-uas",
 }
 
 

@@ -11,10 +11,10 @@ builds; an item is not resolved merely because a candidate patch exists.
 | ext4 initialization | r3 and r4 automatically created persistent ext4; r4 survives subsequent reboot | Cold power-cycle and longer storage checks |
 | FDB deletion | Idempotent missing-entry patch installed in r3; no errors in collected boot | Repeated bridge/AP changes and sustained traffic |
 | PCIe AER | Earlier single corrected boot RxErr; latest r3 boot counter zero | More boot/load samples; do not hide AER |
-| HE | AP advertises HE; current Intel client reports NO-HE | Compatible legal-channel HE client required for actual HE traffic |
-| EHT / MLO | Current firmware regulatory bitmap reports NO-EHT; grouped radio path previously crashed | Compatible supported firmware/driver path, no regulatory bypass |
+| HE | Independent Android phone negotiated 11ax/HE80 on 5 GHz; 441/559 Mbit/s actual traffic | 2.4 GHz HE, 160 MHz and extended stability; Intel client still reports NO-HE |
+| EHT / MLO | Current firmware regulatory bitmap reports NO-EHT; grouped radio path previously crashed; owner has no Wi-Fi 7 client | Not accepted or fully testable with current clients; no regulatory bypass |
 | WAN / NAT / IPv6 routing | Not yet accepted on current installed build | Isolated second endpoint/uplink and firewall tests |
-| USB / LEDs / buttons | Controller/sysfs visible | Actual attached device and physical checks, no destructive reset test |
+| USB / LEDs / buttons | r5: external UAS SSD at USB 5G; 512 MiB direct-I/O pattern and remount/fsck passed | Extended storage/power tests; physical LEDs/buttons, no destructive reset test |
 | Security / time | WAN/radios off; root password unset; no router uplink/NTP | Owner password before uplink; verify time once routing is configured |
 | Recovery | Existing HTTP recovery and original backups verified | New builds still experimental; do not replace bootloader/GPT |
 

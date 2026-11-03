@@ -3,20 +3,23 @@
 Experimental, source-based build for **JDCloud RE-CS-06 / BE6500** with
 Qualcomm IPQ5322/IPQ5332. This is **not an official OpenWrt release**.
 
-**Status: local maintenance-r4 boots Linux 6.18.60 from eMMC with automatically
-created ext4. Its checked upgrade automatically restored settings and the
-original SSH key; reboot/readback checks passed. The TX queue fix plus corrected
-persistent RX policy yielded 2.346–2.348 Gbit/s RX and 1.961–2.034 Gbit/s TX,
-with zero retransmissions in four 30-second direct 2.5G runs. The RX scripts
-were corrected in the persistent overlay after the original r4 build. Both
-radio PHYs and earlier HT/VHT traffic were tested; HE/EHT, MLO, WAN/NAT and
-broader upgrade/power-loss scenarios remain unvalidated.
+**Status: local peripherals-r5 boots Linux 6.18.60 from eMMC with automatically
+created ext4. Its checked upgrade retained settings and the original SSH key;
+kernel/root readback passed. The earlier r4 TX/RX fixes yielded 2.346–2.348
+Gbit/s RX and 1.961–2.034 Gbit/s TX, with zero retransmissions in four
+30-second direct 2.5G runs. r5 includes the corrected RX scripts and USB
+storage/UAS. Independent phone tests confirmed 5 GHz HE/802.11ax traffic;
+an external UAS SSD passed direct-I/O verification and remount/fsck checks.
+EHT/MLO, 6 GHz, accelerated WAN/NAT and broader upgrade/power-loss scenarios
+remain unvalidated; the current PHYs advertise no 6 GHz band.
 Do not flash the older published images with the account-permissions defect.**
 
 See [persistent installation results and follow-up fixes](docs/INSTALL-CANDIDATE.md).
 Latest: [queuefix-r3 installation and hardware comparison](docs/QUEUEFIX-R3.md).
-Current: [acceptance tracker and maintenance-r4 results](docs/KNOWN-ISSUES.md),
-[machine-readable hardware report](reports/maintenance-r4-hardware.json).
+Current: [acceptance tracker](docs/KNOWN-ISSUES.md),
+[r5 hardware report](reports/peripherals-r5-hardware.json),
+[phone HE test](docs/PHONE-HE-TEST.md), [USB storage test](docs/USB-SSD-TEST.md)
+and [acceleration implementation versus validation](docs/ACCELERATION.md).
 
 ## Goals
 

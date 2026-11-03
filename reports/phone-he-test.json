@@ -1,0 +1,26 @@
+{
+  "band_ghz": 5,
+  "channel": 36,
+  "width_mhz": 80,
+  "android_reports_11ax": true,
+  "router_station_reports_he": true,
+  "streams": 2,
+  "seconds_per_direction": 20,
+  "results": [
+    {
+      "direction": "phone-to-router",
+      "receiver_mbps": 440.75,
+      "retransmits": 0
+    },
+    {
+      "direction": "router-to-phone",
+      "receiver_mbps": 558.65,
+      "retransmits": 39
+    }
+  ],
+  "temporary_phone_network_removed": true,
+  "original_phone_network_restored": true,
+  "router_wireless_config_restored_disabled": true,
+  "wifi7_tested": false,
+  "six_ghz_advertised_by_router_phys": false
+}

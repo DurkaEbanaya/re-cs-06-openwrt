@@ -1,0 +1,49 @@
+# Acceleration in this particular build
+
+This is a pinned LEDE-derived IPQ53xx port, not an official generic OpenWrt
+release and not QWRT. "Open source" does not mean "CPU-only", and a driver
+being proprietary does not by itself establish which traffic it accelerates.
+
+## Implemented paths versus enabled and measured paths
+
+- The installed `qcom_ppe` module drives the Qualcomm Packet Processing
+  Engine and EDMA; QCA8K/DSA drives the external QCA8386 switch. These are
+  compiled C drivers in this source tree, not a userspace routing shortcut.
+- The compiled PPE source includes `ppe_flowtable.c` and the netdevice
+  `TC_SETUP_FT` callback. It translates supported netfilter flowtable rules
+  into hardware next-hop/flow entries, including address/port translation
+  and a supported PPPoE path. Unsupported rules fall back to software.
+  Source support is not proof that a particular topology/protocol offloads.
+- This driver also implements a PPE direct-switch interface for ath12k.
+  Runtime debugfs shows registered PCI-radio rings. Ring registration is
+  not proof that arbitrary Wi-Fi, bridge or routed traffic bypasses CPU.
+- ath12k and mac80211/hostapd are source-built host software; the radios
+  still run separately downloaded proprietary Qualcomm firmware. Removing
+  vendor UI/proxy packages does not remove the radio's firmware requirement.
+- The installed package set does not include the vendor QSDK NSS/ECM
+  acceleration stack. Its absence must not be confused with absence of the
+  separate native PPE implementation above, or a claim of feature parity.
+
+For reproducible correctness tests, the current firewall configuration has
+**both software and hardware flow offloading disabled**. At the initial
+inspection PPE flowtable counters reported `bound:0 replace:0` and zero
+active flow entries. No hardware-accelerated NAT result has been established.
+Earlier iperf tests terminated on the router, not through it; these normally
+exercise the CPU endpoint and cannot measure routed flowtable acceleration.
+RPS/packet steering moves CPU processing between cores; it is not hardware
+NAT or an NSS substitute.
+
+## Acceptance before enabling acceleration by default
+
+Use separate LAN and WAN endpoints and compare off/software/hardware modes
+at identical rates and packet sizes. Require successful hardware bind and
+packet/byte counter growth, not merely an enabled LuCI checkbox. Compare
+throughput, CPU load, retransmissions and firewall behavior; test IPv4 NAT,
+IPv6, reconnects and any required PPPoE/VLAN topology independently. Unsupported
+tunnels, VPN encryption, SQM, helpers and local endpoints can remain CPU paths
+even when ordinary routed flows offload. Do not promise line-rate VPN or all
+QWRT features from the presence of PPE.
+
+Enabling an untested fast path globally just to improve a benchmark can hide
+correctness problems or change accounting/QoS behavior. It is a separate
+acceptance step, not a reason to replace the bootloader or calibration.

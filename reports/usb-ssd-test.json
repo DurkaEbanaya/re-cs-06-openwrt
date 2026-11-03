@@ -1,0 +1,18 @@
+{
+  "bytes": 536870912,
+  "direct_io": true,
+  "write_seconds_including_generation_and_fsync": 4.153327,
+  "read_seconds_including_verification": 2.606849,
+  "write_mib_s": 123.27,
+  "read_mib_s": 196.41,
+  "all_words_verified": true,
+  "usb_protocol": "UAS",
+  "usb_bus_mbps": 5000,
+  "test_partition_reformatted_ext4_with_owner_permission": true,
+  "whole_disk_repartitioned": false,
+  "hash_equal_after_unmount_remount": true,
+  "e2fsck_read_only_exit": 0,
+  "test_file_and_binary_removed": true,
+  "filesystem_unmounted_after_test": true,
+  "not_a_full_surface_or_power_loss_test": true
+}

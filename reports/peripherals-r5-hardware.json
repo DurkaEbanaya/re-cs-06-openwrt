@@ -1,0 +1,27 @@
+{
+  "version": "experimental-2026.11.03-peripherals-r5",
+  "sysupgrade_sha256": "789abb512d7e2e308a6dedd842aabc16c95a9ad9ba513e02f66997fc96b1f7d5",
+  "kernel_root_readback": [
+    {
+      "member": "kernel",
+      "bytes": 6856796,
+      "sha256": "1811a42b93b7859655bfc4cbbf06e88234b4d8b501a752d8c3228b1697152d83"
+    },
+    {
+      "member": "root",
+      "bytes": 19267584,
+      "sha256": "1d781cbc09d380c14c8c9bc6fb0566884cc4e859d103df5289ff66bedcf91281"
+    }
+  ],
+  "configuration_and_host_key_carried_over": true,
+  "bootloader_art_gpt_environment_preserved": true,
+  "rx_masks_after_boot": [
+    2,
+    2,
+    2,
+    2
+  ],
+  "usb_uas_bound": true,
+  "usb_bus_mbps": 5000,
+  "usb_disk_reported_bytes": 14403239936
+}
