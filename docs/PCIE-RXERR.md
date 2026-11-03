@@ -81,3 +81,84 @@ and boot counter zero. No UART commands were needed for that boot.
 This establishes that r10's NAPI fix did **not** eliminate the cold-start
 RxErr. A temporary early-boot trace is being used to narrow the interval;
 no permanent PCIe behavior change has been made.
+
+The next cold start with early kprobes reproduced it again. The AER handler
+ran at about 8.435 seconds, during the PCI device's `ath12k_fw_map()` call
+(8.120–9.466 seconds). The first traced `ath12k_pci_power_up()` was later,
+at 9.468 seconds, and the MHI reset was at 9.508 seconds. Before AER, the
+trace contained one tracked PCI register read for hardware identification
+and no tracked register writes. Per-CPU trace buffers reported zero
+overruns. This rules out the *later* reset sequence as the direct preceding
+operation in that sample; it does not prove firmware file I/O causes a
+physical-layer fault, or exclude untraced PCI configuration/power activity.
+
+A subsequent separating experiment held only the PCI radio unbound from
+early boot using a temporary `driver_override`. RxErr still occurred at
+about 8.50 seconds, before any PCI ath12k probing. Before releasing the
+driver at 16.22 seconds, both ends already had count 1; after successful
+radio initialization, both remained at 1. Early Link Control snapshots
+were `0x0008` at both ends (ASPM L0s/L1 off). This disproves an explanation
+requiring the PCI driver's firmware-file read or reset to cause the event.
+The earlier overlap with firmware mapping was timing, not established
+causality. The integrated AHB radio was still starting in this experiment;
+shared SoC/radio initialization is not excluded.
+
+The next physical cold start held **both** radios unbound from early boot,
+then released them separately. Both PCIe reporting locations stayed at
+`RxErr 0` before release. The PCI radio was released at 16.239 seconds,
+initialized successfully, and counts were still zero after a 15-second
+observation. Releasing the integrated AHB radio at 33.851 seconds moved
+the AER event to about 35.168 seconds. Its firmware-version message appeared
+at 34.962 seconds; both PCIe locations then had `RxErr 1`.
+
+This separates the triggering **stage**: the event follows AHB radio
+bring-up, not a fixed eight-second boot timer or the PCI radio's own probe.
+It does not establish which AHB firmware action, shared clock/power path or
+physical interaction causes the receiver event. Host QMI and clock tracing
+are the next checks; changing calibration data or suppressing AER is not a
+substitute for that evidence.
+
+After each completed isolation experiment, both radio drivers returned,
+Gen3 x2 and the full firmware/protected-partition checks passed, and the
+temporary hold/trace hook was removed. These hooks are not part of the
+generic image. No wireless traffic acceptance follows from driver probing.
+
+## QMI/WMI and host clock isolation
+
+A further both-held cold start added request-ID-only QMI probes, WMI command
+IDs and Linux clock-framework tracepoints. The PCI radio again initialized
+first without RxErr. After the integrated radio was released, its timeline
+was:
+
+| Kernel time (seconds) | Integrated AHB initialization / PCIe observation |
+| --- | --- |
+| 33.931 | Controlled AHB driver release |
+| 35.049 | Firmware-version message |
+| 35.067–35.137 | Board-data download requests |
+| 35.142 | M3 information request |
+| 35.144 | Firmware-ready handler; WLAN INI request |
+| 35.148 | WLAN configuration request |
+| 35.150 | WLAN mode request |
+| 35.228 | WMI command 1 (`WMI_INIT_CMDID`) |
+| 35.255 / 35.264 | PCIe AER handler entries |
+| 35.316 | Firmware-ready handler returns success |
+
+The first AER handler followed WMI INIT by approximately **27.7 ms**.
+This identifies a narrower initialization interval; temporal ordering alone
+does **not** prove WMI INIT itself, calibration, a particular firmware
+instruction or a defective component caused the physical receiver event.
+All four trace buffers reported zero overruns. Between 35.13 and 35.32
+seconds the raw trace contains CPU-frequency activity and eMMC clock
+disable/unprepare events, but no recorded PCIe, Wi-Fi or CMN clock-framework
+transition. This is narrower than saying there were no clock events at all:
+the initial summary filtered out CPU/eMMC activity. It does not exclude
+firmware- or secure-world-controlled changes, indirect effects of those
+other host clocks, or analog supply/reference behavior.
+
+An equivalent warm-start tracing rehearsal had zero RxErr. The cold sample
+again ended at count 1 at each reporting location, with zero nonfatal/fatal
+totals; a later idle check found no increase. Both drivers returned, Gen3 x2
+was retained, all firmware/protected-partition checks passed, and temporary
+trace/hold hooks and overrides were removed. This is still **not an RxErr
+fix**. There is insufficient evidence for a permanent PCIe/clock/calibration
+change, and no such change is included in r10.

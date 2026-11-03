@@ -54,9 +54,57 @@
     "uart_commands_used": false,
     "original_rxerr_reproduced": true
   },
+  "early_cold_trace": {
+    "rxerr_reproduced": true,
+    "aer_during_firmware_map_interval": true,
+    "aer_precedes_pci_power_up_and_mhi_reset": true,
+    "trace_buffer_overruns": 0,
+    "firmware_file_io_causality_claimed": false
+  },
+  "pci_driver_held_cold_start": {
+    "rxerr_reproduced_before_pci_driver_probe": true,
+    "root_port_and_endpoint_rxerr_before_release_each": 1,
+    "root_port_and_endpoint_rxerr_after_release_each": 1,
+    "early_aspm_l0s_l1_disabled_at_both_ends": true,
+    "radio_returned_after_controlled_release": true,
+    "temporary_pci_only_hold_removed_after_test": true,
+    "integrated_ahb_radio_was_not_held": true
+  },
+  "both_radios_held_cold_start": {
+    "root_port_and_endpoint_rxerr_before_release_each": 0,
+    "pci_radio_released_first_at_kernel_seconds": 16.239,
+    "root_port_and_endpoint_rxerr_after_pci_initialization_each": 0,
+    "pci_only_observation_seconds": 15,
+    "ahb_radio_released_second_at_kernel_seconds": 33.851,
+    "ahb_firmware_version_message_at_kernel_seconds": 34.962,
+    "aer_handler_at_kernel_seconds": 35.168,
+    "root_port_and_endpoint_rxerr_after_ahb_initialization_each": 1,
+    "triggering_initialization_stage": "integrated AHB radio bring-up",
+    "exact_firmware_or_shared_hardware_operation_established": false,
+    "both_radio_phys_and_gen3_x2_returned": true,
+    "full_readback_checks_passed": true,
+    "temporary_hold_and_trace_hook_removed": true
+  },
+  "qmi_wmi_clock_traced_cold_start": {
+    "pci_radio_initialized_first_without_rxerr": true,
+    "ahb_driver_release_kernel_seconds": 33.931,
+    "ahb_wmi_init_kernel_seconds": 35.227651,
+    "first_aer_handler_kernel_seconds": 35.255325,
+    "aer_delay_after_wmi_init_ms": 27.674,
+    "firmware_ready_handler_returned_success": true,
+    "trace_buffer_overruns": [0, 0, 0, 0],
+    "pcie_wifi_or_cmn_clock_framework_transitions_between_35_13_and_35_32_seconds": 0,
+    "other_host_clock_events_in_same_interval": "CPU-frequency activity and eMMC clock disable/unprepare",
+    "firmware_or_secure_world_clock_changes_excluded": false,
+    "wmi_init_causality_proven": false,
+    "root_port_and_endpoint_final_rxerr_each": 1,
+    "later_idle_counter_increase_observed": false,
+    "nonfatal_and_fatal_totals": 0,
+    "equivalent_warm_trace_rxerr_each": 0,
+    "full_readback_passed_and_temporary_diagnostics_removed": true
+  },
   "remaining": [
-    "Early-boot isolation of reproduced cold-start RxErr",
-    "Further isolation if intermittent RxErr recurs",
+    "Isolate the AHB firmware/shared-hardware operation preceding cold-start PCIe RxErr",
     "Wireless traffic and existing EHT/MLO acceptance limits",
     "Other second-device port and routed acceleration gates"
   ]
