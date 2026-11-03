@@ -1,0 +1,134 @@
+{
+  "build": "experimental-2026.11.03-radio-sequence-r12",
+  "devices": 2,
+  "wired": {
+    "streams_initial": 4,
+    "seconds_per_initial_run": 30,
+    "forward_receiver_mbps": 2343.74,
+    "reverse_receiver_mbps": 1929.07,
+    "forward_retransmits": 2777,
+    "reverse_retransmits": 0,
+    "initial_simultaneous_receiver_mbps": [
+      181.17,
+      1810.74
+    ],
+    "initial_simultaneous_retransmits": [
+      1442,
+      0
+    ],
+    "paced_1g_each_way_receiver_mbps": [
+      999.98,
+      999.92
+    ],
+    "paced_retransmits": [
+      0,
+      0
+    ],
+    "unpaced_two_stream_repeat_receiver_mbps": [
+      1576.25,
+      779.63
+    ],
+    "unpaced_repeat_retransmits": [
+      84,
+      0
+    ],
+    "saturated_full_duplex_acceptance": false
+  },
+  "wireless": {
+    "band_ghz": 5,
+    "channel": 36,
+    "width_mhz": 80,
+    "mode": "HE",
+    "security": "WPA3-SAE, required PMF",
+    "sampled_phy_rate_mbps": 2401.9,
+    "sampled_nss": 4,
+    "configured_txpower_dbm": 10,
+    "very_close_range": true,
+    "six_ghz_phy_channels_each": 0,
+    "wifi_6e_available_in_tested_configuration": false,
+    "eht_advertised_by_phy": true,
+    "actual_ru_domain_no_eht": true,
+    "eht80_request_produced_working_link": false,
+    "wifi_7_accepted": false,
+    "regulatory_override_applied": false,
+    "mlo_tested": false,
+    "he80_runs": [
+      {
+        "label": "he80",
+        "mode": "off",
+        "direction": "forward",
+        "receiver_mbps": 1365.22,
+        "retransmits": 397
+      },
+      {
+        "label": "he80",
+        "mode": "off",
+        "direction": "reverse",
+        "receiver_mbps": 815.14,
+        "retransmits": 128
+      },
+      {
+        "label": "he80",
+        "mode": "hardware",
+        "direction": "forward",
+        "receiver_mbps": 1398.03,
+        "retransmits": 0
+      },
+      {
+        "label": "he80",
+        "mode": "hardware",
+        "direction": "reverse",
+        "receiver_mbps": 1509.58,
+        "retransmits": 0
+      }
+    ],
+    "simultaneous_60s_receiver_mbps": [
+      699.97,
+      858.91
+    ],
+    "simultaneous_retransmits": [
+      11,
+      0
+    ],
+    "ping_received": 200,
+    "ping_sent": 200,
+    "ping_rtt_min_avg_max_ms": [
+      9.491,
+      52.726,
+      1062.712
+    ],
+    "low_latency_accepted": false,
+    "radio_tx_failed_counters_grew": true
+  },
+  "acceleration": {
+    "ap_ppe_nat_valid_entries_and_packet_growth": true,
+    "ap_conntrack_hw_offload_observed": true,
+    "ap_direct_switch_running_nonfaulted": true,
+    "direct_switch_refill_retry_deferred_counters_grew": true,
+    "ppe_bind_readback_resource_errors_observed": false,
+    "sta_local_iperf_endpoint_not_forwarding_acceptance": true,
+    "both_router_forwarding_acceptance": false
+  },
+  "post_load": {
+    "pcie_aer_correctable_nonfatal_fatal_each_zero_both_routers": true,
+    "panic_oops_cpu_warning_observed": false,
+    "thermal_samples_celsius_range": [
+      49.9,
+      53.9
+    ]
+  },
+  "cleanup": {
+    "original_management_configs_restored": true,
+    "radio_off": true,
+    "temporary_nat_and_route_removed": true,
+    "own_iperf_removed": true,
+    "host_wifi_internet_preserved": true
+  },
+  "limitations": [
+    "Router 2 iperf endpoint is not an independent receiving PC",
+    "Saturated wired duplex asymmetry remains unexplained",
+    "No 6E, working EHT or MLO acceptance",
+    "Short tests, not long-duration wireless stability",
+    "Latency spike under load remains; no zero radio-failure claim"
+  ]
+}
