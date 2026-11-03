@@ -1,0 +1,44 @@
+{
+  "installed_build": "experimental-2026.11.03-resources-r6",
+  "before_reboot_pc_carrier": false,
+  "owner_rebooted": true,
+  "original_ssh_host_key_preserved": true,
+  "active_logical_port": "lan2",
+  "negotiated_mbps": 2500,
+  "duplex": "full",
+  "initial_port_fcs_alignment_overflow_underrun_zero": true,
+  "ext4_overlay_mounted_rw": true,
+  "rx_rps_masks": [
+    "2",
+    "2",
+    "2",
+    "2"
+  ],
+  "corrected_pcie_rxerr_root_and_endpoint": [
+    1,
+    1
+  ],
+  "registered_pstore_backend": false,
+  "ramoops_memory_size": 0,
+  "prior_boot_cause_established": false,
+  "persistent_diagnostic_logging_configured": false,
+  "ethernet_outage_explained_by_pcie_error": false,
+  "post_reboot_endpoint_tests": [
+    {
+      "direction": "pc-to-router",
+      "receiver_mbps": 2339.68,
+      "retransmits": 0
+    },
+    {
+      "direction": "router-to-pc",
+      "receiver_mbps": 2006.09,
+      "retransmits": 0
+    }
+  ],
+  "endpoint_streams": 2,
+  "endpoint_seconds_per_direction": 15,
+  "no_panic_fdb_timeout_or_io_error_seen_after_tests": true,
+  "temporary_test_server_removed": true,
+  "pc_shutdown_requested": false,
+  "persistent_router_changes": false
+}
