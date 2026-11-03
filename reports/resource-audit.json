@@ -1,0 +1,176 @@
+{
+  "installed_test_build": "experimental-2026.11.03-peripherals-r5",
+  "transport": "IPv4 TCP NAT",
+  "streams": 2,
+  "seconds_per_run": 15,
+  "lan_and_wan_link_mbps": 2500,
+  "endpoint": "Keenetic system iperf3 3.19",
+  "internet_default_route_changed": false,
+  "routed_results": [
+    {
+      "mode": "off",
+      "direction": "lan-to-wan",
+      "receiver_mbps": 1699.72,
+      "retransmits": 388,
+      "router_cpu_busy_percent": 42.16
+    },
+    {
+      "mode": "off",
+      "direction": "wan-to-lan",
+      "receiver_mbps": 1755.18,
+      "retransmits": 117,
+      "router_cpu_busy_percent": 40.86
+    },
+    {
+      "mode": "software",
+      "direction": "lan-to-wan",
+      "receiver_mbps": 1526.73,
+      "retransmits": 55,
+      "router_cpu_busy_percent": 40.61
+    },
+    {
+      "mode": "software",
+      "direction": "wan-to-lan",
+      "receiver_mbps": 1658.44,
+      "retransmits": 288,
+      "router_cpu_busy_percent": 37.91
+    },
+    {
+      "mode": "hardware",
+      "direction": "lan-to-wan",
+      "receiver_mbps": 2173.72,
+      "retransmits": 537,
+      "router_cpu_busy_percent": 0.29
+    },
+    {
+      "mode": "hardware",
+      "direction": "wan-to-lan",
+      "receiver_mbps": 2327.05,
+      "retransmits": 0,
+      "router_cpu_busy_percent": 0.3
+    }
+  ],
+  "software_physical_diagnostic": [
+    {
+      "mode": "software-physical",
+      "direction": "lan-to-wan",
+      "receiver_mbps": 1558.74,
+      "retransmits": 337,
+      "router_cpu_busy_percent": 30.58
+    },
+    {
+      "mode": "software-physical",
+      "direction": "wan-to-lan",
+      "receiver_mbps": 1602.61,
+      "retransmits": 312,
+      "router_cpu_busy_percent": 30.22
+    }
+  ],
+  "software_ingress_patched": [
+    {
+      "mode": "software-patched",
+      "direction": "lan-to-wan",
+      "receiver_mbps": 1551.5,
+      "retransmits": 405,
+      "router_cpu_busy_percent": 30.94
+    },
+    {
+      "mode": "software-patched",
+      "direction": "wan-to-lan",
+      "receiver_mbps": 1604.72,
+      "retransmits": 367,
+      "router_cpu_busy_percent": 29.92
+    }
+  ],
+  "ppe_hardware_entries_and_packet_byte_growth": true,
+  "conntrack_hw_offload_observed": true,
+  "original_software_offload_accepted": false,
+  "patched_software_conntrack_offload_observed": true,
+  "ppe_replace_resource_readback_errors_observed": false,
+  "wan_management_tcp_ports_rejected": [
+    22,
+    80,
+    443
+  ],
+  "cpu_busy_method": "Aggregate proc/stat busy deltas, excludes idle and iowait; not isolated flow processing",
+  "openssl_aes_128_gcm_16k_kbytes_per_sec": {
+    "normal": 691773.44,
+    "armcap_zero_process_only": 35717.12
+  },
+  "kernel_crypto_armv8_ce_missing_on_installed_r5": true,
+  "r6_crypto_compiled_not_installed": false,
+  "wan_and_offloading_restored_disabled": true,
+  "temporary_keenetic_server_removed": true,
+  "persistent_live_fix": "fw4 software flowtable includes DSA ingress ports for RE-CS-06",
+  "full_hardware_utilization_acceptance_complete": false,
+  "remaining": [
+    "IPv6 routed acceleration",
+    "PPPoE/VLAN if required",
+    "Wi-Fi routed direct-switch path",
+    "EHT/MLO unsupported in accepted configuration",
+    "Longer mixed traffic and retransmission analysis",
+    "VPN-specific throughput and broader crypto validation"
+  ],
+  "r6_installed": true,
+  "r6_version": "experimental-2026.11.03-resources-r6",
+  "r6_routed_results": [
+    {
+      "mode": "r6-software",
+      "direction": "lan-to-wan",
+      "receiver_mbps": 1663.94,
+      "retransmits": 434,
+      "router_cpu_busy_percent": 32.16
+    },
+    {
+      "mode": "r6-software",
+      "direction": "wan-to-lan",
+      "receiver_mbps": 1646.79,
+      "retransmits": 314,
+      "router_cpu_busy_percent": 29.9
+    },
+    {
+      "mode": "r6-hardware",
+      "direction": "lan-to-wan",
+      "receiver_mbps": 2187.27,
+      "retransmits": 442,
+      "router_cpu_busy_percent": 0.27
+    },
+    {
+      "mode": "r6-hardware",
+      "direction": "wan-to-lan",
+      "receiver_mbps": 2314.96,
+      "retransmits": 0,
+      "router_cpu_busy_percent": 0.32
+    }
+  ],
+  "r6_readback": {
+    "kernel": {
+      "bytes": 6856796,
+      "sha256": "134c600ff8f11187ced90fed1aa428674aa852e99fa04e9100f9695f3d6e5f32",
+      "readback_matches": true
+    },
+    "root": {
+      "bytes": 19267584,
+      "sha256": "685547b028008fbfab3de92d197809a7157efd5265ea92e21d4a90fd79bc0c3f",
+      "readback_matches": true
+    },
+    "appsbl_art_primary_gpt_unchanged": true,
+    "stored_boot_environment_unchanged": true,
+    "config_and_original_hostkey_carryover_verified": true
+  },
+  "r6_cryptoapi": {
+    "registered": [
+      "gcm-aes-ce",
+      "rfc4106-gcm-aes-ce",
+      "ccm-aes-ce",
+      "ctr-aes-ce"
+    ],
+    "kernel_reported_selftests_passed": true,
+    "af_alg_aes_ctr_16k_mib_per_second": {
+      "generic": 51.5,
+      "armv8_ce": 487.19
+    },
+    "nist_first_block_checked_each_iteration": true,
+    "complete_crypto_validation_claimed": false
+  }
+}

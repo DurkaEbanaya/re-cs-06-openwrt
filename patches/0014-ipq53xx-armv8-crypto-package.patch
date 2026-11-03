@@ -1,0 +1,36 @@
+diff --git a/package/kernel/linux/modules/crypto.mk b/package/kernel/linux/modules/crypto.mk
+index 1dea82c8..5c3f2d75 100644
+--- a/package/kernel/linux/modules/crypto.mk
++++ b/package/kernel/linux/modules/crypto.mk
+@@ -13,6 +13,23 @@ CRYPTO_MODULES = \
+ 
+ CRYPTO_TARGET = $(BOARD)/$(SUBTARGET)
+ 
++define KernelPackage/crypto-armv8-ce-ipq53xx
++  TITLE:=ARMv8 AES and GCM acceleration for IPQ53xx
++  DEPENDS:=@TARGET_qualcommbe_ipq53xx +kmod-crypto-manager +kmod-crypto-gf128
++  KCONFIG:= \
++	CONFIG_CRYPTO_AES_ARM64_CE \
++	CONFIG_CRYPTO_AES_ARM64_CE_BLK \
++	CONFIG_CRYPTO_AES_ARM64_CE_CCM \
++	CONFIG_CRYPTO_GHASH_ARM64_CE
++  FILES:= \
++	$(LINUX_DIR)/arch/arm64/crypto/aes-ce-cipher.ko \
++	$(LINUX_DIR)/arch/arm64/crypto/aes-ce-blk.ko \
++	$(LINUX_DIR)/arch/arm64/crypto/aes-ce-ccm.ko \
++	$(LINUX_DIR)/arch/arm64/crypto/ghash-ce.ko
++  AUTOLOAD:=$(call AutoLoad,09,aes-ce-cipher aes-ce-blk aes-ce-ccm ghash-ce)
++  $(call AddDepends/crypto)
++endef
++
+ crypto_confvar=CONFIG_CRYPTO_$(word 1,$(subst =,$(space),$(1)))
+ crypto_file=$(LINUX_DIR)/crypto/$(word 2,$(subst =,$(space),$(1))).ko
+ crypto_name=$(if $(findstring y,$($(call crypto_confvar,$(1)))),,$(word 2,$(subst =,$(space),$(1))))
+@@ -22,6 +39,7 @@ define AddDepends/crypto
+   DEPENDS+= $(1)
+ endef
+ 
++$(eval $(call KernelPackage,crypto-armv8-ce-ipq53xx))
+ 
+ define KernelPackage/crypto-acompress
+   TITLE:=Asynchronous Compression operations

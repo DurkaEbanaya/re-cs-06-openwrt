@@ -3,15 +3,18 @@
 Experimental, source-based build for **JDCloud RE-CS-06 / BE6500** with
 Qualcomm IPQ5322/IPQ5332. This is **not an official OpenWrt release**.
 
-**Status: local peripherals-r5 boots Linux 6.18.60 from eMMC with automatically
+**Status: local resources-r6 boots Linux 6.18.60 from eMMC with automatically
 created ext4. Its checked upgrade retained settings and the original SSH key;
 kernel/root readback passed. The earlier r4 TX/RX fixes yielded 2.346–2.348
 Gbit/s RX and 1.961–2.034 Gbit/s TX, with zero retransmissions in four
 30-second direct 2.5G runs. r5 includes the corrected RX scripts and USB
 storage/UAS. Independent phone tests confirmed 5 GHz HE/802.11ax traffic;
 an external UAS SSD passed direct-I/O verification and remount/fsck checks.
-EHT/MLO, 6 GHz, accelerated WAN/NAT and broader upgrade/power-loss scenarios
-remain unvalidated; the current PHYs advertise no 6 GHz band.
+r6 adds ARMv8 CryptoAPI AES/GCM and fixes software-flowtable DSA ingress.
+Routed IPv4 hardware NAT reached 2.19/2.31 Gbit/s with ~0.3% aggregate CPU;
+PPE counters and HW_OFFLOAD confirmed the hardware path. This is not full
+acceptance of IPv6, VPNs, EHT/MLO or broader upgrade/power-loss scenarios;
+the current PHYs advertise no 6 GHz band.
 Do not flash the older published images with the account-permissions defect.**
 
 See [persistent installation results and follow-up fixes](docs/INSTALL-CANDIDATE.md).
@@ -20,6 +23,7 @@ Current: [acceptance tracker](docs/KNOWN-ISSUES.md),
 [r5 hardware report](reports/peripherals-r5-hardware.json),
 [phone HE test](docs/PHONE-HE-TEST.md), [USB storage test](docs/USB-SSD-TEST.md)
 and [acceleration implementation versus validation](docs/ACCELERATION.md).
+Latest: [resource audit and r6 results](docs/RESOURCE-AUDIT.md).
 
 ## Goals
 

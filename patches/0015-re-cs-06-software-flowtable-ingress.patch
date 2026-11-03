@@ -1,0 +1,38 @@
+diff --git a/package/network/config/firewall4/patches/008-re-cs-06-software-flowtable-dsa-ingress.patch b/package/network/config/firewall4/patches/008-re-cs-06-software-flowtable-dsa-ingress.patch
+new file mode 100644
+index 00000000..e8f68713
+--- /dev/null
++++ b/package/network/config/firewall4/patches/008-re-cs-06-software-flowtable-dsa-ingress.patch
+@@ -0,0 +1,32 @@
++Subject: [PATCH] firewall4: include RE-CS-06 DSA ingress devices in software flowtable
++
++Software ingress hooks attached only to br-lan do not see the physical DSA
++port ingress path used on this board. Reuse the existing lower-device
++resolver, without enabling hardware flags or changing other boards.
++
++--- a/root/usr/share/ucode/fw4.uc
+++++ b/root/usr/share/ucode/fw4.uc
++@@ -581,11 +581,23 @@ return {
++ 		if (!devices) {
++ 			devices = [];
++ 
+++			let dsa_status = null;
+++			if (trim(fs.readfile('/tmp/sysinfo/board_name') || '') == 'jdcloud,re-cs-06') {
+++				let bus = ubus.connect();
+++				if (bus) {
+++					dsa_status = bus.call('network.device', 'status') || {};
+++					bus.disconnect();
+++				}
+++			}
+++
++ 			for (let zone in this.zones())
++ 				for (let device in zone.related_physdevs)
++-					if (fs.access(`/sys/class/net/${device}`))
++-						push(devices, device);
+++					if (fs.access(`/sys/class/net/${device}`)) {
+++						push(devices, device);
+++						if (dsa_status)
+++							push(devices, ...resolve_lower_devices(dsa_status, device));
+++					}
++ 
++ 			devices = sort(uniq(devices));

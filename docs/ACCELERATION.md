@@ -27,7 +27,7 @@ being proprietary does not by itself establish which traffic it accelerates.
 For reproducible correctness tests, the current firewall configuration has
 **both software and hardware flow offloading disabled**. At the initial
 inspection PPE flowtable counters reported `bound:0 replace:0` and zero
-active flow entries. No hardware-accelerated NAT result has been established.
+active flow entries. This was the initial state, before the routed tests below.
 Earlier iperf tests terminated on the router, not through it; these normally
 exercise the CPU endpoint and cannot measure routed flowtable acceleration.
 RPS/packet steering moves CPU processing between cores; it is not hardware
@@ -47,3 +47,14 @@ QWRT features from the presence of PPE.
 Enabling an untested fast path globally just to improve a benchmark can hide
 correctness problems or change accounting/QoS behavior. It is a separate
 acceptance step, not a reason to replace the bootloader or calibration.
+
+## Routed hardware result
+
+The later [resource audit](RESOURCE-AUDIT.md) verified IPv4 NAT through
+JDCloud, rather than terminating traffic on it: valid PPE entries, increasing
+packet/byte counters and conntrack `HW_OFFLOAD`, with 2.17/2.33 Gbit/s and
+about 0.3% aggregate CPU busy during the sampled runs. This establishes a
+working tested native hardware path, not NSS feature parity or acceptance
+of every tunnel/protocol. Software-only ingress selection needed a separate
+board-scoped fix. Both offload settings and WAN were returned to disabled
+after diagnostics; see the audit for retransmissions and remaining gates.
