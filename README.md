@@ -3,14 +3,16 @@
 Experimental, source-based build for **JDCloud RE-CS-06 / BE6500** with
 Qualcomm IPQ5322/IPQ5332. This is **not an official OpenWrt release**.
 
-**Status: local install-r2 boots Linux 6.18.60 from eMMC, with SSH and both
-radio PHYs registered. An ext4 overlay was initialized manually after the
-first-boot formatter problem; file and SSH-key persistence passed a reboot.
-Wired ports previously passed isolated 1 Gbit/s RAM tests. AP/client Wi-Fi
-traffic, MLO, routing performance and normal sysupgrade remain unvalidated.
+**Status: local queuefix-r3 boots Linux 6.18.60 from eMMC with automatically
+created ext4. Configuration needed manual recovery after sysupgrade; restored
+settings and the original SSH key passed reboot/readback checks. Direct 2.5G
+tests show clean JDCloud-sender TCP runs after the queue fix, but two-stream
+host-sender retransmissions remain. Both radio PHYs and earlier HT/VHT traffic
+were tested; HE/EHT, MLO, WAN/NAT and unattended sysupgrade remain unvalidated.
 Do not flash the older published images with the account-permissions defect.**
 
 See [persistent installation results and follow-up fixes](docs/INSTALL-CANDIDATE.md).
+Latest: [queuefix-r3 installation and hardware comparison](docs/QUEUEFIX-R3.md).
 
 ## Goals
 

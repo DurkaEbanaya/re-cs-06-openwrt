@@ -1,0 +1,87 @@
+{
+  "installed_r3": true,
+  "kernel_and_rootfs_readback_match_image": true,
+  "appsbl_art_primary_gpt_and_stored_environment_match_backup": true,
+  "restored_network_wireless_and_host_key_match_private_backup": true,
+  "manual_config_restore_required": true,
+  "ext4_created_automatically": true,
+  "rootfs_overlay_persistence_verified_after_reboot": true,
+  "version": "experimental-2026.11.03-queuefix-r3",
+  "installed_sysupgrade_sha256": "0a7edf63e5d50fb05ea6a0e324d4375cc0070f483f687fcf82799bb10be2a48a",
+  "persistent_kernel_bytes": 6856704,
+  "first_upgrade_attempt_blocked_before_writes": true,
+  "first_attempt_missing_stage2_binary": "mktemp",
+  "automatic_configuration_carryover_passed": false,
+  "carryover_failure_root_cause_established": false,
+  "hardware_test_transport": "direct 2500 Mbit/s full duplex IPv4/IPv6 TCP endpoints",
+  "seconds_per_run": 15,
+  "results": [
+    {
+      "test": "forward-1",
+      "receiver_mbps": 1720.57,
+      "retransmits": 290
+    },
+    {
+      "test": "reverse-1",
+      "receiver_mbps": 1225.07,
+      "retransmits": 0
+    },
+    {
+      "test": "forward-2",
+      "receiver_mbps": 1702.89,
+      "retransmits": 350
+    },
+    {
+      "test": "reverse-2",
+      "receiver_mbps": 1211.34,
+      "retransmits": 0
+    },
+    {
+      "test": "reverse-cpu0",
+      "receiver_mbps": 1266.6,
+      "retransmits": 0
+    },
+    {
+      "test": "reverse-cpu1",
+      "receiver_mbps": 1809.94,
+      "retransmits": 0
+    },
+    {
+      "test": "reverse-ipv6",
+      "receiver_mbps": 1184.98,
+      "retransmits": 0
+    },
+    {
+      "test": "reverse-cpu1-repeat",
+      "receiver_mbps": 1786.89,
+      "retransmits": 0
+    },
+    {
+      "test": "forward-single",
+      "receiver_mbps": 1980.72,
+      "retransmits": 0
+    },
+    {
+      "test": "reverse-2stream-cpu1",
+      "receiver_mbps": 1189.6,
+      "retransmits": 0
+    },
+    {
+      "test": "forward-repeat",
+      "receiver_mbps": 1684.46,
+      "retransmits": 255
+    }
+  ],
+  "all_seven_reverse_runs_had_zero_retransmits": true,
+  "two_stream_forward_retransmissions_remain": true,
+  "all_direction_network_issue_resolved": false,
+  "pcie_corrected_rxerr_in_observed_post_restore_boot": 0,
+  "permanent_pcie_resolution_claimed": false,
+  "wireless_ap_teardown_retested": false,
+  "wan_nat_tested": false,
+  "wan_and_wireless_left_disabled": true,
+  "temporary_test_server_removed": true,
+  "global_rps_or_offload_tuning_applied": false,
+  "unattended_sysupgrade_validated": false,
+  "fdb_delete_errors_in_collected_post_restore_dmesg": false
+}
