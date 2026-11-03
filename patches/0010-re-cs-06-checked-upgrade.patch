@@ -26,3 +26,15 @@ diff --git a/target/linux/qualcommbe/ipq53xx/base-files/lib/upgrade/platform.sh 
  	jdcloud,re-cs-08)
  		return 0
  		;;
+@@ -41,8 +45,10 @@ platform_check_image() {
+ 
+ platform_copy_config() {
+ 	case "$(board_name)" in
++	jdcloud,re-cs-06)
++		: # Backup was written and hash-verified inside recs06_do_upgrade.
++		;;
+ 	gl.inet,gl-be9300|\
+-	jdcloud,re-cs-06|\
+ 	jdcloud,re-cs-08)
+ 		emmc_copy_config
+ 		;;

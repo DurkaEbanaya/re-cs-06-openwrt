@@ -37,6 +37,33 @@ sysupgrade-jdcloud_re-cs-06/root' ] || return 1
 	EMMC_ROOTFS_BLOCKS=$((root_size / 512))
 }
 
+recs06_stage_backup() {
+	RECS06_BACKUP=
+	[ -n "$UPGRADE_BACKUP" ] || return 0
+	[ -s "$UPGRADE_BACKUP" ] && [ ! -L "$UPGRADE_BACKUP" ] || return 1
+	# Validate and preserve the actual stage2 input before touching either slot.
+	gzip -t "$UPGRADE_BACKUP" && tar tzf "$UPGRADE_BACKUP" >/dev/null || return 1
+	RECS06_BACKUP="$RECS06_TMP/config.tgz"
+	cp "$UPGRADE_BACKUP" "$RECS06_BACKUP" || return 1
+	local size available
+	size=$(wc -c < "$RECS06_BACKUP")
+	available=$((2147483648 - EMMC_ROOTFS_BLOCKS * 512))
+	[ "$size" -gt 0 ] && [ "$size" -le "$available" ]
+}
+
+recs06_write_backup() {
+	[ -n "$RECS06_BACKUP" ] || return 0
+	local size expected actual
+	size=$(wc -c < "$RECS06_BACKUP")
+	expected=$(sha256sum "$RECS06_BACKUP")
+	expected=${expected%% *}
+	dd if="$RECS06_BACKUP" of="$EMMC_ROOT_DEV" bs=512 seek="$EMMC_ROOTFS_BLOCKS" conv=fsync || return 1
+	# Read exactly the backup bytes back; never expose configuration contents.
+	actual=$(dd if="$EMMC_ROOT_DEV" bs=512 skip="$EMMC_ROOTFS_BLOCKS" count=$(((size + 511) / 512)) 2>/dev/null | head -c "$size" | sha256sum)
+	actual=${actual%% *}
+	[ "$actual" = "$expected" ]
+}
+
 recs06_check_image() {
 	local rc=0
 	recs06_prepare_upgrade "$1" || rc=1
@@ -59,10 +86,11 @@ recs06_write_verify() {
 recs06_do_upgrade() {
 	# Recheck inside stage2, after pivoting to RAM and unmounting the overlay.
 	local rc=0
-	if recs06_prepare_upgrade "$1"; then
+	if recs06_prepare_upgrade "$1" && recs06_stage_backup; then
 		recs06_write_verify "$RECS06_DIR/root" "$EMMC_ROOT_DEV" &&
 		dd if=/dev/zero of="$EMMC_ROOT_DEV" bs=512 seek="$EMMC_ROOTFS_BLOCKS" count=8 conv=fsync &&
-		recs06_write_verify "$RECS06_DIR/kernel" "$EMMC_KERN_DEV" || rc=1
+		recs06_write_verify "$RECS06_DIR/kernel" "$EMMC_KERN_DEV" &&
+		recs06_write_backup || rc=1
 	else
 		rc=1
 	fi

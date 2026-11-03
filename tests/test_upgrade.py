@@ -82,6 +82,30 @@ OPERATION "$FIXTURE/image.tar"
             (root / 'sys/hlos/size').write_text('1')
             self.assertNotEqual(self.run_script(root, image, 'recs06_check_image').returncode, 0)
 
+    def test_backup_roundtrip_at_overlay_boundary(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root, image, _, filesystem = self.fixture(temp)
+            backup = root / 'config.tgz'
+            with tarfile.open(backup, 'w:gz') as archive:
+                entry = tarfile.TarInfo('etc/config/test')
+                data = b'synthetic-private-settings\n'
+                entry.size = len(data)
+                archive.addfile(entry, io.BytesIO(data))
+            operation = f'UPGRADE_BACKUP="{backup}"; recs06_do_upgrade'
+            result = self.run_script(root, image, operation)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            output = (root / 'rootfs').read_bytes()
+            self.assertEqual(output[len(filesystem):len(filesystem)+backup.stat().st_size], backup.read_bytes())
+            recovered = tarfile.open(fileobj=io.BytesIO(output[len(filesystem):]), mode='r:gz')
+            self.assertEqual(recovered.extractfile('etc/config/test').read(), data)
+            # Bad or missing backups fail before modifying kernel or rootfs.
+            for content in (b'not gzip', b''):
+                self.fixture(temp)
+                backup.write_bytes(content)
+                before = (root / 'rootfs').read_bytes(), (root / 'hlos').read_bytes()
+                self.assertNotEqual(self.run_script(root, image, operation).returncode, 0)
+                self.assertEqual(before, ((root / 'rootfs').read_bytes(), (root / 'hlos').read_bytes()))
+
 
 if __name__ == '__main__':
     unittest.main()

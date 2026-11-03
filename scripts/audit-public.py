@@ -11,8 +11,8 @@ ALLOWED = re.compile(
     r"config/[a-z0-9._-]+\.config|patches/[a-z0-9._-]+\.patch|"
     r"docs/[A-Z0-9._-]+\.md|scripts/[a-z0-9._-]+|"
     r"tests/test_[a-z0-9_]+\.py|reports/[a-z0-9._-]+\.json|"
-    r"overlay/etc/uci-defaults/[a-z0-9._-]+|overlay/lib/upgrade/re-cs-06\.sh|"
-    r"overlay/usr/sbin/re-cs-06-provision-macs)$"
+    r"overlay/etc/uci-defaults/[a-z0-9._-]+|overlay/etc/hotplug.d/net/90-re-cs-06-rps|overlay/lib/upgrade/re-cs-06\.sh|"
+    r"overlay/usr/libexec/platform/packet-steering\.sh|overlay/usr/sbin/re-cs-06-provision-macs)$"
 )
 PATTERNS = {
     "private_key": re.compile(rb"-----BEGIN (?:[A-Z0-9 ]+ )?PRIVATE KEY-----"),

@@ -1,0 +1,56 @@
+{
+  "version": "maintenance-r4",
+  "automatic_config_restore_verified": true,
+  "original_host_key_preserved": true,
+  "ext4_persistent": true,
+  "rps_mask_after_reboot_and_service_restart": [
+    2,
+    2,
+    2,
+    2
+  ],
+  "rps_fix_installed_in_overlay_not_original_r4_squashfs": true,
+  "appsbl_art_primary_gpt_environment_match_backup": true,
+  "image_readback": {
+    "kernel": {
+      "bytes": 6856704,
+      "sha256": "80c3e7bc581215cddf6ca8b038b50a24cf103e7fb302ff2304fb9bd70e98fd04"
+    },
+    "root": {
+      "bytes": 19202048,
+      "sha256": "458dbff4f0d6dd2c112b5efe98db9b29c32002571f728770b54d3389b0d46fd7"
+    }
+  },
+  "sysupgrade_sha256": "8f38c40823d6b077905efee7a6ea277bfc573e028453c32f9d4481ba724f5c18",
+  "tcp_tests": {
+    "seconds": 30,
+    "streams": 2,
+    "direct_link_mbps": 2500,
+    "runs": [
+      {
+        "test": "forward-1",
+        "receiver_mbps": 2346.45,
+        "retransmits": 0
+      },
+      {
+        "test": "reverse-1",
+        "receiver_mbps": 1960.68,
+        "retransmits": 0
+      },
+      {
+        "test": "forward-2",
+        "receiver_mbps": 2347.5,
+        "retransmits": 0
+      },
+      {
+        "test": "reverse-2",
+        "receiver_mbps": 2034.05,
+        "retransmits": 0
+      }
+    ],
+    "hardware_full_acceptance": false
+  },
+  "tests_passed": 32,
+  "wan_wifi_enabled": false,
+  "cold_power_cycle_tested": false
+}
