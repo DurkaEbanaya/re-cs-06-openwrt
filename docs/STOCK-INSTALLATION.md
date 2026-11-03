@@ -89,3 +89,8 @@ exact installed image readbacks; network-only reboots with unchanged host
 keys and persistent markers. Physical cold start and all-port/forwarding
 tests remain distinct from a successful warm boot. Full local images also
 retain the [radio-firmware redistribution restrictions](LICENSING.md).
+
+The recorded r9 unit subsequently passed one owner-performed cold power start
+with UART disconnected, including SSH with the existing host key and full
+persistence/image checks. That does not remove the remaining all-port,
+wireless/forwarding, boot-time corrected PCIe RxErr and power-loss gates.

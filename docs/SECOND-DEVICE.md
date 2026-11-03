@@ -337,3 +337,28 @@ second-device routed NAT/PPE acceptance test. Both radio PHYs enumerate,
 but radios and WAN remain disabled; no wireless-traffic verdict follows.
 Physical cold-start, other physical ports and routed/accelerated traffic
 remain open gates. No cold-start result is inferred from warm reboots.
+
+### Physical cold start with UART disconnected
+
+After the owner disconnected UART and performed the requested power cycle,
+the unit returned over SSH using its existing trusted host key. The boot ID
+changed; both the installation marker and the later persistence marker
+survived. Exact shadow/authorized-key hashes, own wired identity, ext4 overlay,
+public boot-success hook and zero boot counter passed again. Kernel/rootfs
+readbacks, protected partitions and repaired GPT ranges still matched.
+No UART access or router configuration repair was used for this test.
+
+All four PHYs registered; the connected LAN port negotiated 2.5 Gbit/s full
+duplex at about 16.38 seconds in the kernel log. The observer started after
+power-on, so its quick SSH connection is **not** a measured power-on-to-SSH
+boot time. This is one cold-start sample, not extended boot reliability.
+
+The cold-boot log also contains a correctable PCIe RxErr episode around
+8.2 seconds. Root-port and PCI-radio endpoint AER counters each report
+`RxErr 1`, with nonfatal and fatal totals zero. These are counters at two
+reporting devices, not proof of two independent faults. Both radio PHYs
+enumerated; WAN/radios and persistent flow offloading remain disabled.
+The earlier Ethernet clock/ID failures, panic and Oops were absent in this
+boot. Correctable AER is retained as an open radio/PCIe observation, not
+suppressed or described as fixed. Other physical ports, wireless traffic
+and second-device routed acceleration still need separate tests.

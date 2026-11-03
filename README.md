@@ -14,8 +14,10 @@ The [second device's stock migration](docs/SECOND-DEVICE.md) exposed and
 isolated Ethernet-reset/LDO and first-boot seed defects. The r9 candidate
 boots with its existing stock U-Boot and restores private setup automatically;
 see [stock installation boundaries](docs/STOCK-INSTALLATION.md). No bootloader
-replacement or copied first-device calibration is required. Cold-start and
-broader second-device traffic acceptance remain separate gates.
+replacement or copied first-device calibration is required. One owner-performed
+cold power start with UART disconnected also passed network/persistence checks.
+All-port and broader second-device traffic acceptance remain separate gates;
+a corrected PCIe RxErr at cold boot remains documented.
 
 **По-русски: [как перейти со стока на нашу систему](docs/INSTALL-STOCK-RU.md)** —
 пошаговая подготовка, доступ, бэкапы, первый вход и честные ограничения текущего

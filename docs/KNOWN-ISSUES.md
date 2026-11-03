@@ -13,8 +13,10 @@ overlay implementation notes do not describe the newer r6 squashfs.
 private configuration restore now pass on the 29-partition unit, with two
 SSH-only persistence reboots and local LAN endpoint traffic. See
 [the detailed record](SECOND-DEVICE.md) and
-[stock installation boundaries](STOCK-INSTALLATION.md). Physical cold start,
-all-port traffic and second-device routed offload remain pending. The table
+[stock installation boundaries](STOCK-INSTALLATION.md). One cold power start
+with UART disconnected passed SSH, persistence and Ethernet checks; boot-time
+correctable PCIe RxErr was observed (fatal/nonfatal AER zero). All-port traffic
+and second-device routed offload remain pending. The table
 below primarily records historical first-device acceptance, not those gates.
 
 | Area | Latest established result | Remaining acceptance |
