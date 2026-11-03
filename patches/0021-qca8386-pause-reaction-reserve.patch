@@ -1,0 +1,52 @@
+From: RE-CS-06 minimal build
+Subject: [PATCH] net: dsa: qca8386: reserve in-flight PAUSE reaction buffers
+
+Match the MHT policy used by Qualcomm SSDK; retain other QM bits.
+
+diff --git a/target/linux/qualcommbe/patches-6.18/0679-net-qca8386-pause-reaction-reserve.patch b/target/linux/qualcommbe/patches-6.18/0679-net-qca8386-pause-reaction-reserve.patch
+new file mode 100644
+--- /dev/null
++++ b/target/linux/qualcommbe/patches-6.18/0679-net-qca8386-pause-reaction-reserve.patch
+@@ -0,0 +1,42 @@
++From: RE-CS-06 minimal build
++Subject: [PATCH] net: dsa: qca8k: reserve MHT buffers for PAUSE reaction
++
++QCA8386/MHT resets FLOW_DROP_CNT to 14. At 2.5 Gbit/s this leaves
++insufficient in-flight packet headroom after PAUSE, dropping frames in
++the ingress switch while the CPU drains a burst. Qualcomm SSDK's MHT
++initialization uses 60. Preserve all other queue-manager policy bits.
++Do not use the QCA8337 HOL field layout on MHT.
++
++--- a/drivers/net/dsa/qca/qca8k.h
+++++ b/drivers/net/dsa/qca/qca8k.h
++@@ -316,6 +316,10 @@
++ #define   QCA8K_GLOBAL_FC_GOL_XOFF_THRES_MASK		GENMASK(8, 0)
++ #define   QCA8K_GLOBAL_FC_GOL_XOFF_THRES(x)		FIELD_PREP(QCA8K_GLOBAL_FC_GOL_XOFF_THRES_MASK, x)
++ 
+++#define QCA8386_REG_QM_CTRL				0x808
+++#define   QCA8386_QM_FLOW_DROP_EN			BIT(6)
+++#define   QCA8386_QM_FLOW_DROP_CNT			GENMASK(5, 0)
+++
++ #define QCA8K_REG_PORT_HOL_CTRL0(_i)			(0x970 + (_i) * 0x8)
++ #define   QCA8K_PORT_HOL_CTRL0_EG_PRI0_BUF_MASK		GENMASK(3, 0)
++ #define   QCA8K_PORT_HOL_CTRL0_EG_PRI0(x)		FIELD_PREP(QCA8K_PORT_HOL_CTRL0_EG_PRI0_BUF_MASK, x)
++--- a/drivers/net/dsa/qca/qca8k-8xxx.c
+++++ b/drivers/net/dsa/qca/qca8k-8xxx.c
++@@ -2364,6 +2364,17 @@ qca8k_setup(struct dsa_switch *ds)
++ 		dsa_switch_for_each_available_port(dp, ds)
++ 			qca8k_setup_hol_fixup(priv, dp->index);
++ 
+++	if (qca8k_is_qca8386(priv)) {
+++		/* MHT/SSDK uses 60 in-flight packets for PAUSE reaction. */
+++		ret = qca8k_rmw(priv, QCA8386_REG_QM_CTRL,
+++				QCA8386_QM_FLOW_DROP_EN | QCA8386_QM_FLOW_DROP_CNT,
+++				QCA8386_QM_FLOW_DROP_EN |
+++				FIELD_PREP(QCA8386_QM_FLOW_DROP_CNT, 60));
+++		if (ret)
+++			return dev_err_probe(priv->dev, ret,
+++					     "failed to set PAUSE reaction reserve\n");
+++	}
+++
++ 	/* Special GLOBAL_FC_THRESH value are needed for ar8327 switch */
++ 	if (priv->switch_id == QCA8K_ID_QCA8327) {
++ 		mask = QCA8K_GLOBAL_FC_GOL_XON_THRES(288) |

@@ -1,0 +1,68 @@
+{
+  "latest_full_local_candidate": "experimental-2026.11.04-loss-fixes-r14",
+  "router1_installed_build": "radio-sequence-r12",
+  "router2_installed_build": "loss-fixes-r14",
+  "public_binary_release_remains": "radio-sequence-r12-external",
+  "kernel": "6.18.60",
+  "qca8386_pause_reaction_reserve": {
+    "patch": "patches/0021-qca8386-pause-reaction-reserve.patch",
+    "original_count": 14,
+    "corrected_count": 60,
+    "isolated_reversible_change_removed_filtered_counter_growth": true,
+    "r13_serialized_30_second_receive_runs": 6,
+    "r13_receiver_mbps_range": [2346.39, 2347.41],
+    "r13_filtered_counter_growth_all_six_runs": 0,
+    "all_tcp_retransmissions_eliminated": false,
+    "wred_disable_or_ingress_buffer_only_accepted": false,
+    "single_ring_control_left_enabled": false
+  },
+  "software_radio_loss_controls": {
+    "baseline_softnet_drops_matched_tcp_retransmissions": true,
+    "temporary_backlog": 16384,
+    "isolated_reverse_run_aqm_drops_and_tcp_retransmissions_each": 8,
+    "filtered_trace_overruns": 0,
+    "ecn_negotiated_comparison_tcp_retransmissions_all_four_runs": 0,
+    "software_reverse_ecn_marks": 7,
+    "qdisc_disabled_or_latency_target_enlarged": false,
+    "larger_backlog_or_ecn_request_enabled_as_firmware_default": false,
+    "non_ecn_congestion_loss_claimed_fixed": false
+  },
+  "wired_sender_trace": {
+    "receiver_mbps": [2347.14, 2346.80],
+    "iperf_retransmissions": [5, 2],
+    "traced_events_including_setup_teardown": 8,
+    "all_traced_stacks_used_tcp_send_loss_probe": true,
+    "trace_events_lost": false,
+    "tcp_loss_recovery_disabled": false,
+    "all_earlier_retries_claimed_explained": false
+  },
+  "r14_full_upgrade": {
+    "restored_network_configuration_no_longer_overwritten_by_defaults": true,
+    "management_and_nine_checked_configuration_access_files_preserved": true,
+    "kernel_and_rootfs_readback_passed": true,
+    "protected_stock_bootloader_calibration_partitions_unchanged": true,
+    "persistent_ext4_both_radio_phys_and_gen3_x2_verified": true,
+    "all_six_aer_totals_zero": true,
+    "boot_counter_zero": true,
+    "new_r14_load_benchmark_claimed": false
+  },
+  "us_eht_control": {
+    "physical_us_location_confirmed_by_owner": true,
+    "actual_5ghz_eht80_four_spatial_streams": true,
+    "ap_phy_tx_mbps": 2882.3,
+    "sta_phy_tx_mbps": 2593.5,
+    "ap_routed_ppe_hw_offload_and_direct_switch_observed": true,
+    "six_ghz_or_mlo_tested": false,
+    "country_ru_and_radios_disabled_after_test": true
+  },
+  "offline_regression_tests_passed": 61,
+  "overlapping_wired_and_backlog_4096_runs_excluded_from_isolated_acceptance": true,
+  "final_cleanup": {
+    "management_and_host_wifi_internet_preserved_before_shutdown": true,
+    "temporary_tools_modules_nat_routes_and_traces_removed": true,
+    "router_backlog_1000_ecn_2_edma_bitmap_15_rps_mask_2_restored": true,
+    "host_ecn_restored_to_original_2": true,
+    "ru_radios_disabled_wan_and_persistent_offloading_disabled": true
+  },
+  "universal_zero_tcp_retransmission_claimed": false
+}

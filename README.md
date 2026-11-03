@@ -3,9 +3,13 @@
 Experimental, source-based build for **JDCloud RE-CS-06 / BE6500** with
 Qualcomm IPQ5322/IPQ5332. This is **not an official OpenWrt release**.
 
-**Current: radio-sequence-r12, Linux 6.18.60.** The full local build runs on
+**Latest full local candidate: loss-fixes-r14, Linux 6.18.60**, installed on
 the second RE-CS-06 with its stock bootloader, persistent ext4 and preserved
-private access. The separately built public **r12-external** variant omits
+private access/management configuration; the first router remains on r12.
+The [TCP loss investigation](docs/TCP-LOSS-DIAGNOSIS.md) distinguishes the
+corrected QCA8386 switch drops, software backlog/AQM congestion and residual
+sender Tail Loss Probes. It does not promise zero TCP retries in all traffic.
+The separately built public **r12-external** variant omits
 radio firmware/BDF blobs: see [release notes](docs/RELEASE-R12.md) and
 [external dependencies](docs/EXTERNAL-RADIO.md). It is not the byte-identical
 hardware-tested full image, and is not a universal stock installer.
@@ -29,7 +33,10 @@ sequences PCI host initialization after AHB PHY registration, without AER
 masking or reducing Gen3 x2. Its missing-helper 60-second kernel fallback
 was tested. Two r11 diagnostic cold starts were clean; full r12 results and
 the pending physical-cycle confirmation are recorded separately. All-port,
-second-device routed traffic and wireless EHT/MLO remain separate gates.
+second-device routed traffic and broader wireless acceptance remain separate
+gates. Actual US-location 5 GHz EHT80 AP/STA with four streams and measured
+AP PPE/Direct Switch traffic is documented in the [EHT control](docs/US-EHT-TEST.md);
+this is not 6 GHz, MLO, or arbitrary STA forwarding acceptance.
 
 **По-русски: [как перейти со стока на нашу систему](docs/INSTALL-STOCK-RU.md)** —
 пошаговая подготовка, доступ, бэкапы, первый вход и честные ограничения текущего
@@ -38,7 +45,7 @@ second-device routed traffic and wireless EHT/MLO remain separate gates.
 **[Что нового в r12](docs/RELEASE-R12.md)** ·
 **[Стенд из двух роутеров, включая Wi-Fi 7](docs/TWO-ROUTER-LAB-RU.md)**
 
-This is not universal hardware certification: EHT/MLO, provider WAN VLANs,
+This is not universal hardware certification: broader EHT/MLO, provider WAN VLANs,
 PPPoE IPv6, VPN throughput and power-loss safety remain outside acceptance.
 The earlier unexplained Ethernet outage and remaining inter-capture-point
 reordering are not claimed fixed. Current PHYs advertise no 6 GHz band.

@@ -3,6 +3,21 @@
 # Public defaults: no per-device credentials or identity.
 [ "$(cat /tmp/sysinfo/board_name 2>/dev/null)" = "jdcloud,re-cs-06" ] || exit 0
 
+# preinit restores a checked backup before S10 runs uci-defaults; S95 removes
+# these archives later. Do not overwrite owner settings on every upgrade.
+# A first-install access-only seed has no network config and still needs the
+# conservative defaults below.
+for archive in /tmp/sysupgrade.tar /sysupgrade.tgz; do
+ [ -f "$archive" ] || continue
+ case "$archive" in
+  *.tgz) entries="$(tar tzf "$archive" 2>/dev/null)" || continue ;;
+  *) entries="$(tar tf "$archive" 2>/dev/null)" || continue ;;
+ esac
+ if printf '%s\n' "$entries" | grep -qxE '(\./)?etc/config/network'; then
+  exit 0
+ fi
+done
+
 uci -q batch <<'EOF'
 set network.lan.ipaddr='192.168.76.1'
 set network.lan.netmask='255.255.255.0'
