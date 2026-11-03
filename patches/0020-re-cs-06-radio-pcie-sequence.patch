@@ -1,0 +1,132 @@
+--- a/target/linux/qualcommbe/dts/ipq5322-re-cs-06.dts
++++ b/target/linux/qualcommbe/dts/ipq5322-re-cs-06.dts
+@@ -210,6 +210,11 @@
+ 	/delete-node/ ports;
+ };
+ 
++&pcie1 {
++	/* Keep the link in reset across integrated radio initialization. */
++	jdcloud,wait-for-ahb-radio;
++};
++
+ &wifi1 {
+ 	qcom,board-id = <2>;
+ 	/delete-property/ qcom,wsi-controller;
+diff --git a/target/linux/qualcommbe/patches-6.18/0678-pci-re-cs-06-radio-sequence.patch b/target/linux/qualcommbe/patches-6.18/0678-pci-re-cs-06-radio-sequence.patch
+new file mode 100644
+--- /dev/null
++++ b/target/linux/qualcommbe/patches-6.18/0678-pci-re-cs-06-radio-sequence.patch
+@@ -0,0 +1,113 @@
++--- a/drivers/pci/controller/dwc/pcie-qcom.c
+++++ b/drivers/pci/controller/dwc/pcie-qcom.c
++@@ -19,6 +19,8 @@
++ #include <linux/iopoll.h>
++ #include <linux/kernel.h>
++ #include <linux/limits.h>
+++#include <linux/moduleparam.h>
+++#include <linux/mutex.h>
++ #include <linux/init.h>
++ #include <linux/of.h>
++ #include <linux/of_pci.h>
++@@ -34,6 +36,7 @@
++ #include <linux/slab.h>
++ #include <linux/types.h>
++ #include <linux/units.h>
+++#include <linux/workqueue.h>
++ 
++ #include "../../pci.h"
++ #include "../pci-host-common.h"
++@@ -1742,6 +1745,62 @@
++ 	return 0;
++ }
++ 
+++/* RE-CS-06 shares radio initialization resources. Keep PERST asserted until
+++ * the integrated radio is ready, with a kernel-owned fail-open deadline.
+++ * This local board property is deliberately not a generic Qcom binding.
+++ */
+++static bool recs06_radio_ready;
+++static DEFINE_MUTEX(recs06_gate_lock);
+++static struct device *recs06_gate_device;
+++
+++static void recs06_release_host(struct work_struct *work)
+++{
+++	struct device *dev;
+++	bool timed_out;
+++	int ret;
+++
+++	mutex_lock(&recs06_gate_lock);
+++	timed_out = !READ_ONCE(recs06_radio_ready);
+++	WRITE_ONCE(recs06_radio_ready, true);
+++	dev = recs06_gate_device;
+++	recs06_gate_device = NULL;
+++	mutex_unlock(&recs06_gate_lock);
+++	if (!dev)
+++		return;
+++	if (timed_out)
+++		dev_warn(dev, "AHB readiness timeout; releasing PCIe fail-open\n");
+++	else
+++		dev_info(dev, "AHB radio ready; releasing PCIe host\n");
+++	ret = device_attach(dev);
+++	if (ret < 0)
+++		dev_warn(dev, "PCIe release probe returned %d\n", ret);
+++	put_device(dev);
+++}
+++static DECLARE_DELAYED_WORK(recs06_release_work, recs06_release_host);
+++
+++static int recs06_radio_ready_set(const char *val, const struct kernel_param *kp)
+++{
+++	bool ready;
+++	int ret = kstrtobool(val, &ready);
+++
+++	/* A release cannot be undone on a live bus. */
+++	if (ret || !ready)
+++		return ret ?: -EINVAL;
+++	mutex_lock(&recs06_gate_lock);
+++	WRITE_ONCE(recs06_radio_ready, true);
+++	if (recs06_gate_device)
+++		mod_delayed_work(system_unbound_wq, &recs06_release_work, 0);
+++	mutex_unlock(&recs06_gate_lock);
+++	return 0;
+++}
+++
+++static const struct kernel_param_ops recs06_ready_ops = {
+++	.set = recs06_radio_ready_set,
+++	.get = param_get_bool,
+++};
+++module_param_cb(recs06_radio_ready, &recs06_ready_ops, &recs06_radio_ready, 0644);
+++MODULE_PARM_DESC(recs06_radio_ready, "One-way RE-CS-06 AHB-ready PCIe release");
+++
++ static int qcom_pcie_probe(struct platform_device *pdev)
++ {
++ 	const struct qcom_pcie_cfg *pcie_cfg;
++@@ -1754,6 +1813,30 @@
++ 	struct resource *res;
++ 	struct dw_pcie *pci;
++ 	int ret;
+++
+++	if (of_machine_is_compatible("jdcloud,re-cs-06") &&
+++	    of_property_read_bool(dev->of_node, "jdcloud,wait-for-ahb-radio") &&
+++	    !READ_ONCE(recs06_radio_ready)) {
+++		struct gpio_desc *hold;
+++
+++		/* Use the controller's declared PERST polarity, never a GPIO number.
+++		 * The output remains asserted after deferred-probe devres cleanup.
+++		 * A later ordinary probe reacquires it and runs the normal sequence.
+++		 */
+++		hold = devm_gpiod_get(dev, "perst", GPIOD_OUT_HIGH);
+++		if (IS_ERR(hold))
+++			return dev_err_probe(dev, PTR_ERR(hold), "radio-sequence PERST hold failed\n");
+++		mutex_lock(&recs06_gate_lock);
+++		if (!recs06_gate_device) {
+++			recs06_gate_device = get_device(dev);
+++			/* Cover a readiness signal racing this probe's first check. */
+++			schedule_delayed_work(&recs06_release_work,
+++				READ_ONCE(recs06_radio_ready) ? 0 : 60 * HZ);
+++		}
+++		mutex_unlock(&recs06_gate_lock);
+++		return dev_err_probe(dev, -EPROBE_DEFER,
+++				     "waiting for integrated AHB radio before PCIe\n");
+++	}
++ 
++ 	pcie_cfg = of_device_get_match_data(dev);
++ 	if (!pcie_cfg) {

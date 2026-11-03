@@ -1,0 +1,73 @@
+{
+  "build": "experimental-2026.11.03-radio-sequence-r12",
+  "kernel": "6.18.60",
+  "device": "second JDCloud RE-CS-06",
+  "full_image_installed": true,
+  "temporary_kernel_only_diagnostic_replaced": true,
+  "public_patch": "patches/0020-re-cs-06-radio-pcie-sequence.patch",
+  "normal_sequence": "Hold declared PERST before PCIe host initialization; release on integrated AHB PHY registration",
+  "kernel_fail_open_deadline_seconds_after_first_gated_probe": 60,
+  "fixed_60_second_normal_startup_delay": false,
+  "aer_masking_or_speed_cap_used": false,
+  "first_full_image_boot": {
+    "ready_release_kernel_seconds": 11.948,
+    "gen3_x2_link_up_kernel_seconds": 12.306,
+    "aer_normally_enabled_kernel_seconds": 12.465,
+    "kernel_timeout_needed": false,
+    "root_and_endpoint_rxerr_each": 0,
+    "both_radio_phys_returned": true,
+    "kernel_root_readback_verified": true,
+    "protected_stock_bootloader_and_calibration_partitions_unchanged": true,
+    "same_device_password_authorized_key_host_keys_and_markers_preserved": true,
+    "temporary_r11_boot_hook_absent": true,
+    "boot_counter_zero": true
+  },
+  "kernel_timeout_failure_path_test_passed": true,
+  "missing_readiness_service_warm_test": {
+    "readiness_service_disabled_for_one_boot": true,
+    "userspace_release_signal_observed": false,
+    "kernel_deadline_fired_seconds": 64.476,
+    "gen3_x2_link_up_seconds": 64.826,
+    "both_radio_phys_returned": true,
+    "root_and_endpoint_rxerr_each": 0,
+    "full_readback_and_private_access_checks_passed": true,
+    "readiness_service_reenabled": true,
+    "all_possible_ahb_failure_modes_tested": false
+  },
+  "full_image_physical_cold_start_test_completed": false,
+  "normal_reboot_after_failure_path": {
+    "readiness_service_enabled": true,
+    "ready_release_seconds": 10.591,
+    "gen3_x2_link_up_seconds": 10.966,
+    "kernel_timeout_needed": false,
+    "root_and_endpoint_rxerr_each": 0,
+    "all_aer_totals_zero": true,
+    "full_image_protected_and_private_access_checks_passed": true
+  },
+  "uart_disconnected_test_completed": false,
+  "latest_requested_physical_cycle_network_observation": {
+    "new_boot_observed_over_ethernet": true,
+    "ready_release_seconds": 10.589,
+    "gen3_x2_link_up_seconds": 10.945,
+    "aer_normally_enabled_seconds": 11.104,
+    "kernel_timeout_needed": false,
+    "root_and_endpoint_rxerr_each": 0,
+    "all_aer_totals_zero": true,
+    "both_radio_phys_returned": true,
+    "kernel_rootfs_protected_and_private_access_checks_passed": true,
+    "later_idle_counters_remained_zero": true,
+    "physical_uart_disconnection_and_power_off_duration_owner_confirmation_pending": true
+  },
+  "full_image_lan_endpoint_regression": {
+    "streams": 2,
+    "seconds_per_direction": 20,
+    "pc_to_router_receiver_mbps": 2347.32,
+    "router_to_pc_receiver_mbps": 1613.18,
+    "tcp_retransmits_each_direction": 0,
+    "temporary_server_removed": true,
+    "routed_ppe_or_wireless_traffic_test": false
+  },
+  "wireless_traffic_acceptance_claimed": false,
+  "offline_regression_tests_passed": 56,
+  "exact_firmware_or_analog_root_cause_proven": false
+}

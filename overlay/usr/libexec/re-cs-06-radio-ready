@@ -1,0 +1,22 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-only
+# Signal PHY registration, not arbitrary boot delay. Kernel owns the timeout.
+[ "$(cat /tmp/sysinfo/board_name 2>/dev/null)" = jdcloud,re-cs-06 ] || exit 0
+param=/sys/module/pcie_qcom/parameters/recs06_radio_ready
+[ -w "$param" ] || exit 0
+
+for n in $(seq 1 65); do
+	[ "$(cat "$param" 2>/dev/null)" = Y ] && exit 0
+	for phy in /sys/class/ieee80211/*; do
+		case "$(readlink -f "$phy/device")" in
+			*/c000000.wifi)
+				echo Y > "$param" || exit 1
+				logger -t re-cs-06-radio 'Integrated PHY ready; PCIe release requested'
+				exit 0
+				;;
+		esac
+	done
+	sleep 1
+done
+logger -t re-cs-06-radio 'Readiness wait ended; kernel fail-open deadline remains authoritative'
+exit 0

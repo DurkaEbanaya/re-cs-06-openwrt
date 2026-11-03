@@ -62,7 +62,7 @@ def main():
         raise SystemExit("Refusing to merge an existing files/ overlay; inspect it first")
     shutil.copytree(REPO / "overlay", source / "files")
     for path in (source / "files").rglob("*"):
-        if path.is_file() and any(part in path.parts for part in ("uci-defaults", "sbin", "hotplug.d", "libexec")):
+        if path.is_file() and any(part in path.parts for part in ("uci-defaults", "sbin", "hotplug.d", "libexec", "init.d")):
             path.chmod(0o755)
     config = source / ".config"
     if config.exists():

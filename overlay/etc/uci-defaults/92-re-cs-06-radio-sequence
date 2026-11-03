@@ -1,0 +1,5 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-only
+[ "$(cat /tmp/sysinfo/board_name 2>/dev/null)" = jdcloud,re-cs-06 ] || exit 0
+/etc/init.d/re-cs-06-radio-sequence enable || exit 1
+exit 0

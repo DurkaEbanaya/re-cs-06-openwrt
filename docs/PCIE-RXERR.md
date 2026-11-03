@@ -200,11 +200,13 @@ readbacks, private access, disabled WAN/radios/offloading and boot counter
 zero passed. The rootfs remains the unchanged r10 root; only the diagnostic
 kernel and local bounded release hook differ.
 
-This is a **first positive cold sample**, not repeated acceptance or proof
-of the exact analog/firmware cause. The link is intentionally not operating
+An owner-performed second physical cold cycle also returned with zero
+RxErr at both ends, both PHYs and Gen3 x2. The same firmware/protected and
+private-access checks passed. These are **two clean diagnostic cold
+samples**, not proof of the exact analog/firmware cause. The link is intentionally not operating
 while AHB initializes; this avoids exposing an active link to that stage
-rather than masking an error on an active link. Cold repeatability, real
-wireless traffic and robust integration/failure handling are still pending.
+rather than masking an error on an active link. Broader repeatability, real
+wireless traffic and full-image integration/failure handling remain pending.
 This remains a local diagnostic, not a production synchronization design or
 an accepted RxErr fix. The bounded release hook is temporary and must be
 removed on restoration or replaced by a reviewed implementation if the
@@ -218,3 +220,62 @@ locations. The temporary server was removed. This is an Ethernet endpoint
 regression, **not** routed PPE acceptance or a Wi-Fi traffic test. All 50
 offline regression tests also passed. The sanitized diagnostic record is
 [`reports/pcie-sequence-diagnostic.json`](../reports/pcie-sequence-diagnostic.json).
+
+## Full-image integration candidate r12
+
+The full `experimental-2026.11.03-radio-sequence-r12` image incorporates
+public patch `0020` and the board-scoped `re-cs-06-radio-sequence` service.
+The service signals registration of the integrated AHB PHY; it does not use
+a fixed minute-long startup delay. A one-way kernel parameter releases the
+normal PCIe controller probe. Independently, a kernel delayed worker
+releases it **60 seconds after the first gated host probe** if the readiness
+signal never arrives. This is a fail-open bound, not the normal wait time.
+On that fallback, radio-sequencing protection may be lost; it is not an
+assertion that the AHB radio successfully initialized.
+
+The mechanism applies only to RE-CS-06 with its explicit local DT property,
+uses the declared PERST descriptor/polarity, and neither changes AER masks
+nor caps link speed. It does not reset an already active bus, cannot be
+re-armed through the readiness parameter, and leaves ordinary controller
+initialization responsible for clocks, PHY, reset release and enumeration.
+This is a local board integration, not a new upstream DT binding or a claim
+that the firmware/analog root cause has been repaired.
+
+The first full-image upgrade passed with the temporary r11 diagnostic hook
+excluded from the retained configuration. Same-device password/authorized
+key/SSH host keys and persistence markers survived; kernel/rootfs readback,
+protected stock/calibration/bootloader partitions and boot counter zero
+passed. The readiness signal released PCIe at 11.948 seconds; Gen3 x2
+trained at 12.306 seconds and AER was enabled normally at 12.465 seconds.
+Both PHYs returned with RxErr zero. No kernel timeout was needed in this
+normal boot. Full-image cold-start and missing-readiness fallback acceptance
+are recorded separately as those tests complete.
+
+The missing-readiness path was then tested by disabling only the readiness
+service for one warm boot. Without any userspace release signal, the kernel
+deadline fired at 64.476 seconds (60 seconds after the gated initial probe),
+and Gen3 x2 trained at 64.826 seconds. Both radio PHYs returned, RxErr stayed
+zero, and the same full firmware/protected/private-access checks passed.
+The service was re-enabled afterward. This validates loss of the readiness
+service, **not** every possible AHB firmware failure or controller error.
+An ordinary reboot after re-enabling it again released PCIe on readiness
+at 10.591 seconds, trained Gen3 x2 at 10.966 seconds, and passed full
+firmware/protected/private-access checks with all AER totals zero. The
+fallback delay therefore did not become a persistent normal-boot delay.
+
+The next requested physical-cycle observation returned over Ethernet with
+the full r12 image: readiness release at 10.589 seconds, Gen3 x2 at 10.945
+seconds, normal AER enable at 11.104 seconds, both PHYs, and all AER totals
+zero. Kernel/rootfs, protected partitions, same-device access and boot
+counter checks passed; a later idle snapshot remained clean. The observer
+label contains `uart-disconnected`, but this is the requested test name,
+not electrical proof: owner confirmation of physical UART disconnection
+and the power-off interval is still pending. Do not count it as a confirmed
+UART-disconnected cold sample until that confirmation is received.
+
+The full-image LAN endpoint regression measured 2347.32/1613.18 Mbit/s
+(PC→router/router→PC, two streams, 20 seconds each, zero TCP retransmits).
+This does not establish routed PPE or Wi-Fi throughput; the lower reverse
+sample is retained rather than presented as universal line-rate acceptance.
+The temporary server was removed. The full-image results are recorded in
+[`reports/radio-sequence-r12.json`](../reports/radio-sequence-r12.json).

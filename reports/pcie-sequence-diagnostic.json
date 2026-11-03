@@ -14,7 +14,7 @@
     "rxerr_at_root_and_endpoint_each": 0
   },
   "physical_cold_start": {
-    "samples": 1,
+    "samples": 2,
     "integrated_firmware_version_message_seconds": 7.854,
     "normal_host_probe_requested_seconds": 10.64,
     "pcie_gen3_x2_link_up_seconds": 11.005,
@@ -53,6 +53,7 @@
     "persistent_module_installed": false
   },
   "exact_firmware_or_analog_root_cause_established": false,
-  "repeat_cold_start_and_wireless_traffic_acceptance_pending": true,
+  "two_cold_start_samples_clean": true,
+  "wireless_traffic_acceptance_pending": true,
   "production_integration_and_failure_handling_pending": true
 }
