@@ -81,3 +81,22 @@ The GitHub workflow runs fast offline tool/policy tests, not a complete
 firmware cross-build and not hardware tests. Source audit checks both index
 and working copies of allowlisted tracked files; it is not an audit of
 arbitrary Git history or untracked release assets.
+
+## Private first-boot configuration seed
+
+Keep per-device configuration outside this repository and the mounted build
+tree. `scripts/make-config-seed.py INPUT.tar OUTPUT.tgz` creates a new mode-0600
+filename-free gzip archive with the exact `1f8b0800` signature expected by
+fstools. It rejects absolute/traversing/duplicate paths and non-regular,
+non-directory members. It does not generate passwords, provision identities
+or install anything. Validate the private tar contents and permissions before
+use. A gzip/tar roundtrip alone does not prove first-boot recognition or restore;
+see [stock installation boundaries](STOCK-INSTALLATION.md).
+
+The locally tested second-device full build identifies as
+`experimental-2026.11.03-stock-ready-r9` (set `CONFIG_VERSION_NUMBER` before
+`make defconfig`). It includes patches 0016–0018 and the current public
+overlay. Earlier resolved configurations/reports retain their historical
+version labels; they are not evidence that an older binary includes these
+fixes. Full local radio dependencies remain subject to the separate workflow
+and licensing restrictions above.

@@ -1,0 +1,67 @@
+From: RE-CS-06 minimal build
+Subject: [PATCH] RE-CS-06: assert both UNIPHY LDO-ready outputs before reset
+
+Supply the omitted two register resources and initialize each optional
+LDO-ready word before toggling the external QCA8386 reset.
+
+diff --git a/target/linux/qualcommbe/dts/ipq5322-re-cs-06.dts b/target/linux/qualcommbe/dts/ipq5322-re-cs-06.dts
+--- a/target/linux/qualcommbe/dts/ipq5322-re-cs-06.dts
++++ b/target/linux/qualcommbe/dts/ipq5322-re-cs-06.dts
+@@ -82,6 +82,8 @@
+ 
+ &mdio {
+ 	status = "okay";
++	/* Both UNIPHY LDO-ready outputs must precede external switch reset. */
++	reg = <0x90000 0x64>, <0x7a00610 0x4>, <0x7a10610 0x4>;
+ 	phy-reset-gpios = <&tlmm 51 GPIO_ACTIVE_LOW>;
+ 	/* QCA8386 reset must see its reference clock, not bootloader state. */
+ 	clocks = <&gcc GCC_MDIO_AHB_CLK>,
+diff --git a/target/linux/qualcommbe/patches-6.18/0375b-net-mdio-enable-both-uniphy-ldo-ready.patch b/target/linux/qualcommbe/patches-6.18/0375b-net-mdio-enable-both-uniphy-ldo-ready.patch
+new file mode 100644
+--- /dev/null
++++ b/target/linux/qualcommbe/patches-6.18/0375b-net-mdio-enable-both-uniphy-ldo-ready.patch
+@@ -0,0 +1,44 @@
++From: RE-CS-06 minimal build
++Subject: [PATCH] net: mdio: enable all optional Ethernet LDO-ready outputs
++
++IPQ5332 has two UNIPHY LDO-ready registers. Both must be asserted before
++the external QCA8386 reset. Without them stock U-Boot cold starts return
++all ones on MDIO. Keep the existing optional-resource behavior for boards
++without these registers. These words overlap the PCS register windows,
++so use non-exclusive mappings as in the original multi-LDO implementation.
++
++--- a/drivers/net/mdio/mdio-ipq4019.c
+++++ b/drivers/net/mdio/mdio-ipq4019.c
++@@ -70,1 +70,1 @@
++-	void __iomem *eth_ldo_rdy;
+++	void __iomem *eth_ldo_rdy[3];
++@@ -529,1 +529,2 @@ static int ipq_mdio_reset(struct mii_bus *bus)
++ 	int ret;
+++	int i;
++@@ -538,6 +539,8 @@ static int ipq_mdio_reset(struct mii_bus *bus)
++-	if (priv->eth_ldo_rdy) {
++-		val = readl(priv->eth_ldo_rdy);
+++	for (i = 0; i < ARRAY_SIZE(priv->eth_ldo_rdy); i++) {
+++		if (!priv->eth_ldo_rdy[i])
+++			continue;
+++		val = readl(priv->eth_ldo_rdy[i]);
++ 		val |= BIT(0);
++-		writel(val, priv->eth_ldo_rdy);
+++		writel(val, priv->eth_ldo_rdy[i]);
++ 		fsleep(IPQ_PHY_SET_DELAY_US);
++ 	}
++@@ -695,6 +698,9 @@ static int ipq4019_mdio_probe(struct platform_device *pdev)
++-	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
++-	if (res) {
++-		priv->eth_ldo_rdy = devm_ioremap_resource(&pdev->dev, res);
++-		if (IS_ERR(priv->eth_ldo_rdy))
++-			return PTR_ERR(priv->eth_ldo_rdy);
+++	for (ret = 0; ret < ARRAY_SIZE(priv->eth_ldo_rdy); ret++) {
+++		res = platform_get_resource(pdev, IORESOURCE_MEM, ret + 1);
+++		if (!res)
+++			continue;
+++		priv->eth_ldo_rdy[ret] = devm_ioremap(&pdev->dev, res->start,
+++						  resource_size(res));
+++		if (!priv->eth_ldo_rdy[ret])
+++			return -ENOMEM;
++ 	}

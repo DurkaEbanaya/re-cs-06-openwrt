@@ -1,5 +1,12 @@
 # Local persistent candidate r2
 
+This is the historical first-device r2 record, not the current stock-router
+installation procedure. See [second-device findings](SECOND-DEVICE.md) for
+the stock loader, 29-partition layout, Ethernet initialization fixes and r9
+installation gates. In particular, do not assume stock U-Boot offers the
+modified first unit's HTTP recovery or install an older r2/r6 image on stock
+hardware merely because it fits the partitions.
+
 User authorized a controlled persistent installation after the guarded RAM
 tests. The local `install-r2` variant adds PAS INIT v2, the tested independent
 radio DT layout, account database permission fixes and generic hash-locked

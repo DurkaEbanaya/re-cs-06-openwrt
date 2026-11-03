@@ -9,6 +9,14 @@ the second-device acceptance plan. The open items below remain visible;
 they are not silently marked fixed by this milestone. Historical r3/r4
 overlay implementation notes do not describe the newer r6 squashfs.
 
+**Second-device r9:** stock-loader Ethernet initialization and automatic
+private configuration restore now pass on the 29-partition unit, with two
+SSH-only persistence reboots and local LAN endpoint traffic. See
+[the detailed record](SECOND-DEVICE.md) and
+[stock installation boundaries](STOCK-INSTALLATION.md). Physical cold start,
+all-port traffic and second-device routed offload remain pending. The table
+below primarily records historical first-device acceptance, not those gates.
+
 | Area | Latest established result | Remaining acceptance |
 | --- | --- | --- |
 | TX queue ordering | r3: seven reverse-direction tests without retransmissions | Longer mixed traffic and forwarding, not just endpoints |

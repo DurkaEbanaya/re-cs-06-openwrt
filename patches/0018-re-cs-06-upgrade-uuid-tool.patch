@@ -1,0 +1,10 @@
+diff --git a/target/linux/qualcommbe/ipq53xx/base-files/lib/upgrade/platform.sh b/target/linux/qualcommbe/ipq53xx/base-files/lib/upgrade/platform.sh
+--- a/target/linux/qualcommbe/ipq53xx/base-files/lib/upgrade/platform.sh
++++ b/target/linux/qualcommbe/ipq53xx/base-files/lib/upgrade/platform.sh
+@@ -1,5 +1,5 @@
+ REQUIRE_IMAGE_METADATA=1
+-RAMFS_COPY_BIN='sha256sum head mktemp'
++RAMFS_COPY_BIN='sha256sum head mktemp tr'
+ 
+ platform_do_upgrade() {
+ 	case "$(board_name)" in

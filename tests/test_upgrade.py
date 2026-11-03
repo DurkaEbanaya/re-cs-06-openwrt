@@ -1,5 +1,6 @@
 """Upgrade logic tests use regular temporary files, never real block devices."""
 import hashlib
+import gzip
 import io
 import os
 from pathlib import Path
@@ -17,6 +18,8 @@ class UpgradeTests(unittest.TestCase):
         copy_line = next(line for line in patch.splitlines() if line.startswith('+RAMFS_COPY_BIN='))
         for binary in ('sha256sum', 'head', 'mktemp'):
             self.assertIn(binary, copy_line.split("'")[1].split())
+        patch = (REPO / 'patches/0018-re-cs-06-upgrade-uuid-tool.patch').read_text()
+        self.assertIn("+RAMFS_COPY_BIN='sha256sum head mktemp tr'", patch)
 
     def fixture(self, directory, extra=False):
         root = Path(directory)
@@ -40,12 +43,15 @@ class UpgradeTests(unittest.TestCase):
             sizepath = root / 'sys' / name
             sizepath.mkdir(parents=True, exist_ok=True)
             (sizepath / 'size').write_text('14336' if name == 'hlos' else '4194304')
+            (sizepath / 'uevent').write_text('PARTUUID=12345678-abcd-0000-0000-000000000001\n')
+        (root / 'cmdline').write_text('console=ttyMSM0 root=PARTUUID=12345678-abcd-0000-0000-000000000001 rootwait')
         # Only replace device-test and sysfs path strings. Original write/hash
         # logic runs unchanged against fixture files.
         script = (REPO / 'overlay/lib/upgrade/re-cs-06.sh').read_text()
         script = script.replace('[ -b "$kernel_dev" ]', '[ -f "$kernel_dev" ]')
         script = script.replace('[ -b "$root_dev" ]', '[ -f "$root_dev" ]')
         script = script.replace('/sys/class/block/', str(root / 'sys') + '/')
+        script = script.replace('/proc/cmdline', str(root / 'cmdline'))
         script = script.replace('/tmp/recs06-upgrade.', str(root / 'scratch.'))
         (root / 'script').write_text(script)
         return root, image, kernel, filesystem
@@ -86,11 +92,13 @@ OPERATION "$FIXTURE/image.tar"
         with tempfile.TemporaryDirectory() as temp:
             root, image, _, filesystem = self.fixture(temp)
             backup = root / 'config.tgz'
-            with tarfile.open(backup, 'w:gz') as archive:
+            stream = io.BytesIO()
+            with tarfile.open(fileobj=stream, mode='w') as archive:
                 entry = tarfile.TarInfo('etc/config/test')
                 data = b'synthetic-private-settings\n'
                 entry.size = len(data)
                 archive.addfile(entry, io.BytesIO(data))
+            backup.write_bytes(gzip.compress(stream.getvalue(), mtime=0))
             operation = f'UPGRADE_BACKUP="{backup}"; recs06_do_upgrade'
             result = self.run_script(root, image, operation)
             self.assertEqual(result.returncode, 0, result.stderr)
@@ -99,11 +107,53 @@ OPERATION "$FIXTURE/image.tar"
             recovered = tarfile.open(fileobj=io.BytesIO(output[len(filesystem):]), mode='r:gz')
             self.assertEqual(recovered.extractfile('etc/config/test').read(), data)
             # Bad or missing backups fail before modifying kernel or rootfs.
-            for content in (b'not gzip', b''):
+            incompatible = io.BytesIO()
+            with gzip.GzipFile(filename='config.tgz', fileobj=incompatible, mode='wb') as f:
+                f.write(stream.getvalue())
+            for content in (b'not gzip', b'', incompatible.getvalue()):
                 self.fixture(temp)
                 backup.write_bytes(content)
                 before = (root / 'rootfs').read_bytes(), (root / 'hlos').read_bytes()
                 self.assertNotEqual(self.run_script(root, image, operation).returncode, 0)
+                self.assertEqual(before, ((root / 'rootfs').read_bytes(), (root / 'hlos').read_bytes()))
+
+    def test_stock_root_geometry_and_unknown_sizes(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root, image, kernel, filesystem = self.fixture(temp)
+            (root / 'sys/rootfs/size').write_text('249856')
+            result = self.run_script(root, image, 'recs06_do_upgrade')
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual((root / 'hlos').read_bytes()[:len(kernel)], kernel)
+            self.assertEqual((root / 'rootfs').read_bytes()[:len(filesystem)], filesystem)
+            for sectors in ('249855', '249857', '0', '4194305', 'invalid'):
+                (root / 'sys/rootfs/size').write_text(sectors)
+                before = (root / 'rootfs').read_bytes(), (root / 'hlos').read_bytes()
+                self.assertNotEqual(self.run_script(root, image, 'recs06_do_upgrade').returncode, 0)
+                self.assertEqual(before, ((root / 'rootfs').read_bytes(), (root / 'hlos').read_bytes()))
+
+    def test_stock_root_reserves_overlay_space(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root, image, _, _ = self.fixture(temp)
+            (root / 'sys/rootfs/size').write_text('249856')
+            # Override only wc's synthetic root-size response; no large device
+            # or image is created. All rejection paths must precede writes.
+            script = (root / 'script').read_text().replace(
+                'root_size=$(wc -c < "$RECS06_DIR/root")',
+                'root_size=111214592')  # 64 KiB beyond the allowed maximum.
+            (root / 'script').write_text(script)
+            before = (root / 'rootfs').read_bytes(), (root / 'hlos').read_bytes()
+            self.assertNotEqual(self.run_script(root, image, 'recs06_do_upgrade').returncode, 0)
+            self.assertEqual(before, ((root / 'rootfs').read_bytes(), (root / 'hlos').read_bytes()))
+
+    def test_secondary_or_ambiguous_boot_is_rejected(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root, image, _, _ = self.fixture(temp)
+            for cmdline in ('root=PARTUUID=00000000-0000-0000-0000-000000000002',
+                            'root=/dev/mmcblk0p24', 'console=ttyMSM0',
+                            'root=PARTUUID=12345678-abcd-0000-0000-000000000001 root=/dev/mmcblk0p24'):
+                (root / 'cmdline').write_text(cmdline)
+                before = (root / 'rootfs').read_bytes(), (root / 'hlos').read_bytes()
+                self.assertNotEqual(self.run_script(root, image, 'recs06_do_upgrade').returncode, 0)
                 self.assertEqual(before, ((root / 'rootfs').read_bytes(), (root / 'hlos').read_bytes()))
 
 

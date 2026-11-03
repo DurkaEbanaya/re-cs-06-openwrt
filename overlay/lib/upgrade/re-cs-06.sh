@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-only
 # Board-specific checked tar upgrade; never changes GPT, ART or boot firmware.
 recs06_prepare_upgrade() {
-	local image="$1" list kernel_dev root_dev kernel_size root_size
+	local image="$1" list kernel_dev root_dev kernel_size root_size root_sectors
 	RECS06_TMP=$(mktemp -d /tmp/recs06-upgrade.XXXXXX) || return 1
 	list=$(tar tf "$image") || return 1
 	[ "$list" = 'sysupgrade-jdcloud_re-cs-06/
@@ -26,11 +26,27 @@ sysupgrade-jdcloud_re-cs-06/root' ] || return 1
 	root_dev=$(find_mmc_part rootfs)
 	[ -b "$kernel_dev" ] && [ -b "$root_dev" ] && [ "$kernel_dev" != "$root_dev" ] || return 1
 	[ "$(cat "/sys/class/block/${kernel_dev##*/}/size")" = 14336 ] || return 1
-	[ "$(cat "/sys/class/block/${root_dev##*/}/size")" = 4194304 ] || return 1
+	root_sectors=$(cat "/sys/class/block/${root_dev##*/}/size") || return 1
+	# Known layouts only: modified 2 GiB or the stock 122 MiB primary slot.
+	# Neither case resizes partitions or activates a different boot slot.
+	case "$root_sectors" in 4194304|249856) ;; *) return 1 ;; esac
+	# A secondary/stock boot must not accidentally overwrite the primary pair.
+	# The tested loaders identify the booted root by its GPT PARTUUID.
+	local root_uuid boot_root word
+	root_uuid=$(sed -n 's/^PARTUUID=//p' "/sys/class/block/${root_dev##*/}/uevent")
+	[ -n "$root_uuid" ] || return 1
+	boot_root=
+	for word in $(cat /proc/cmdline); do
+		case "$word" in root=*) [ -z "$boot_root" ] || return 1; boot_root=${word#root=} ;; esac
+	done
+	case "$boot_root" in PARTUUID=*) boot_root=${boot_root#PARTUUID=} ;; *) return 1 ;; esac
+	[ "$(printf '%s' "$boot_root" | tr 'A-F' 'a-f')" = "$(printf '%s' "$root_uuid" | tr 'A-F' 'a-f')" ] || return 1
+	RECS06_ROOT_BYTES=$((root_sectors * 512))
 	kernel_size=$(wc -c < "$RECS06_DIR/kernel")
 	root_size=$(wc -c < "$RECS06_DIR/root")
 	[ "$kernel_size" -gt 40 ] && [ "$kernel_size" -le 7340032 ] || return 1
-	[ "$root_size" -gt 4096 ] && [ "$root_size" -lt 2147479552 ] || return 1
+	# Keep at least 16 MiB for ext4 and settings on either supported layout.
+	[ "$root_size" -gt 4096 ] && [ "$root_size" -le $((RECS06_ROOT_BYTES - 16777216)) ] || return 1
 	[ $((root_size % 65536)) -eq 0 ] || return 1
 	EMMC_KERN_DEV="$kernel_dev"
 	EMMC_ROOT_DEV="$root_dev"
@@ -43,11 +59,14 @@ recs06_stage_backup() {
 	[ -s "$UPGRADE_BACKUP" ] && [ ! -L "$UPGRADE_BACKUP" ] || return 1
 	# Validate and preserve the actual stage2 input before touching either slot.
 	gzip -t "$UPGRADE_BACKUP" && tar tzf "$UPGRADE_BACKUP" >/dev/null || return 1
+	# fstools compares four bytes, including FLG. A gzip FNAME archive is
+	# readable by tar but silently skipped during first-boot restoration.
+	[ "$(head -c 4 "$UPGRADE_BACKUP" | hexdump -v -e '1/1 "%02x"')" = 1f8b0800 ] || return 1
 	RECS06_BACKUP="$RECS06_TMP/config.tgz"
 	cp "$UPGRADE_BACKUP" "$RECS06_BACKUP" || return 1
 	local size available
 	size=$(wc -c < "$RECS06_BACKUP")
-	available=$((2147483648 - EMMC_ROOTFS_BLOCKS * 512))
+	available=$((RECS06_ROOT_BYTES - EMMC_ROOTFS_BLOCKS * 512))
 	[ "$size" -gt 0 ] && [ "$size" -le "$available" ]
 }
 

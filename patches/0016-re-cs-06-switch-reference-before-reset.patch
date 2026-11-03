@@ -1,0 +1,67 @@
+From: RE-CS-06 minimal build
+Subject: [PATCH] RE-CS-06: prepare switch reference before MDIO-owned reset
+
+Candidate for stock-bootloader bring-up. Do not depend on the bootloader
+leaving the QCA8386 reference running before the MDIO parent resets it.
+
+diff --git a/target/linux/qualcommbe/dts/ipq5322-re-cs-06.dts b/target/linux/qualcommbe/dts/ipq5322-re-cs-06.dts
+--- a/target/linux/qualcommbe/dts/ipq5322-re-cs-06.dts
++++ b/target/linux/qualcommbe/dts/ipq5322-re-cs-06.dts
+@@ -83,6 +83,17 @@
+ &mdio {
+ 	status = "okay";
+ 	phy-reset-gpios = <&tlmm 51 GPIO_ACTIVE_LOW>;
++	/* QCA8386 reset must see its reference clock, not bootloader state. */
++	clocks = <&gcc GCC_MDIO_AHB_CLK>,
++		 <&gcc GCC_UNIPHY0_AHB_CLK>,
++		 <&gcc GCC_UNIPHY0_SYS_CLK>,
++		 <&gcc GCC_UNIPHY1_AHB_CLK>,
++		 <&gcc GCC_UNIPHY1_SYS_CLK>,
++		 <&cmn_pll IPQ5332_ETH_50MHZ_CLK>;
++	clock-names = "gcc_mdio_ahb_clk",
++		      "uniphy0_ahb_clk", "uniphy0_sys_clk",
++		      "uniphy1_ahb_clk", "uniphy1_sys_clk",
++		      "switch_ref";
+ };
+ 
+ &qca8386 {
+diff --git a/target/linux/qualcommbe/patches-6.18/0375a-net-mdio-prepare-switch-reference-before-reset.patch b/target/linux/qualcommbe/patches-6.18/0375a-net-mdio-prepare-switch-reference-before-reset.patch
+new file mode 100644
+--- /dev/null
++++ b/target/linux/qualcommbe/patches-6.18/0375a-net-mdio-prepare-switch-reference-before-reset.patch
+@@ -0,0 +1,35 @@
++From: RE-CS-06 minimal build
++Subject: [PATCH] net: mdio: prepare optional switch reference before GPIO reset
++
++QCA8K NSSCC requires its reference clock to be running while the external
++reset is asserted. Enabling that clock in the child NSSCC probe is too late
++when the MDIO parent owns the reset GPIO. Acquire and enable the optional
++reference before even requesting the GPIO and retain it for the bus lifetime.
++Existing boards without switch_ref keep their old behavior.
++
++--- a/drivers/net/mdio/mdio-ipq4019.c
+++++ b/drivers/net/mdio/mdio-ipq4019.c
++@@ -648,5 +648,6 @@ static int ipq4019_mdio_probe(struct platform_device *pdev)
++ 	struct mii_bus *bus;
++ 	struct resource *res;
+++	struct clk *switch_ref;
++ 	int ret;
++ 
++ 	bus = devm_mdiobus_alloc_size(&pdev->dev, sizeof(*priv));
++@@ -672,6 +673,16 @@ static int ipq4019_mdio_probe(struct platform_device *pdev)
++ 				      ipq5332_uniphy_clk_names[ret]);
++ 	}
++ 
+++	/* A reset without the external reference can leave MDIO unresponsive. */
+++	switch_ref = devm_clk_get_optional_enabled(&pdev->dev, "switch_ref");
+++	if (IS_ERR(switch_ref))
+++		return dev_err_probe(&pdev->dev, PTR_ERR(switch_ref),
+++				     "failed to enable switch reference before reset\n");
+++	if (switch_ref)
+++		dev_info(&pdev->dev,
+++			 "switch reference enabled before GPIO reset: %luHz\n",
+++			 clk_get_rate(switch_ref));
+++
++ 	priv->reset_gpios = devm_gpiod_get_array_optional(&pdev->dev,
++ 							 "phy-reset", GPIOD_OUT_LOW);
++ 	if (IS_ERR(priv->reset_gpios))

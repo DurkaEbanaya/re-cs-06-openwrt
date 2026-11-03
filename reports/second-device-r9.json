@@ -1,0 +1,69 @@
+{
+  "build": "experimental-2026.11.03-stock-ready-r9",
+  "kernel": "6.18.60",
+  "model": "JDCloud RE-CS-06",
+  "stock_gpt_partition_count": 29,
+  "existing_bootloader_replaced": false,
+  "root_slot_mib": 122,
+  "diagnosed_defects": [
+    "Missing UNIPHY LDO-ready outputs before external switch reset",
+    "Switch reference-clock acquisition occurred too late in the child probe",
+    "Filename-bearing gzip seed was silently not recognized by fstools",
+    "Custom successful-userspace-boot counter handling was absent"
+  ],
+  "primary_os_installed": true,
+  "stock_secondary_os_preserved": true,
+  "gpt_redundancy_repaired_separately_without_entry_changes": true,
+  "full_backup_and_second_physical_copy_verified_before_writes": true,
+  "clean_private_seed_restored_automatically": true,
+  "own_device_wired_identity_verified": true,
+  "password_and_authorized_key_restored": true,
+  "public_boot_success_hook_installed_and_counter_zero": true,
+  "persistent_ext4_overlay": true,
+  "kernel_and_rootfs_readback_verified": true,
+  "protected_bootloader_calibration_and_stock_partition_hashes_verified": true,
+  "ssh_only_reboot_tests": [
+    {
+      "full_check_completion_seconds": 44.4,
+      "changed_boot_id": true,
+      "persistent_marker_retained": true,
+      "ssh_host_keys_unchanged": true
+    },
+    {
+      "full_check_completion_seconds": 46.4,
+      "changed_boot_id": true,
+      "persistent_marker_retained": true,
+      "ssh_host_keys_unchanged": true
+    }
+  ],
+  "all_four_external_phys_registered": true,
+  "connected_lan_link_mbps": 2500,
+  "endpoint_tcp_tests": {
+    "streams": 2,
+    "seconds_per_direction": 20,
+    "pc_to_router_receiver_mbps": 2340.10,
+    "router_to_pc_receiver_mbps": 2026.77,
+    "pc_to_router_retransmits": 0,
+    "router_to_pc_retransmits": 0,
+    "routed_or_hardware_nat_test": false,
+    "temporary_server_removed": true
+  },
+  "offline_regression_tests_passed": 49,
+  "wan_and_wifi_disabled": true,
+  "persistent_flow_offloading_enabled": false,
+  "host_wifi_internet_preserved": true,
+  "physical_cold_start_tested": false,
+  "all_physical_ports_traffic_tested": false,
+  "second_device_routed_offload_tested": false,
+  "universal_stock_installer_claimed": false,
+  "uart_used_for_root_cause_diagnosis": true,
+  "uart_commands_required_to_repair_r9_installation": false,
+  "host_policy_route_loss_and_observer_transient_documented": true,
+  "remaining_gates": [
+    "Physical cold power start",
+    "Other physical port traffic",
+    "Second-device routed and accelerated traffic",
+    "Wireless traffic and prior EHT/MLO exclusions",
+    "Non-atomic upgrade and recovery limitations"
+  ]
+}

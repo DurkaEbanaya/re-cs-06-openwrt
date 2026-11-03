@@ -10,8 +10,16 @@ carryover. Hardware IPv4 NAT, IPv6 forwarding, PPPoE IPv4, tagged LAN VLAN
 NAT, routed 5 GHz HE80 PCI-radio Direct Switch and ARMv8 CryptoAPI CE paths
 have been exercised. Software-flowtable ingress and TX/RX queue fixes are
 included. See the [acceptance matrix and second-device plan](docs/CONDITIONAL-COMPLETION.md).
-The [second device's stock preflight](docs/SECOND-DEVICE.md) is in progress;
-its 29-partition layout is not supported by the existing upgrade helper.
+The [second device's stock migration](docs/SECOND-DEVICE.md) exposed and
+isolated Ethernet-reset/LDO and first-boot seed defects. The r9 candidate
+boots with its existing stock U-Boot and restores private setup automatically;
+see [stock installation boundaries](docs/STOCK-INSTALLATION.md). No bootloader
+replacement or copied first-device calibration is required. Cold-start and
+broader second-device traffic acceptance remain separate gates.
+
+**По-русски: [как перейти со стока на нашу систему](docs/INSTALL-STOCK-RU.md)** —
+пошаговая подготовка, доступ, бэкапы, первый вход и честные ограничения текущего
+установочного процесса. Это пока не универсальный установщик «в один клик».
 
 This is not universal hardware certification: EHT/MLO, provider WAN VLANs,
 PPPoE IPv6, VPN throughput and power-loss safety remain outside acceptance.
