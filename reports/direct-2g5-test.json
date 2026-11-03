@@ -1,0 +1,225 @@
+{
+  "physical_link_mbps": 2500,
+  "host_driver": "igc",
+  "host_nic": "Intel I225-V rev 03",
+  "active_router_port": "lan3",
+  "keenetic_in_test_data_path": false,
+  "usb_adapter_in_test_data_path": false,
+  "internet_remained_on_wifi": true,
+  "router_firmware_changed": false,
+  "root_cause_established": false,
+  "results": [
+    {
+      "test": "ipv4-forward-1",
+      "receiver_mbps": 1696.59,
+      "retransmits": 1
+    },
+    {
+      "test": "ipv4-reverse-1",
+      "receiver_mbps": 1142.03,
+      "retransmits": 949
+    },
+    {
+      "test": "ipv4-forward-2",
+      "receiver_mbps": 1869.24,
+      "retransmits": 1
+    },
+    {
+      "test": "ipv4-reverse-2",
+      "receiver_mbps": 1103.59,
+      "retransmits": 810
+    },
+    {
+      "test": "ipv6-forward",
+      "receiver_mbps": 1613.44,
+      "retransmits": 273
+    },
+    {
+      "test": "ipv6-reverse",
+      "receiver_mbps": 1093.66,
+      "retransmits": 609
+    },
+    {
+      "test": "reverse-cpu0",
+      "receiver_mbps": 1271.99,
+      "retransmits": 0
+    },
+    {
+      "test": "reverse-cpu1",
+      "receiver_mbps": 1758.37,
+      "retransmits": 462
+    },
+    {
+      "test": "reverse-zerocopy",
+      "receiver_mbps": 1105.68,
+      "retransmits": 65
+    },
+    {
+      "test": "reverse-small-writes",
+      "receiver_mbps": 1434.16,
+      "retransmits": 727
+    },
+    {
+      "test": "reverse-paced",
+      "receiver_mbps": 999.76,
+      "retransmits": 0
+    }
+  ],
+  "affinity_results": [
+    {
+      "test": "cpu0-repeat1",
+      "receiver_mbps": 1281.04,
+      "retransmits": 0
+    },
+    {
+      "test": "cpu1-paced1200",
+      "receiver_mbps": 1199.17,
+      "retransmits": 13
+    },
+    {
+      "test": "cpu0-repeat2",
+      "receiver_mbps": 1278.86,
+      "retransmits": 0
+    },
+    {
+      "test": "cpu1-repeat",
+      "receiver_mbps": 1752.09,
+      "retransmits": 362
+    },
+    {
+      "test": "cpu0-ipv6",
+      "receiver_mbps": 1235.5,
+      "retransmits": 0
+    }
+  ],
+  "alternating_rps_runs_with_destination_tcp_metrics_reset": [
+    {
+      "run": 0,
+      "rps_mask": "1",
+      "sender_cpu": 1,
+      "streams": 1,
+      "error": null,
+      "mbps": 1753.47,
+      "retransmits": 795
+    },
+    {
+      "run": 1,
+      "rps_mask": "2",
+      "sender_cpu": 1,
+      "streams": 1,
+      "error": null,
+      "mbps": 1650.14,
+      "retransmits": 0
+    },
+    {
+      "run": 2,
+      "rps_mask": "1",
+      "sender_cpu": 1,
+      "streams": 1,
+      "error": null,
+      "mbps": 1735.5,
+      "retransmits": 350
+    },
+    {
+      "run": 3,
+      "rps_mask": "2",
+      "sender_cpu": 1,
+      "streams": 1,
+      "error": null,
+      "mbps": 1630.23,
+      "retransmits": 0
+    },
+    {
+      "run": 4,
+      "rps_mask": "1",
+      "sender_cpu": null,
+      "streams": 2,
+      "error": null,
+      "mbps": 1135.54,
+      "retransmits": 720
+    },
+    {
+      "run": 5,
+      "rps_mask": "2",
+      "sender_cpu": null,
+      "streams": 2,
+      "error": null,
+      "mbps": 1780.34,
+      "retransmits": 3033
+    },
+    {
+      "run": 6,
+      "rps_mask": "1",
+      "sender_cpu": null,
+      "streams": 2,
+      "error": null,
+      "mbps": 1135.42,
+      "retransmits": 662
+    }
+  ],
+  "equal_rate_ring_runs": [
+    {
+      "run": 0,
+      "rps_mask": "1",
+      "sender_cpu": 1,
+      "requested_pacing_mbps": 1600,
+      "mbps": 1594.7845814421182,
+      "retransmits": 79,
+      "ring_deltas": {
+        "4": 94398,
+        "5": 2062213,
+        "6": 2,
+        "7": 6
+      }
+    },
+    {
+      "run": 1,
+      "rps_mask": "2",
+      "sender_cpu": 1,
+      "requested_pacing_mbps": 1600,
+      "mbps": 1595.8322333432686,
+      "retransmits": 7,
+      "ring_deltas": {
+        "4": 14020,
+        "5": 2142295,
+        "7": 10
+      }
+    },
+    {
+      "run": 2,
+      "rps_mask": "1",
+      "sender_cpu": 1,
+      "requested_pacing_mbps": 1600,
+      "mbps": 1591.3756779229457,
+      "retransmits": 69,
+      "ring_deltas": {
+        "4": 109100,
+        "5": 2042817,
+        "6": 2,
+        "7": 15
+      }
+    },
+    {
+      "run": 3,
+      "rps_mask": "2",
+      "sender_cpu": 1,
+      "requested_pacing_mbps": 1600,
+      "mbps": 1596.1768496612556,
+      "retransmits": 10,
+      "ring_deltas": {
+        "4": 8660,
+        "5": 2148510,
+        "6": 3,
+        "7": 12
+      }
+    }
+  ],
+  "ring_counter_is_per_flow_capture": false,
+  "physical_error_counter_growth_observed": false,
+  "rps_masks_restored": true,
+  "temporary_server_removed": true,
+  "candidate_patch": "0013-qcom-ppe-preserve-socket-tx-queue.patch",
+  "candidate_patch_hardware_tested": false,
+  "exact_packet_reordering_demonstrated": false,
+  "offline_tool_tests_passed": 28
+}

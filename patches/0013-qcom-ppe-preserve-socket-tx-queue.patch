@@ -1,0 +1,32 @@
+diff --git a/target/linux/qualcommbe/patches-6.18/2017-net-qcom-ppe-preserve-tcp-tx-queue.patch b/target/linux/qualcommbe/patches-6.18/2017-net-qcom-ppe-preserve-tcp-tx-queue.patch
+new file mode 100644
+--- /dev/null
++++ b/target/linux/qualcommbe/patches-6.18/2017-net-qcom-ppe-preserve-tcp-tx-queue.patch
+@@ -0,0 +1,27 @@
++From: DurkaEbanaya <287994592+DurkaEbanaya@users.noreply.github.com>
++Subject: [PATCH] net: ethernet: qcom: ppe: preserve socket TX queue selection
++
++Choosing a new EDMA queue from the executing CPU on every packet lets
++process-driven and ACK-driven output from one TCP socket use independent
++hardware rings. Use the core socket-cached/XPS/flow-hashed selector instead.
++This retains multiple queues without pinning every packet to one CPU.
++
++--- a/drivers/net/ethernet/qualcomm/ppe/edma_port.c
+++++ b/drivers/net/ethernet/qualcomm/ppe/edma_port.c
++@@ -88,11 +88,11 @@ static u16 __maybe_unused edma_port_select_queue(__maybe_unused struct net_device *netdev,
++ 						 __maybe_unused struct sk_buff *skb,
++ 				__maybe_unused struct net_device *sb_dev)
++ {
++-	int cpu = get_cpu();
++-
++-	put_cpu();
++-
++-	return cpu;
+++	/* TCP output may run on both the sending task's CPU and an ACK CPU.
+++	 * Keep the socket/flow queue stable while packets remain outstanding;
+++	 * selecting each packet's CPU can reorder it across EDMA rings.
+++	 */
+++	return netdev_pick_tx(netdev, skb, sb_dev);
++ }
++ 
++ static int edma_port_open(struct net_device *netdev)
