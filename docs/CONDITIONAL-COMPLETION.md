@@ -97,3 +97,7 @@ in generic images or public reports.
    Recheck hardware counters and loss without the Keenetic receiver bottleneck.
 
 The first unit is a tested reference, not an identity or calibration template.
+
+The second unit's [stock preflight findings](SECOND-DEVICE.md) are now
+recorded separately. It has a different stock GPT/boot path; that inventory
+does not yet constitute installation or hardware acceptance of device two.
