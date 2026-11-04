@@ -1,0 +1,78 @@
+{
+  "build_on_both_devices": "experimental-2026.11.04-loss-fixes-r14",
+  "same_generic_kernel_and_rootfs_payloads": true,
+  "per_device_identity_and_configuration_kept_separate": true,
+  "router1_upgrade": {
+    "from": "radio-sequence-r12",
+    "fresh_private_backups_on_independent_physical_ssd_verified_before_write": true,
+    "checked_config_preserving_sysupgrade": true,
+    "kernel_rootfs_readback_verified": true,
+    "all_saved_regular_configuration_and_access_files_retained_exact_hashes": true,
+    "protected_partitions_and_gpt_unchanged": true,
+    "primary_root_ext4_and_health_logging_retained": true,
+    "both_radio_phys_and_gen3_x2": true,
+    "aer_totals": [0, 0, 0, 0, 0, 0],
+    "boot_counter": 0
+  },
+  "router2_recheck": {
+    "already_on_r14_not_reflashed": true,
+    "kernel_rootfs_protected_partitions_and_nine_configuration_access_files_verified": true,
+    "both_radio_phys_and_gen3_x2": true,
+    "aer_totals": [0, 0, 0, 0, 0, 0],
+    "boot_counter": 0
+  },
+  "serialized_wired_endpoint_runs": {
+    "tcp_streams": 4,
+    "seconds_per_run": 30,
+    "queue_steering_or_tcp_tuning_applied": false,
+    "runs": [
+      {"direction": "PC to router1", "receiver_mbps": 2346.46, "retransmissions": 0},
+      {"direction": "PC to router2 repeat1", "receiver_mbps": 2346.44, "retransmissions": 4},
+      {"direction": "PC to router2 repeat2", "receiver_mbps": 2346.24, "retransmissions": 9},
+      {"direction": "router2 to PC", "receiver_mbps": 1975.27, "retransmissions": 0}
+    ],
+    "filtered_counter_or_softnet_drop_growth": false,
+    "remaining_retransmissions_newly_traced_in_these_runs": false,
+    "endpoint_measurements_not_independent_routed_nat_capacity": true
+  },
+  "interpretation": {
+    "earlier_aqm_trace_rechecked_eight_drops_for_eight_retries_no_trace_overruns": true,
+    "earlier_pc_trace_rechecked_eight_tlp_stacks": true,
+    "tlp_stack_alone_proves_no_packet_or_ack_loss": false,
+    "universal_zero_retransmission_claimed": false,
+    "public_binary_release_still_r12_external": true
+  },
+  "serialized_us_eht80_repeat": {
+    "both_devices_full_r14": true,
+    "physical_us_location_previously_confirmed_by_owner": true,
+    "actual_eht80_four_spatial_streams": true,
+    "ap_tx_phy_mbps": 2882.3,
+    "sta_tx_phy_mbps": 2593.5,
+    "streams": 2,
+    "seconds_per_direction": 25,
+    "temporary_backlog_16384_not_firmware_default": true,
+    "host_and_router_tcp_ecn_left_at_original_2": true,
+    "runs": [
+      {"offload": "off", "direction": "PC to STA", "receiver_mbps": 1338.30, "retransmissions": 0},
+      {"offload": "off", "direction": "STA to PC", "receiver_mbps": 823.28, "retransmissions": 6},
+      {"offload": "hardware", "direction": "PC to STA", "receiver_mbps": 1284.11, "retransmissions": 0},
+      {"offload": "hardware", "direction": "STA to PC", "receiver_mbps": 1644.27, "retransmissions": 0}
+    ],
+    "software_reverse_ap_qdisc_congested_trace_events": 6,
+    "software_reverse_sta_tcp_retransmit_trace_events": 6,
+    "all_eight_radio_drop_traces_overruns": 0,
+    "ap_ppe_valid_flows_hw_offload_and_running_nonfaulted_direct_switch_observed": true,
+    "all_station_forwarding_acceleration_claimed": false,
+    "six_ghz_mlo_or_long_term_stability_claimed": false,
+    "first_harness_attempt_stopped_before_traffic_static_address_not_ready": true
+  },
+  "final_cleanup": {
+    "both_countries_ru_radios_disabled_wan_and_persistent_offloading_disabled": true,
+    "original_backlog_1000_ecn_2_edma_15_rps_2_restored": true,
+    "temporary_tools_trace_modules_nat_and_host_test_route_absent": true,
+    "both_management_addresses_and_host_wifi_internet_preserved": true,
+    "all_six_aer_totals_zero_on_each_device": true,
+    "kernel_panic_oops_or_warning_in_collected_final_logs": false
+  },
+  "offline_regression_tests_passed": 61
+}

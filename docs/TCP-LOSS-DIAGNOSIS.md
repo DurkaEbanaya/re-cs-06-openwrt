@@ -135,7 +135,10 @@ its event total is not substituted for the reported 5+2 retries.
 Receiver DSACK counters and sender socket samples recorded duplicate
 acknowledgements; one retransmitted tail was only 96 bytes. These are
 consistent with premature Tail Loss Probes rather than a recurrence of
-the earlier switch-buffer drops. This does not prove that every retry in
+the earlier switch-buffer drops. **A Tail Loss Probe stack alone does not
+prove that no packet or ACK was lost**: TLP is also used for genuine tail
+loss. DSACK establishes duplicate delivery for some packets, not a complete
+packet-by-packet explanation of every retry. This does not prove that every retry in
 every earlier run had the same cause. Disabling TCP loss recovery to force
 a zero counter is not a firmware correction and is not applied.
 
@@ -163,3 +166,55 @@ ECN request setting was restored from 1 to its original 2; wired management
 and Wi-Fi internet remained available before the owner-requested PC shutdown.
 Private evidence and images have independently verified SSD copies. The
 public binary release remains **r12-external**, not a newly tested r14 asset.
+
+## Independent recheck with r14 on both devices
+
+On the owner's follow-up request, the first router was upgraded from r12
+to the same full-local r14 payload already on the second router. Fresh
+same-device critical/GPT/configuration and live root/overlay backups were
+verified on an independent physical SSD before writing. After upgrade,
+all saved regular configuration/access files, protected partitions and GPT
+matched their saved hashes; kernel/rootfs matched the checked r14 payload.
+Health logging, primary ext4, both radio PHYs, Gen3 x2, zero AER totals and
+boot counter zero were verified. The already-r14 second router passed a
+separate read-only payload/protected/configuration recheck without reflashing.
+
+Four serialized 30-second, four-stream wired endpoint runs used unchanged
+queue/TCP/steering policy:
+
+| Direction | Receiver Mbit/s | TCP retries |
+| --- | ---: | ---: |
+| PC → router 1 | 2346.46 | 0 |
+| PC → router 2, repeat 1 | 2346.44 | 4 |
+| PC → router 2, repeat 2 | 2346.24 | 9 |
+| Router 2 → PC | 1975.27 | 0 |
+
+Neither LAN `Filtered` counters nor softnet drops grew. This reconfirms
+removal of the previous large switch-drop episode; the remaining retries
+in these particular repeats were **not freshly stack-traced**, so the older
+TLP sample must not be used to assign every new retry a cause. A first
+wireless recheck associated the station using EHT but stopped before traffic
+because the AP's static test address was not ready. Cleanup completed; this
+failed harness preflight is not a speed or packet-loss result.
+
+The serialized retry waited for netifd's static radio address as well as
+station authorization before starting traffic. With actual EHT80/NSS4 and a
+temporary backlog of 16384 (not an image default), two-stream 25-second
+runs measured software 1338.30/823.28 Mbit/s with 0/6 retries, and hardware
+1284.11/1644.27 Mbit/s with 0/0 retries (PC→STA / STA→PC). The software
+reverse trace recorded six AP `QDISC_CONGESTED` drops and six station TCP
+retransmit events. All eight per-run/device traces had zero buffer overruns.
+AP PPE valid entries, conntrack HW_OFFLOAD and running/nonfaulted PCI-radio
+Direct Switch were observed. This repeats the AQM localization without
+changing ECN request policy; it is not arbitrary STA forwarding acceptance.
+
+Final checks found no panic, Oops or warning in collected logs, with all six
+AER totals zero on each router. Cleanup restored backlog 1000, ECN 2,
+EDMA bitmap 15 and RPS mask 2, RU/radios off, WAN/offloading off, no pending
+UCI changes and no test binaries/modules/traces/NAT/host route. Management
+and PC Wi-Fi internet were preserved. No further PC shutdown was performed
+as part of this follow-up request.
+
+See [machine-readable recheck](../reports/r14-recheck.json). Firmware is
+still experimental; this check is not all-port, 6 GHz, MLO or arbitrary
+STA-forwarding acceptance.

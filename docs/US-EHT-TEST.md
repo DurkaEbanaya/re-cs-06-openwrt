@@ -50,3 +50,25 @@ were cleaned up after each completed session. Persistent hardware and
 software flow-offloading settings returned to disabled. See
 [TCP loss diagnosis](TCP-LOSS-DIAGNOSIS.md) for the remaining gates and
 excluded overlapping experiments.
+
+## Follow-up on two full r14 devices
+
+After upgrading the first unit and read-only verifying the already-r14
+second unit, the same serialized US-location EHT80/NSS4 topology was repeated.
+The PC and routers retained ECN setting 2; backlog 16384 was temporary.
+
+| r14 mode | PC → STA Mbit/s / TCP retries | STA → PC Mbit/s / TCP retries |
+| --- | ---: | ---: |
+| Offload disabled | 1338.30 / 0 | 823.28 / 6 |
+| Hardware-offload mode | 1284.11 / 0 | 1644.27 / 0 |
+
+Each run again used two streams for 25 seconds. Six reverse software retries
+matched six AP fq_codel congestion-drop trace events; all eight device/run
+trace captures had zero overruns. Hardware-mode AP snapshots showed valid
+PPE entries, HW_OFFLOAD and running/nonfaulted Direct Switch. Actual rate
+samples again included AP EHT MCS13/NSS4 at 2882.3 Mbit/s and STA EHT
+MCS12/NSS4 TX at 2593.5 Mbit/s. A first harness attempt stopped before traffic
+while waiting for the AP static test address; it is not a benchmark result.
+RU/radios-off and original sysctls/configuration were restored, all temporary
+test tools/routes/NAT/tracing removed, and both routers had zero AER totals.
+See [r14 recheck report](../reports/r14-recheck.json) for the complete scope.

@@ -19,7 +19,7 @@ correctable PCIe RxErr was observed (fatal/nonfatal AER zero). A later explicit
 PCI radio unbind exposed a separate dummy-NAPI cleanup panic; r10's common
 allocator fix passed three consecutive instrumented unbind/rebind cycles.
 That allocator fix alone did not resolve cold-start RxErr. The current full
-**r12** adds board-scoped PCI/AHB startup sequencing; normal boots and the
+**r12 and later** add board-scoped PCI/AHB startup sequencing; normal boots and the
 60-second missing-helper kernel fallback passed with Gen3 x2 and zero AER.
 Two owner-confirmed r11 diagnostic cold starts were clean; full r12's latest
 network return is clean but its physical-cycle/UART details remain confirmation
@@ -27,6 +27,18 @@ pending. See [the PCIe investigation](PCIE-RXERR.md) and
 [r12 release notes](RELEASE-R12.md). All-port traffic
 and second-device routed offload remain pending. The table
 below primarily records historical first-device acceptance, not those gates.
+
+**Latest follow-up:** both devices now run the same full-local **loss-fixes-r14**
+payload. The first device's checked r12→r14 upgrade retained all saved
+configuration/access files, protected partitions and GPT; the second device
+was independently rechecked without rewriting its already-installed r14.
+The QCA8386 PAUSE reaction reserve corrects the reproduced switch drops.
+Software receive-backlog/AQM congestion and sender Tail Loss Probes remain
+distinct from that defect; zero retries under every load is not claimed.
+See [TCP loss diagnosis](TCP-LOSS-DIAGNOSIS.md). The actual US-location
+[EHT80 AP/STA test](US-EHT-TEST.md) supersedes the historical "not performed"
+entry below for that specific 5 GHz single-link topology only; 6 GHz and MLO
+remain unaccepted. The public binary release is still r12-external.
 
 | Area | Latest established result | Remaining acceptance |
 | --- | --- | --- |

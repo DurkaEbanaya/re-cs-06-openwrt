@@ -5,7 +5,9 @@ Qualcomm IPQ5322/IPQ5332. This is **not an official OpenWrt release**.
 
 **Latest full local candidate: loss-fixes-r14, Linux 6.18.60**, installed on
 the second RE-CS-06 with its stock bootloader, persistent ext4 and preserved
-private access/management configuration; the first router remains on r12.
+private access/management configuration. Both routers now run the same full
+r14 payload after a separately checked first-device upgrade; each retains
+its own identity, keys and configuration.
 The [TCP loss investigation](docs/TCP-LOSS-DIAGNOSIS.md) distinguishes the
 corrected QCA8386 switch drops, software backlog/AQM congestion and residual
 sender Tail Loss Probes. It does not promise zero TCP retries in all traffic.

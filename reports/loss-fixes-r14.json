@@ -1,6 +1,6 @@
 {
   "latest_full_local_candidate": "experimental-2026.11.04-loss-fixes-r14",
-  "router1_installed_build": "radio-sequence-r12",
+  "router1_installed_build": "loss-fixes-r14",
   "router2_installed_build": "loss-fixes-r14",
   "public_binary_release_remains": "radio-sequence-r12-external",
   "kernel": "6.18.60",
@@ -10,7 +10,10 @@
     "corrected_count": 60,
     "isolated_reversible_change_removed_filtered_counter_growth": true,
     "r13_serialized_30_second_receive_runs": 6,
-    "r13_receiver_mbps_range": [2346.39, 2347.41],
+    "r13_receiver_mbps_range": [
+      2346.39,
+      2347.41
+    ],
     "r13_filtered_counter_growth_all_six_runs": 0,
     "all_tcp_retransmissions_eliminated": false,
     "wred_disable_or_ingress_buffer_only_accepted": false,
@@ -28,8 +31,14 @@
     "non_ecn_congestion_loss_claimed_fixed": false
   },
   "wired_sender_trace": {
-    "receiver_mbps": [2347.14, 2346.80],
-    "iperf_retransmissions": [5, 2],
+    "receiver_mbps": [
+      2347.14,
+      2346.8
+    ],
+    "iperf_retransmissions": [
+      5,
+      2
+    ],
     "traced_events_including_setup_teardown": 8,
     "all_traced_stacks_used_tcp_send_loss_probe": true,
     "trace_events_lost": false,
@@ -44,7 +53,8 @@
     "persistent_ext4_both_radio_phys_and_gen3_x2_verified": true,
     "all_six_aer_totals_zero": true,
     "boot_counter_zero": true,
-    "new_r14_load_benchmark_claimed": false
+    "new_r14_load_benchmark_claimed": true,
+    "load_measurement_scope": "Follow-up serialized wired endpoint controls in r14-recheck.json; not universal forwarding capacity"
   },
   "us_eht_control": {
     "physical_us_location_confirmed_by_owner": true,
@@ -64,5 +74,6 @@
     "host_ecn_restored_to_original_2": true,
     "ru_radios_disabled_wan_and_persistent_offloading_disabled": true
   },
-  "universal_zero_tcp_retransmission_claimed": false
+  "universal_zero_tcp_retransmission_claimed": false,
+  "followup_recheck_report": "reports/r14-recheck.json"
 }
