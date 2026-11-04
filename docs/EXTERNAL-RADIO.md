@@ -4,11 +4,11 @@ The `external-radio` images contain ath12k drivers, but no IPQ5332/QCN9274
 radio firmware/BDF package. They are not standalone Wi-Fi firmware, nor are
 they hardware-validated. See [licensing](LICENSING.md) and [recovery](RECOVERY.md).
 
-Current public prerelease: **loss-fixes-r14-external**. It includes all
-source/overlay fixes through patch 0021; the complete local r14 has separate
+Current release recipe: **usb-clocks-r15-external**. It includes all
+source/overlay fixes through patch 0022; the complete local r15 has separate
 hardware evidence. The November 2 assets are obsolete **DO NOT FLASH**
-prototypes. See [r14 release notes](RELEASE-R14.md); the older
-[r12 notes](RELEASE-R12.md) remain historical.
+prototypes. See [r15 release notes](RELEASE-R15.md); the older
+[r14](RELEASE-R14.md) and [r12 notes](RELEASE-R12.md) remain historical.
 
 On the build PC, from this repository:
 

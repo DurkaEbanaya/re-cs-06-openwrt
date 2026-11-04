@@ -40,8 +40,8 @@ distinct from that defect; zero retries under every load is not claimed.
 See [TCP loss diagnosis](TCP-LOSS-DIAGNOSIS.md). The actual US-location
 [EHT80 AP/STA test](US-EHT-TEST.md) supersedes the historical "not performed"
 entry below for that specific 5 GHz single-link topology only; 6 GHz and MLO
-remain unaccepted. The public **r14-external** prerelease has separate offline
-inspection evidence, not a hardware boot claim; see [r14 notes](RELEASE-R14.md).
+remain unaccepted. The public **r15-external** recipe has separate offline
+inspection evidence, not a hardware boot claim; see [r15 notes](RELEASE-R15.md).
 
 The extended check found a **real USB3 initialization defect** on the
 stock-loader unit: the same device worked at 5G/UAS on the first unit but
@@ -54,6 +54,11 @@ on both units subsequently passed identical payload readback, each unit's
 saved configuration, GPT/protected partitions, radio enumeration, Gen3 x2
 and clock checks. Post-upgrade traffic checks are reported separately;
 fresh r15 WAN performance is not inferred from the unchanged modules.
+Before release, the first full-r15 unit also enumerated the same attached
+bridge at 5000 Mbit/s/UAS; consecutive direct reads and read-only filesystem
+checking passed without recorded USB errors. The second unit's full-r15 file
+write/remount verification remains separate. Broader hotplug/device/power
+coverage and a full-image-pair physical power-cycle test remain open.
 
 | Area | Latest established result | Remaining acceptance |
 | --- | --- | --- |

@@ -25,7 +25,7 @@ To resume a prepared tree, rerun make rather than rerunning preparation.
 `config/resolved.config` records the current public release configuration;
 `minimal.config` is the smaller seed used to derive it.
 
-Follow-up: `resolved.config` records the public `r14-external` build.
+Follow-up: `resolved.config` records the public `r15-external` build.
 Original complete-build hashes remain in the historical first-build reports.
 The public seed excludes the radio firmware/BDF packages and keeps ath12k;
 see [external dependencies](EXTERNAL-RADIO.md) for full local reconstruction.
@@ -93,19 +93,18 @@ or install anything. Validate the private tar contents and permissions before
 use. A gzip/tar roundtrip alone does not prove first-boot recognition or restore;
 see [stock installation boundaries](STOCK-INSTALLATION.md).
 
-The published full-local r14 validation identifies as
-`experimental-2026.11.04-loss-fixes-r14`. The public seed/resolved config
-selects `experimental-2026.11.04-loss-fixes-r14-external`, excludes the
+The current full-local build identifies as
+`experimental-2026.11.04-usb-clocks-r15`. The public seed/resolved config
+selects `experimental-2026.11.04-usb-clocks-r15-external`, excludes the
 three radio firmware/BDF packages and contains no local firmware overlay.
-The released r14 recipe uses patches 0001–0021. Current development also
-includes board USB clock initialization in patch `0022`, tested with full
-`experimental-2026.11.04-usb-clocks-r15` on both units. To reproduce the
-published r14 assets, use their corresponding-source archive or pinned
-release commit, not current development patches with an old version label.
-Current development requires patches 0001–0022 and the public overlay. Do not mix an
+The r15 recipe uses patches 0001–0022, including board USB clock
+initialization tested with the full local image on both units. The historical
+r14 recipe uses patches 0001–0021; to reproduce those assets, use their
+corresponding-source archive or pinned release commit, not current patches
+with an old version label. Current builds require the public overlay. Do not mix an
 old resolved configuration/source archive with a new binary's provenance.
 Full local radio dependencies remain subject to the separate workflow and
-licensing restrictions above. See [r14 notes](RELEASE-R14.md).
+licensing restrictions above. See [r15 notes](RELEASE-R15.md).
 
 The binary release includes its patched source tree/feed snapshots, downloaded
 source archives, exact configuration and recipe as `corresponding-source.tar.zst`.

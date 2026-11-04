@@ -18,12 +18,12 @@ acceptance matrix or universal loss-free traffic claim.
 The [TCP loss investigation](docs/TCP-LOSS-DIAGNOSIS.md) distinguishes the
 corrected QCA8386 switch drops, software backlog/AQM congestion and residual
 sender Tail Loss Probes. It does not promise zero TCP retries in all traffic.
-The separately built public **r14-external** prerelease omits
-radio firmware/BDF blobs: see [release notes](docs/RELEASE-R14.md) and
+The separately built public **r15-external** recipe omits
+radio firmware/BDF blobs: see [release notes](docs/RELEASE-R15.md) and
 [external dependencies](docs/EXTERNAL-RADIO.md). It is not the byte-identical
 hardware-tested full image, and is not a universal stock installer.
 
-**Download: [r14-external prerelease](https://github.com/DurkaEbanaya/re-cs-06-openwrt/releases/tag/experimental-2026.11.04-loss-fixes-r14-external)** —
+**Download: [r15-external prerelease](https://github.com/DurkaEbanaya/re-cs-06-openwrt/releases/tag/experimental-2026.11.04-usb-clocks-r15-external)** —
 images, corresponding source, inspection results and SHA256SUMS. Radio files
 are external dependencies; read the release notes before installing.
 
@@ -57,7 +57,7 @@ this is not 6 GHz, MLO, or arbitrary STA forwarding acceptance.
 пошаговая подготовка, доступ, бэкапы, первый вход и честные ограничения текущего
 установочного процесса. Это пока не универсальный установщик «в один клик».
 
-**[Что нового в r14](docs/RELEASE-R14.md)** ·
+**[Что нового в r15](docs/RELEASE-R15.md)** ·
 **[Стенд из двух роутеров, включая Wi-Fi 7](docs/TWO-ROUTER-LAB-RU.md)**
 
 This is not universal hardware certification: broader EHT/MLO, provider WAN VLANs,

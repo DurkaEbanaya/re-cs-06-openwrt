@@ -231,7 +231,6 @@
     "Live outer USB wrapper rebind followed by unexplained restart; not repeated as recovery"
   ],
   "remaining": [
-    "First full-r15 unit attached USB device test",
     "Repeated hotplug, other USB devices/power and extended storage testing",
     "Full-image physical cold-start pair"
   ],
@@ -2199,5 +2198,20 @@
     "cable_fault_proven": false,
     "observer_effect_causality_proven": false,
     "note": "Initial PC link renegotiated from 1G to 2.5G; explicit stable-2.5G controls are distinguished from the first repeats"
+  },
+  "first_full_r15_unit_usb_release_gate": {
+    "unit": 1,
+    "build": "experimental-2026.11.04-usb-clocks-r15",
+    "already_installed": true,
+    "kernel_rootfs_readback_verified": true,
+    "usb_link_mbps": 5000,
+    "transport": "uas",
+    "direct_read_bytes_per_run": 268435456,
+    "consecutive_direct_reads_matched": true,
+    "read_only_filesystem_check_passed": true,
+    "aer_all_zero": true,
+    "no_usb_reset_io_error_or_kernel_fault_in_collected_log": true,
+    "unmounted": true,
+    "formatted": false
   }
 }

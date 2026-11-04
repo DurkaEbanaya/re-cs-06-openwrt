@@ -134,10 +134,14 @@ existing persistent logging service remained enabled.
 On the second unit, the attached bridge remained at 5000 Mbit/s/UAS after
 the full upgrade. A new exclusive 64 MiB file passed write/fsync/unmount,
 read-only remount/direct-read SHA256 comparison, removal and read-only
-filesystem checking. The disk was left unmounted. There is not yet an
-attached-device USB3 test of the first unit's full r15, nor a new
-owner-confirmed power-cycle test of the full-image pair. The earlier
-kernel-only cold-start evidence remains explicitly separate.
+filesystem checking. The disk was left unmounted. Before the r15 release,
+the same bridge was moved to the first unit. Its full r15 kernel/rootfs
+readbacks matched, the bridge enumerated at **5000 Mbit/s/UAS**, two direct
+256 MiB reads matched, and read-only ext4 checking passed. The collected log
+had no USB reset, I/O error or kernel fault, and all six PCIe AER totals were
+zero. It was left unmounted; no redundant reflash or formatting was needed.
+A new owner-confirmed power-cycle test of the full-image pair remains open.
+The earlier kernel-only cold-start evidence remains explicitly separate.
 
 Two initial post-upgrade WAN-load attempts stopped before iperf. The first
 had no dedicated WAN link; after the cable was added, the old harness still
