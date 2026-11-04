@@ -1,0 +1,399 @@
+{
+  "build": "experimental-2026.11.04-loss-fixes-r14",
+  "kernel": "6.18.60",
+  "tested_variant": "full local; not the public external-radio images",
+  "target": "second RE-CS-06; first unit as isolated peer",
+  "physical_port_inventory_repeated": false,
+  "management": {
+    "unauthenticated_system_rpc_rejected": true,
+    "authenticated_https_board_query": true,
+    "session_destroyed": true,
+    "http_https_login_pages": true,
+    "public_certificate_trust_claimed": false
+  },
+  "persistence": {
+    "exclusive_4mib_write_sync_direct_read_compare": true,
+    "graceful_reboot_marker_retained": true,
+    "private_config_and_protected_readback": true,
+    "atomic_upgrade_or_power_loss_acceptance": false
+  },
+  "crypto": {
+    "aes_ctr_generic_and_arm_ce_known_answer_sample": true,
+    "comprehensive_crypto_or_vpn_acceptance": false
+  },
+  "network_services": {
+    "wan_dhcp_and_reconnect": true,
+    "tagged_wan_dhcp_and_reconnect": true,
+    "pppoe_ipv4_reconnect_and_actual_mtu1492": true,
+    "full_df_pmtu_boundary_test": false,
+    "lan_tcp_management_positive_control_and_wan_rejection_ports": [
+      22,
+      80,
+      443
+    ],
+    "controlled_dns_forwarding": true,
+    "negative_dns_answer": true,
+    "isolated_ntp_sync_offset_seconds": 1,
+    "dhcpv6_ia_na_lease_matched_server": true,
+    "slaac": true,
+    "public_internet_ntp": false,
+    "prefix_delegation": false
+  },
+  "routed_tcp": {
+    "streams": 2,
+    "ordinary_run_seconds": 20,
+    "soak_seconds_per_direction": 180,
+    "results": {
+      "wan": [
+        {
+          "mode": "off",
+          "direction": "out",
+          "receiver_mbps": 1825.01,
+          "retransmissions": 160,
+          "hw_offload_observed": false,
+          "software_offload_observed": false
+        },
+        {
+          "mode": "off",
+          "direction": "in",
+          "receiver_mbps": 1568.14,
+          "retransmissions": 161,
+          "hw_offload_observed": false,
+          "software_offload_observed": false
+        },
+        {
+          "mode": "software",
+          "direction": "out",
+          "receiver_mbps": 1633.02,
+          "retransmissions": 362,
+          "hw_offload_observed": false,
+          "software_offload_observed": true
+        },
+        {
+          "mode": "software",
+          "direction": "in",
+          "receiver_mbps": 1456.73,
+          "retransmissions": 0,
+          "hw_offload_observed": false,
+          "software_offload_observed": true
+        },
+        {
+          "mode": "hardware",
+          "direction": "out",
+          "receiver_mbps": 2338.87,
+          "retransmissions": 0,
+          "hw_offload_observed": true,
+          "software_offload_observed": false
+        },
+        {
+          "mode": "hardware",
+          "direction": "in",
+          "receiver_mbps": 1465.31,
+          "retransmissions": 0,
+          "hw_offload_observed": true,
+          "software_offload_observed": false
+        }
+      ],
+      "wan-vlan-repeat": [
+        {
+          "mode": "off",
+          "direction": "out",
+          "receiver_mbps": 1705.91,
+          "retransmissions": 178,
+          "hw_offload_observed": false,
+          "software_offload_observed": false
+        },
+        {
+          "mode": "off",
+          "direction": "in",
+          "receiver_mbps": 1587.88,
+          "retransmissions": 253,
+          "hw_offload_observed": false,
+          "software_offload_observed": false
+        },
+        {
+          "mode": "software",
+          "direction": "out",
+          "receiver_mbps": 2062.21,
+          "retransmissions": 955,
+          "hw_offload_observed": false,
+          "software_offload_observed": true
+        },
+        {
+          "mode": "software",
+          "direction": "in",
+          "receiver_mbps": 1589.46,
+          "retransmissions": 308,
+          "hw_offload_observed": false,
+          "software_offload_observed": true
+        },
+        {
+          "mode": "hardware",
+          "direction": "out",
+          "receiver_mbps": 2315.9,
+          "retransmissions": 0,
+          "hw_offload_observed": true,
+          "software_offload_observed": false
+        },
+        {
+          "mode": "hardware",
+          "direction": "in",
+          "receiver_mbps": 1490.26,
+          "retransmissions": 0,
+          "hw_offload_observed": true,
+          "software_offload_observed": false
+        }
+      ],
+      "pppoe": [
+        {
+          "mode": "off",
+          "direction": "out",
+          "receiver_mbps": 1465.53,
+          "retransmissions": 233,
+          "hw_offload_observed": false
+        },
+        {
+          "mode": "off",
+          "direction": "in",
+          "receiver_mbps": 1399.63,
+          "retransmissions": 80,
+          "hw_offload_observed": false
+        },
+        {
+          "mode": "hardware",
+          "direction": "out",
+          "receiver_mbps": 2323.34,
+          "retransmissions": 0,
+          "hw_offload_observed": true
+        },
+        {
+          "mode": "hardware",
+          "direction": "in",
+          "receiver_mbps": 1928.11,
+          "retransmissions": 0,
+          "hw_offload_observed": true
+        }
+      ],
+      "ipv6": [
+        {
+          "mode": "off",
+          "direction": "out",
+          "receiver_mbps": 1866.3,
+          "retransmissions": 349,
+          "hw_offload_observed": false
+        },
+        {
+          "mode": "off",
+          "direction": "in",
+          "receiver_mbps": 1529.45,
+          "retransmissions": 84,
+          "hw_offload_observed": false
+        },
+        {
+          "mode": "software",
+          "direction": "out",
+          "receiver_mbps": 1592.82,
+          "retransmissions": 374,
+          "hw_offload_observed": false
+        },
+        {
+          "mode": "software",
+          "direction": "in",
+          "receiver_mbps": 1583.18,
+          "retransmissions": 382,
+          "hw_offload_observed": false
+        },
+        {
+          "mode": "hardware",
+          "direction": "out",
+          "receiver_mbps": 2304.06,
+          "retransmissions": 0,
+          "hw_offload_observed": true
+        },
+        {
+          "mode": "hardware",
+          "direction": "in",
+          "receiver_mbps": 2024.96,
+          "retransmissions": 0,
+          "hw_offload_observed": true
+        }
+      ],
+      "wan-soak": [
+        {
+          "mode": "hardware",
+          "direction": "out",
+          "receiver_mbps": 2339.54,
+          "retransmissions": 173,
+          "hw_offload_observed": true,
+          "software_offload_observed": false
+        },
+        {
+          "mode": "hardware",
+          "direction": "in",
+          "receiver_mbps": 2041.89,
+          "retransmissions": 0,
+          "hw_offload_observed": true,
+          "software_offload_observed": false
+        }
+      ]
+    },
+    "collected_hardware_entries_and_hw_offload": true,
+    "collected_ppe_bind_resource_index_readback_failures": 0,
+    "soak_health_checks": [
+      {
+        "direction": "out",
+        "mib_deltas": {
+          "Filtered": 0,
+          "RxFcsErr": 0,
+          "RxTooLong": 0,
+          "RxBadByte": 0,
+          "RxPause": 0,
+          "RxOverFlow": 0,
+          "TxUnderRun": 0
+        },
+        "softnet_drop_delta": 0,
+        "health_max_temperature_millicelsius": 62200,
+        "aer_all_zero": true
+      },
+      {
+        "direction": "in",
+        "mib_deltas": {
+          "Filtered": 0,
+          "RxFcsErr": 0,
+          "RxTooLong": 0,
+          "RxBadByte": 0,
+          "RxPause": 0,
+          "RxOverFlow": 0,
+          "TxUnderRun": 0
+        },
+        "softnet_drop_delta": 0,
+        "health_max_temperature_millicelsius": 62800,
+        "aer_all_zero": true
+      }
+    ],
+    "outbound_soak_retransmissions_individually_localized": false
+  },
+  "radio_endpoint_services": {
+    "country": "RU",
+    "tcp_streams": 2,
+    "seconds_per_direction": 20,
+    "actual_he_association": true,
+    "dhcp_dns_and_ipv4_ipv6_ping_passed": true,
+    "ipv4_and_ipv6_ping_count_per_case": 10,
+    "ping_loss": 0,
+    "results": [
+      {
+        "radio_ghz": 2.4,
+        "ap_router": 2,
+        "sta_router": 1,
+        "security": "sae",
+        "requested_mode": "HE20",
+        "direction": "forward",
+        "receiver_mbps": 169.41,
+        "retransmissions": 120
+      },
+      {
+        "radio_ghz": 2.4,
+        "ap_router": 2,
+        "sta_router": 1,
+        "security": "sae",
+        "requested_mode": "HE20",
+        "direction": "reverse",
+        "receiver_mbps": 170.86,
+        "retransmissions": 81
+      },
+      {
+        "radio_ghz": 2.4,
+        "ap_router": 1,
+        "sta_router": 2,
+        "security": "psk2",
+        "requested_mode": "HE20",
+        "direction": "forward",
+        "receiver_mbps": 184.05,
+        "retransmissions": 0
+      },
+      {
+        "radio_ghz": 2.4,
+        "ap_router": 1,
+        "sta_router": 2,
+        "security": "psk2",
+        "requested_mode": "HE20",
+        "direction": "reverse",
+        "receiver_mbps": 160.06,
+        "retransmissions": 86
+      },
+      {
+        "radio_ghz": 5,
+        "ap_router": 2,
+        "sta_router": 1,
+        "security": "sae",
+        "requested_mode": "HE80",
+        "direction": "forward",
+        "receiver_mbps": 1099.62,
+        "retransmissions": 340
+      },
+      {
+        "radio_ghz": 5,
+        "ap_router": 2,
+        "sta_router": 1,
+        "security": "sae",
+        "requested_mode": "HE80",
+        "direction": "reverse",
+        "receiver_mbps": 1383.78,
+        "retransmissions": 0
+      },
+      {
+        "radio_ghz": 5,
+        "ap_router": 1,
+        "sta_router": 2,
+        "security": "psk2",
+        "requested_mode": "HE80",
+        "direction": "forward",
+        "receiver_mbps": 1084.36,
+        "retransmissions": 268
+      },
+      {
+        "radio_ghz": 5,
+        "ap_router": 1,
+        "sta_router": 2,
+        "security": "psk2",
+        "requested_mode": "HE80",
+        "direction": "reverse",
+        "receiver_mbps": 1394.11,
+        "retransmissions": 0
+      }
+    ],
+    "very_close_strong_signal": true,
+    "wireless_forwarding_offload_acceptance_claimed": false
+  },
+  "usb": {
+    "first_full_r14_unit_same_device": "5000 Mbit/s/UAS",
+    "second_full_r14_unit": "480 Mbit/s/usb-storage",
+    "consecutive_direct_reads_and_ext4_check": true,
+    "exclusive_64mib_file_write_remount_compare": true,
+    "formatted": false,
+    "second_unit_superspeed_initialization_accepted_on_r14": false,
+    "fix_evidence": "docs/USB-CLOCK-DIAGNOSIS.md",
+    "earlier_usb_timeouts_delayed_boot": true,
+    "outer_usb_wrapper_live_rebind_followed_by_unexplained_restart": true
+  },
+  "cleanup": {
+    "kernel_rootfs_and_protected_partitions_verified": true,
+    "private_access_and_configuration_preserved": true,
+    "original_config_bytes_restored_both_routers": true,
+    "temporary_tools_and_routes_removed": true,
+    "wan_radios_persistent_offload_disabled": true,
+    "original_sysctls_preserved": true,
+    "aer_zero_both_routers": true,
+    "pc_wifi_internet_preserved": true
+  },
+  "limits": [
+    "No exhaustive all-feature certification",
+    "USB hotplug/device/power matrix remains open",
+    "Physical LEDs/buttons and destructive reset not exercised",
+    "No 6 GHz, MLO, PPPoE IPv6, prefix delegation or QinQ acceptance",
+    "No comprehensive VPN, recovery or power-loss validation",
+    "TCP retries not universally eliminated",
+    "Public external-radio variant not hardware-tested by these runs"
+  ]
+}

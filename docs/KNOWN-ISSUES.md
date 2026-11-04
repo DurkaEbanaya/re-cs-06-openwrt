@@ -24,11 +24,13 @@ That allocator fix alone did not resolve cold-start RxErr. The current full
 Two owner-confirmed r11 diagnostic cold starts were clean; full r12's latest
 network return is clean but its physical-cycle/UART details remain confirmation
 pending. See [the PCIe investigation](PCIE-RXERR.md) and
-[r12 release notes](RELEASE-R12.md). All-port traffic
-and second-device routed offload remain pending. The table
+[r12 release notes](RELEASE-R12.md). The owner subsequently accepted the
+physical ports, and [extended full-r14 validation](FULL-R14-VALIDATION.md)
+exercised the second device's actual WAN, NAT, WAN VLAN, PPPoE IPv4, IPv6
+and radio-role services. Uninspected provider combinations remain open. The table
 below primarily records historical first-device acceptance, not those gates.
 
-**Latest follow-up:** both devices now run the same full-local **loss-fixes-r14**
+**Previous follow-up:** both devices were checked on the same full-local **loss-fixes-r14**
 payload. The first device's checked r12→r14 upgrade retained all saved
 configuration/access files, protected partitions and GPT; the second device
 was independently rechecked without rewriting its already-installed r14.
@@ -40,6 +42,18 @@ See [TCP loss diagnosis](TCP-LOSS-DIAGNOSIS.md). The actual US-location
 entry below for that specific 5 GHz single-link topology only; 6 GHz and MLO
 remain unaccepted. The public **r14-external** prerelease has separate offline
 inspection evidence, not a hardware boot claim; see [r14 notes](RELEASE-R14.md).
+
+The extended check found a **real USB3 initialization defect** on the
+stock-loader unit: the same device worked at 5G/UAS on the first unit but
+only 480M/usb-storage on the second. Explicit board clock rates in patch
+`0022` restored 5G/UAS with an r15 kernel/r14-root test, including an
+owner-confirmed power cycle, direct reads and filesystem checks. This is
+not retroactive acceptance of r14 USB3 or evidence of different PCB
+revisions. See [USB diagnosis](USB-CLOCK-DIAGNOSIS.md). Full-r15 upgrades
+on both units subsequently passed identical payload readback, each unit's
+saved configuration, GPT/protected partitions, radio enumeration, Gen3 x2
+and clock checks. Post-upgrade traffic checks are reported separately;
+fresh r15 WAN performance is not inferred from the unchanged modules.
 
 | Area | Latest established result | Remaining acceptance |
 | --- | --- | --- |

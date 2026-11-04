@@ -93,11 +93,16 @@ or install anything. Validate the private tar contents and permissions before
 use. A gzip/tar roundtrip alone does not prove first-boot recognition or restore;
 see [stock installation boundaries](STOCK-INSTALLATION.md).
 
-The full build tested on both devices identifies as
+The published full-local r14 validation identifies as
 `experimental-2026.11.04-loss-fixes-r14`. The public seed/resolved config
 selects `experimental-2026.11.04-loss-fixes-r14-external`, excludes the
 three radio firmware/BDF packages and contains no local firmware overlay.
-Patches 0001–0021 and the current public overlay are required. Do not mix an
+The released r14 recipe uses patches 0001–0021. Current development also
+includes board USB clock initialization in patch `0022`, tested with full
+`experimental-2026.11.04-usb-clocks-r15` on both units. To reproduce the
+published r14 assets, use their corresponding-source archive or pinned
+release commit, not current development patches with an old version label.
+Current development requires patches 0001–0022 and the public overlay. Do not mix an
 old resolved configuration/source archive with a new binary's provenance.
 Full local radio dependencies remain subject to the separate workflow and
 licensing restrictions above. See [r14 notes](RELEASE-R14.md).

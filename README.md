@@ -3,11 +3,18 @@
 Experimental, source-based build for **JDCloud RE-CS-06 / BE6500** with
 Qualcomm IPQ5322/IPQ5332. This is **not an official OpenWrt release**.
 
-**Latest full local candidate: loss-fixes-r14, Linux 6.18.60**, installed on
-the second RE-CS-06 with its stock bootloader, persistent ext4 and preserved
-private access/management configuration. Both routers now run the same full
-r14 payload after a separately checked first-device upgrade; each retains
-its own identity, keys and configuration.
+**Latest full local candidate: usb-clocks-r15, Linux 6.18.60.** The same full
+image is installed on both inspected RE-CS-06 units: one with a modified
+bootloader/2 GiB primary root and the other with its stock bootloader/122 MiB
+primary root. Each retains its own persistent settings, identity and keys;
+GPT, bootloader and calibration are not normalized or copied between units.
+The [USB investigation](docs/USB-CLOCK-DIAGNOSIS.md) found an inherited
+clock-state dependency in r14. Explicit board clock rates restored 5G/UAS
+on the stock-loader unit, including an owner-confirmed kernel-only power
+cycle and subsequent full-image upgrade/file checks. Post-upgrade HE service
+and isolated hardware-NAT tests also completed; their nonzero TCP retries
+remain visible in the report. This is not a complete USB hotplug/device/power
+acceptance matrix or universal loss-free traffic claim.
 The [TCP loss investigation](docs/TCP-LOSS-DIAGNOSIS.md) distinguishes the
 corrected QCA8386 switch drops, software backlog/AQM congestion and residual
 sender Tail Loss Probes. It does not promise zero TCP retries in all traffic.
@@ -38,9 +45,11 @@ panic in r10 and localized cold RxErr to integrated-radio startup. r12
 sequences PCI host initialization after AHB PHY registration, without AER
 masking or reducing Gen3 x2. Its missing-helper 60-second kernel fallback
 was tested. Two r11 diagnostic cold starts were clean; full r12 results and
-the pending physical-cycle confirmation are recorded separately. All-port,
-second-device routed traffic and broader wireless acceptance remain separate
-gates. Actual US-location 5 GHz EHT80 AP/STA with four streams and measured
+the pending physical-cycle confirmation are recorded separately. The owner
+accepted the physical ports. [Extended full-r14 validation](docs/FULL-R14-VALIDATION.md)
+checked actual WAN NAT, WAN VLAN, PPPoE IPv4, routed IPv6 and both radio
+roles; untested provider combinations and broader wireless acceptance remain
+separate gates. Actual US-location 5 GHz EHT80 AP/STA with four spatial streams (NSS4) and measured
 AP PPE/Direct Switch traffic is documented in the [EHT control](docs/US-EHT-TEST.md);
 this is not 6 GHz, MLO, or arbitrary STA forwarding acceptance.
 

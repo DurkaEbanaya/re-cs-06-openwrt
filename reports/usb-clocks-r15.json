@@ -1,0 +1,2203 @@
+{
+  "build": "experimental-2026.11.04-usb-clocks-r15",
+  "variant": "full local; not a new public binary release",
+  "correction": "patches/0022-re-cs-06-usb-clock-rates.patch",
+  "usb_clock_rates": {
+    "master": 200000000,
+    "mock_utmi": 60000000,
+    "aux": 2000000,
+    "lfps": 25000000
+  },
+  "same_device_baseline": {
+    "first_r14_unit_link_mbps": 5000,
+    "first_r14_transport": "uas",
+    "second_r14_unit_link_mbps": 480,
+    "second_r14_transport": "usb-storage"
+  },
+  "kernel_only_test": {
+    "rootfs_remained_r14": true,
+    "modules_compared_byte_identical": 94,
+    "warm_boot_link_mbps": 5000,
+    "warm_boot_transport": "uas",
+    "two_256mib_direct_reads_matched": true,
+    "exclusive_64mib_write_remount_compare_passed": true,
+    "owner_confirmed_power_cycle": true,
+    "exact_power_off_duration_independently_recorded": false,
+    "new_boot_superspeed_kernel_seconds": 3.146,
+    "new_boot_uas_kernel_seconds": 3.253,
+    "cold_consecutive_256mib_reads_matched": true,
+    "cold_read_only_filesystem_check_passed": true,
+    "cold_aer_totals": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "full_image": {
+    "identical_payload_both_units": true,
+    "units": [
+      {
+        "unit": 1,
+        "primary_root_mib": 2048,
+        "bootloader": "modified existing",
+        "kernel_rootfs_verified": true,
+        "private_configuration_environment_gpt_protected_partitions_preserved": true,
+        "both_radio_phys_and_gen3_x2": true,
+        "aer_totals": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "boot_counter_zero": true,
+        "assigned_usb_clock_rates_correct": true,
+        "attached_usb3_uas_verified": false
+      },
+      {
+        "unit": 2,
+        "primary_root_mib": 122,
+        "bootloader": "retained stock",
+        "kernel_rootfs_verified": true,
+        "private_configuration_environment_gpt_protected_partitions_preserved": true,
+        "both_radio_phys_and_gen3_x2": true,
+        "aer_totals": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "boot_counter_zero": true,
+        "assigned_usb_clock_rates_correct": true,
+        "attached_usb3_uas_verified": true
+      }
+    ],
+    "second_unit_usb_link_mbps": 5000,
+    "second_unit_transport": "uas",
+    "second_unit_write_bytes": 67108864,
+    "second_unit_write_remount_hash_match": true,
+    "second_unit_filesystem_check_passed": true,
+    "second_unit_test_file_removed": true,
+    "usb_left_unmounted": true,
+    "usb_formatted": false,
+    "full_image_pair_physical_cold_cycle_tested": false,
+    "post_upgrade_radio_services": {
+      "country": "RU",
+      "actual_he": true,
+      "dhcp_dns_ipv4_ipv6_ping": true,
+      "tcp_streams": 2,
+      "seconds_per_direction": 20,
+      "results": [
+        {
+          "radio_ghz": 2.4,
+          "ap_router": 2,
+          "sta_router": 1,
+          "security": "sae",
+          "requested_mode": "HE20",
+          "direction": "forward",
+          "receiver_mbps": 167.36,
+          "retransmissions": 0
+        },
+        {
+          "radio_ghz": 2.4,
+          "ap_router": 2,
+          "sta_router": 1,
+          "security": "sae",
+          "requested_mode": "HE20",
+          "direction": "reverse",
+          "receiver_mbps": 172.85,
+          "retransmissions": 0
+        },
+        {
+          "radio_ghz": 2.4,
+          "ap_router": 1,
+          "sta_router": 2,
+          "security": "psk2",
+          "requested_mode": "HE20",
+          "direction": "forward",
+          "receiver_mbps": 173.26,
+          "retransmissions": 0
+        },
+        {
+          "radio_ghz": 2.4,
+          "ap_router": 1,
+          "sta_router": 2,
+          "security": "psk2",
+          "requested_mode": "HE20",
+          "direction": "reverse",
+          "receiver_mbps": 146.32,
+          "retransmissions": 0
+        },
+        {
+          "radio_ghz": 5,
+          "ap_router": 2,
+          "sta_router": 1,
+          "security": "sae",
+          "requested_mode": "HE80",
+          "direction": "forward",
+          "receiver_mbps": 1098.2,
+          "retransmissions": 150
+        },
+        {
+          "radio_ghz": 5,
+          "ap_router": 2,
+          "sta_router": 1,
+          "security": "sae",
+          "requested_mode": "HE80",
+          "direction": "reverse",
+          "receiver_mbps": 1408.53,
+          "retransmissions": 0
+        },
+        {
+          "radio_ghz": 5,
+          "ap_router": 1,
+          "sta_router": 2,
+          "security": "psk2",
+          "requested_mode": "HE80",
+          "direction": "forward",
+          "receiver_mbps": 1107.56,
+          "retransmissions": 1234
+        },
+        {
+          "radio_ghz": 5,
+          "ap_router": 1,
+          "sta_router": 2,
+          "security": "psk2",
+          "requested_mode": "HE80",
+          "direction": "reverse",
+          "receiver_mbps": 1400.04,
+          "retransmissions": 0
+        }
+      ],
+      "default_backlog_unchanged": true,
+      "zero_tcp_retransmissions_universally_claimed": false,
+      "original_configurations_restored": true
+    },
+    "post_upgrade_wan_nat": {
+      "seconds_per_direction": 30,
+      "tcp_streams": 2,
+      "results": [
+        {
+          "mode": "hardware",
+          "direction": "out",
+          "receiver_mbps": 2337.76,
+          "retransmissions": 1056,
+          "hw_offload_observed": true,
+          "software_offload_observed": false
+        },
+        {
+          "mode": "hardware",
+          "direction": "in",
+          "receiver_mbps": 1482.19,
+          "retransmissions": 0,
+          "hw_offload_observed": true,
+          "software_offload_observed": false
+        }
+      ],
+      "physical_isolated_wan": true,
+      "lan_management_positive_and_wan_input_block_controls": true,
+      "dhcp_reconnect": true,
+      "original_configurations_restored": true
+    },
+    "final_check": {
+      "identical_full_image_both_units": true,
+      "kernel_rootfs_protected_gpt_environment_and_private_configuration_verified": true,
+      "both_radios_gen3_x2_and_clock_rates_correct": true,
+      "aer_all_zero_both": true,
+      "usb3_uas_attached_second_unit": true,
+      "usb_unmounted": true,
+      "original_sysctls_and_configs_preserved": true,
+      "temporary_tools_and_routes_removed": true,
+      "wan_radios_persistent_offload_disabled": true,
+      "pc_wifi_internet_preserved": true
+    }
+  },
+  "failed_post_upgrade_wan_attempt": {
+    "no_iperf_results": true,
+    "initial_wan_carrier_absent": true,
+    "management_connection_used_first_unit_lan1": true,
+    "original_configurations_restored": true,
+    "fresh_r15_nat_performance_acceptance_claimed": false
+  },
+  "hardware_pcb_revision_difference_proven": false,
+  "negative_findings": [
+    "Earlier r14 USB storage timeouts delayed boot",
+    "Live outer USB wrapper rebind followed by unexplained restart; not repeated as recovery"
+  ],
+  "remaining": [
+    "First full-r15 unit attached USB device test",
+    "Repeated hotplug, other USB devices/power and extended storage testing",
+    "Full-image physical cold-start pair"
+  ],
+  "offline_regression_tests_passed": 62,
+  "cable_replacement_controls": {
+    "owner_reported_replacement": true,
+    "tcp_streams": 2,
+    "seconds_per_direction": 30,
+    "baseline": {
+      "seconds_per_direction": 30,
+      "tcp_streams": 2,
+      "out_mbps": 2337.76,
+      "in_mbps": 1482.19,
+      "out_tcp_retransmissions": 1056,
+      "in_tcp_retransmissions": 0,
+      "outbound_retransmission_interval_seconds": [
+        7,
+        8
+      ],
+      "active_snapshot_started_seconds": 7
+    },
+    "experiments": [
+      {
+        "label": "pc-1g-confirmed",
+        "results": [
+          {
+            "repeat": 1,
+            "direction": "out",
+            "receiver_mbps": 2338.54,
+            "retransmissions": 0,
+            "active_observation_performed": true,
+            "ppe_failures_zero": true,
+            "target_aer_totals_zero": true,
+            "counter_deltas": [
+              {
+                "device": "target_router2",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 20388
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "device": "peer_router1",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "retransmission_intervals": []
+          },
+          {
+            "repeat": 1,
+            "direction": "in",
+            "receiver_mbps": 2027.23,
+            "retransmissions": 0,
+            "active_observation_performed": true,
+            "ppe_failures_zero": true,
+            "target_aer_totals_zero": true,
+            "counter_deltas": [
+              {
+                "device": "target_router2",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 506
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "device": "peer_router1",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 506
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 32384
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "retransmission_intervals": []
+          },
+          {
+            "repeat": 2,
+            "direction": "out",
+            "receiver_mbps": 2337.13,
+            "retransmissions": 0,
+            "active_observation_performed": true,
+            "ppe_failures_zero": true,
+            "target_aer_totals_zero": true,
+            "counter_deltas": [
+              {
+                "device": "target_router2",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 23736
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "device": "peer_router1",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "retransmission_intervals": []
+          },
+          {
+            "repeat": 2,
+            "direction": "in",
+            "receiver_mbps": 2012.12,
+            "retransmissions": 0,
+            "active_observation_performed": true,
+            "ppe_failures_zero": true,
+            "target_aer_totals_zero": true,
+            "counter_deltas": [
+              {
+                "device": "target_router2",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 419
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "device": "peer_router1",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 419
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 26816
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "retransmission_intervals": []
+          }
+        ],
+        "pc_link_checks": [
+          {
+            "repeat": 1,
+            "stage": "before",
+            "pc_2500_full": null,
+            "measurement_available": false
+          },
+          {
+            "repeat": 1,
+            "stage": "after",
+            "pc_2500_full": null,
+            "measurement_available": false
+          },
+          {
+            "repeat": 2,
+            "stage": "before",
+            "pc_2500_full": null,
+            "measurement_available": false
+          },
+          {
+            "repeat": 2,
+            "stage": "after",
+            "pc_2500_full": null,
+            "measurement_available": false
+          }
+        ],
+        "final_preservation_and_cleanup_passed": true
+      },
+      {
+        "label": "all-25g-repeat",
+        "results": [
+          {
+            "repeat": 1,
+            "direction": "out",
+            "receiver_mbps": 2340.91,
+            "retransmissions": 79,
+            "active_observation_performed": true,
+            "ppe_failures_zero": true,
+            "target_aer_totals_zero": true,
+            "counter_deltas": [
+              {
+                "device": "target_router2",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 17235
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "device": "peer_router1",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  79,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "retransmission_intervals": [
+              {
+                "start_seconds": 3.001036,
+                "retransmissions": 79
+              }
+            ]
+          },
+          {
+            "repeat": 1,
+            "direction": "in",
+            "receiver_mbps": 2030.18,
+            "retransmissions": 0,
+            "active_observation_performed": true,
+            "ppe_failures_zero": true,
+            "target_aer_totals_zero": true,
+            "counter_deltas": [
+              {
+                "device": "target_router2",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 417
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "device": "peer_router1",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 417
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 26688
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "retransmission_intervals": []
+          },
+          {
+            "repeat": 2,
+            "direction": "out",
+            "receiver_mbps": 2338.62,
+            "retransmissions": 0,
+            "active_observation_performed": true,
+            "ppe_failures_zero": true,
+            "target_aer_totals_zero": true,
+            "counter_deltas": [
+              {
+                "device": "target_router2",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 20221
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "device": "peer_router1",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "retransmission_intervals": []
+          },
+          {
+            "repeat": 2,
+            "direction": "in",
+            "receiver_mbps": 1465.34,
+            "retransmissions": 0,
+            "active_observation_performed": true,
+            "ppe_failures_zero": true,
+            "target_aer_totals_zero": true,
+            "counter_deltas": [
+              {
+                "device": "target_router2",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "device": "peer_router1",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "retransmission_intervals": []
+          }
+        ],
+        "pc_link_checks": [
+          {
+            "repeat": 1,
+            "stage": "before",
+            "pc_2500_full": true
+          },
+          {
+            "repeat": 1,
+            "stage": "after",
+            "pc_2500_full": true
+          },
+          {
+            "repeat": 2,
+            "stage": "before",
+            "pc_2500_full": true
+          },
+          {
+            "repeat": 2,
+            "stage": "after",
+            "pc_2500_full": true
+          }
+        ],
+        "final_preservation_and_cleanup_passed": true
+      },
+      {
+        "label": "quiet-25g",
+        "results": [
+          {
+            "repeat": 1,
+            "direction": "out",
+            "receiver_mbps": 2338.79,
+            "retransmissions": 0,
+            "active_observation_performed": false,
+            "ppe_failures_zero": true,
+            "target_aer_totals_zero": true,
+            "counter_deltas": [
+              {
+                "device": "target_router2",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 20067
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "device": "peer_router1",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "retransmission_intervals": []
+          },
+          {
+            "repeat": 1,
+            "direction": "in",
+            "receiver_mbps": 1467.52,
+            "retransmissions": 0,
+            "active_observation_performed": false,
+            "ppe_failures_zero": true,
+            "target_aer_totals_zero": true,
+            "counter_deltas": [
+              {
+                "device": "target_router2",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 2
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "device": "peer_router1",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 2
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 128
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "retransmission_intervals": []
+          },
+          {
+            "repeat": 2,
+            "direction": "out",
+            "receiver_mbps": 2340.68,
+            "retransmissions": 0,
+            "active_observation_performed": false,
+            "ppe_failures_zero": true,
+            "target_aer_totals_zero": true,
+            "counter_deltas": [
+              {
+                "device": "target_router2",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 18783
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "device": "peer_router1",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "retransmission_intervals": []
+          },
+          {
+            "repeat": 2,
+            "direction": "in",
+            "receiver_mbps": 2029.71,
+            "retransmissions": 0,
+            "active_observation_performed": false,
+            "ppe_failures_zero": true,
+            "target_aer_totals_zero": true,
+            "counter_deltas": [
+              {
+                "device": "target_router2",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 460
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "device": "peer_router1",
+                "mib": [
+                  {
+                    "counter": "RxPause",
+                    "delta": 460
+                  },
+                  {
+                    "counter": "RxFcsErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxAlignErr",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxRunt",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxFragment",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxTooLong",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "RxBadByte",
+                    "delta": 29440
+                  },
+                  {
+                    "counter": "Filtered",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxPause",
+                    "delta": 0
+                  },
+                  {
+                    "counter": "TxUnderRun",
+                    "delta": 0
+                  }
+                ],
+                "softnet_drop_delta": [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "retransmission_intervals": []
+          }
+        ],
+        "pc_link_checks": [
+          {
+            "repeat": 1,
+            "stage": "before",
+            "pc_2500_full": true
+          },
+          {
+            "repeat": 1,
+            "stage": "after",
+            "pc_2500_full": true
+          },
+          {
+            "repeat": 2,
+            "stage": "before",
+            "pc_2500_full": true
+          },
+          {
+            "repeat": 2,
+            "stage": "after",
+            "pc_2500_full": true
+          }
+        ],
+        "final_preservation_and_cleanup_passed": true
+      }
+    ],
+    "cable_fault_proven": false,
+    "observer_effect_causality_proven": false,
+    "note": "Initial PC link renegotiated from 1G to 2.5G; explicit stable-2.5G controls are distinguished from the first repeats"
+  }
+}
