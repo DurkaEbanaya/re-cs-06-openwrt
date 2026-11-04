@@ -4,10 +4,11 @@ The `external-radio` images contain ath12k drivers, but no IPQ5332/QCN9274
 radio firmware/BDF package. They are not standalone Wi-Fi firmware, nor are
 they hardware-validated. See [licensing](LICENSING.md) and [recovery](RECOVERY.md).
 
-Current public version: **radio-sequence-r12-external**. It includes all
-source/overlay fixes through patch 0020; the complete local r12 has separate
+Current public prerelease: **loss-fixes-r14-external**. It includes all
+source/overlay fixes through patch 0021; the complete local r14 has separate
 hardware evidence. The November 2 assets are obsolete **DO NOT FLASH**
-prototypes. See [r12 release notes](RELEASE-R12.md).
+prototypes. See [r14 release notes](RELEASE-R14.md); the older
+[r12 notes](RELEASE-R12.md) remain historical.
 
 On the build PC, from this repository:
 

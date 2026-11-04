@@ -38,7 +38,8 @@ distinct from that defect; zero retries under every load is not claimed.
 See [TCP loss diagnosis](TCP-LOSS-DIAGNOSIS.md). The actual US-location
 [EHT80 AP/STA test](US-EHT-TEST.md) supersedes the historical "not performed"
 entry below for that specific 5 GHz single-link topology only; 6 GHz and MLO
-remain unaccepted. The public binary release is still r12-external.
+remain unaccepted. The public **r14-external** prerelease has separate offline
+inspection evidence, not a hardware boot claim; see [r14 notes](RELEASE-R14.md).
 
 | Area | Latest established result | Remaining acceptance |
 | --- | --- | --- |
