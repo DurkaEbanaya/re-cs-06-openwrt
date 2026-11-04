@@ -27,6 +27,11 @@ hardware-tested full image, and is not a universal stock installer.
 images, corresponding source, inspection results and SHA256SUMS. Radio files
 are external dependencies; read the release notes before installing.
 
+**Post-release source fix:** [LuCI/uhttpd CGI queue crash](docs/UHTTPD-CGI-CRASH.md).
+A targeted `size_t` compatibility backport for newer libubox was reproduced,
+tested and installed as userspace package release `-2` on the active r16 target.
+Existing r15-external release assets are unchanged and do **not** include it.
+
 First-device resources-r6 is conditionally complete for its tested scope.
 Linux 6.18.60
 boots from eMMC with persistent ext4 and checked upgrade/configuration

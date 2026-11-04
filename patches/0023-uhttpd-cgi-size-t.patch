@@ -1,0 +1,84 @@
+diff --git a/package/network/services/uhttpd/Makefile b/package/network/services/uhttpd/Makefile
+--- a/package/network/services/uhttpd/Makefile
++++ b/package/network/services/uhttpd/Makefile
+@@ -8,7 +8,7 @@
+ include $(TOPDIR)/rules.mk
+ 
+ PKG_NAME:=uhttpd
+-PKG_RELEASE:=1
++PKG_RELEASE:=2
+ 
+ PKG_SOURCE_PROTO:=git
+ PKG_SOURCE_URL=$(PROJECT_GIT)/project/uhttpd.git
+diff --git a/package/network/services/uhttpd/patches/110-fix-calloc-a-field-length-type.patch b/package/network/services/uhttpd/patches/110-fix-calloc-a-field-length-type.patch
+new file mode 100644
+--- /dev/null
++++ b/package/network/services/uhttpd/patches/110-fix-calloc-a-field-length-type.patch
+@@ -0,0 +1,67 @@
++From: Andy Chiang <AndyChiang_git@outlook.com>
++Subject: [PATCH] cgi, file: fix crash due to field_len type mismatch with libubox
++
++Backport of upstream 6ab9abb56bcb28684f382f7a94c170fad02348ea.
++libubox __calloc_a consumes size_t variadic lengths, not int. On aarch64
++the mismatched argument can produce an invalid allocation and a CGI queue crash.
++Also delay req_free installation until allocation succeeds, so the OOM error
++path does not dereference an uninitialized deferred request.
++
++--- a/cgi.c
+++++ b/cgi.c
++@@ -31,6 +31,12 @@ void uh_interpreter_add(const char *ext, const char *path)
++ 	in = calloc_a(sizeof(*in),
++ 		&new_ext, strlen(ext) + 1,
++ 		&new_path, strlen(path) + 1);
+++	if (!in) {
+++		fprintf(stderr,
+++			"uhttpd: OOM while adding CGI interpreter (%s -> %s)\n",
+++			ext, path);
+++		return;
+++	}
++ 
++ 	in->ext = strcpy(new_ext, ext);
++ 	in->path = strcpy(new_path, path);
++--- a/file.c
+++++ b/file.c
++@@ -777,7 +777,7 @@ uh_free_pending_request(struct client *cl)
++ 	free(dr);
++ }
++ 
++-static int field_len(const char *ptr)
+++static size_t field_len(const char *ptr)
++ {
++ 	if (!ptr)
++ 		return 0;
++@@ -795,13 +795,15 @@ uh_defer_script(struct client *cl, struct dispatch_handler *d, char *url, struct
++ 	struct deferred_request *dr;
++ 	char *_url, *_root, *_phys, *_name, *_info, *_query;
++ 
++-	cl->dispatch.req_free = uh_free_pending_request;
++-
++ 	if (pi) {
++ 		/* allocate enough memory to duplicate all path_info strings in one block */
++ #undef _field
++ #define _field(_name) &_##_name, field_len(pi->_name),
++ 		dr = calloc_a(sizeof(*dr), &_url, strlen(url) + 1, path_info_fields NULL);
+++		if (!dr) {
+++			uh_client_error(cl, 500, "Internal Server Error", "Out of memory");
+++			return;
+++		}
++ 
++ 		memcpy(&dr->pi, pi, sizeof(*pi));
++ 		dr->path = true;
++@@ -812,8 +814,13 @@ uh_defer_script(struct client *cl, struct dispatch_handler *d, char *url, struct
++ 		path_info_fields
++ 	} else {
++ 		dr = calloc_a(sizeof(*dr), &_url, strlen(url) + 1, NULL);
+++		if (!dr) {
+++			uh_client_error(cl, 500, "Internal Server Error", "Out of memory");
+++			return;
+++		}
++ 	}
++ 
+++	cl->dispatch.req_free = uh_free_pending_request;
++ 	cl->dispatch.req_data = dr;
++ 	cl->dispatch.data_blocked = true;
++ 	dr->url = strcpy(_url, url);
