@@ -23,6 +23,14 @@ REQUIRED = {
     "kmod-tun", "kmod-nft-queue", "libnetfilter-queue", "kmod-usb-net-qmi-wwan",
     "kmod-usb-net-cdc-mbim", "kmod-usb-serial-option", "luci-proto-qmi",
     "luci-proto-mbim", "sms-tool", "coreutils-stty",
+    "kmod-nf-socket", "kmod-nft-socket",
+}
+OPTIONAL = {
+    "kmod-ifb", "kmod-sched-core", "kmod-sched-cake", "tc-full",
+    "sqm-scripts", "luci-app-sqm", "kmod-ipvlan", "kmod-dummy",
+    "kmod-br-netfilter", "kmod-gre", "kmod-gre6", "kmod-vxlan",
+    "kmod-ipip", "kmod-sit", "kmod-fs-exfat", "kmod-fs-vfat",
+    "kmod-fs-ntfs3", "kmod-nls-cp437", "kmod-nls-iso8859-1", "kmod-nls-utf8",
 }
 
 
@@ -41,8 +49,11 @@ def main():
     packages = set(re.findall(r"^CONFIG_PACKAGE_([^=]+)=y$", text, re.M))
     bad = sorted(x for x in packages if FORBIDDEN.fullmatch(x))
     missing = sorted(REQUIRED - packages)
+    modules = set(re.findall(r"^CONFIG_PACKAGE_([^=]+)=m$", text, re.M))
+    missing_optional = sorted(OPTIONAL - modules)
     assert not bad, f"Forbidden packages selected: {bad}"
     assert not missing, f"Required packages missing: {missing}"
+    assert not missing_optional, f"Optional packages must be built separately, not installed: {missing_optional}"
     assert not packages.intersection({"ath12k-firmware-ipq5332-ddwrt",
                                      "ath12k-firmware-qcn9274-ddwrt", "ipq-wifi-jdcloud_re-cs-06"}), \
         "Public build must use separately downloaded radio firmware"

@@ -21,7 +21,8 @@ def patched_paths(repo):
     return names
 
 
-def package(source, output, include_radio=False):
+def package(source, output, include_radio=False, omit_radio_overlay=False):
+    assert not (include_radio and omit_radio_overlay)
     repo = Path(__file__).resolve().parents[1]
     assert not output.exists()
     omitted = []
@@ -61,6 +62,11 @@ def package(source, output, include_radio=False):
     for path in (source / "files").rglob("*"):
         if path.is_file():
             assert path.suffix not in (".key", ".pem")
+            if omit_radio_overlay and path.relative_to(source / 'files').as_posix().startswith('lib/firmware/'):
+                omitted.append({"tree": "lede", "path": path.relative_to(source).as_posix(),
+                                "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                                "reason": "radio overlay excluded from public package sources"})
+                continue
             assert include_radio or 'lib/firmware/' not in path.relative_to(source / 'files').as_posix(), \
                 "External-radio source bundle must not include a local firmware overlay"
             inputs.append((path, "lede/" + path.relative_to(source).as_posix()))
@@ -89,6 +95,8 @@ if __name__ == "__main__":
     parser.add_argument("source", type=Path)
     parser.add_argument("output", type=Path)
     parser.add_argument("--include-radio-private", action="store_true",
-                        help="Include local proprietary inputs for a PRIVATE full-image source bundle; not a license grant")
+                         help="Include local proprietary inputs for a PRIVATE full-image source bundle; not a license grant")
+    parser.add_argument("--omit-radio-overlay", action="store_true",
+                        help="Explicitly omit local radio overlay for public matching-package sources; not a full radio-image bundle")
     args = parser.parse_args()
-    print(json.dumps(package(args.source.resolve(), args.output.resolve(), args.include_radio_private), indent=2))
+    print(json.dumps(package(args.source.resolve(), args.output.resolve(), args.include_radio_private, args.omit_radio_overlay), indent=2))

@@ -25,6 +25,12 @@ ROOTS = [
     'kmod-usb-net-huawei-cdc-ncm', 'kmod-usb-serial-option', 'kmod-usb-acm',
     'usb-modeswitch', 'coreutils-stty', 'qmi-utils', 'mbim-utils', 'modemmanager',
     'luci-proto-qmi', 'luci-proto-mbim', 'luci-proto-modemmanager', 'adb',
+    'kmod-nf-socket', 'kmod-nft-socket',
+    'kmod-ifb', 'kmod-sched-core', 'kmod-sched-cake', 'tc-full',
+    'sqm-scripts', 'luci-app-sqm', 'kmod-ipvlan', 'kmod-dummy',
+    'kmod-br-netfilter', 'kmod-gre', 'kmod-gre6', 'kmod-vxlan',
+    'kmod-ipip', 'kmod-sit', 'kmod-fs-exfat', 'kmod-fs-vfat', 'kmod-fs-ntfs3',
+    'kmod-nls-cp437', 'kmod-nls-iso8859-1', 'kmod-nls-utf8',
 ]
 
 
@@ -49,6 +55,19 @@ def control(path):
     with tarfile.open(fileobj=io.BytesIO(data), mode='r:gz') as inner:
         member = next(m for m in inner if m.name.lstrip('./') == 'control')
         return fields(inner.extractfile(member).read().decode())
+
+
+def check_public_payload(path):
+    """The downloadable feed must not carry blobs or unsafe archive paths."""
+    with tarfile.open(path, 'r:gz') as archive:
+        member = next(m for m in archive if m.name.lstrip('./') == 'data.tar.gz')
+        data = archive.extractfile(member).read()
+    with tarfile.open(fileobj=io.BytesIO(data), mode='r:gz') as archive:
+        for member in archive:
+            name = Path(member.name.removeprefix('./'))
+            if (name.is_absolute() or '..' in name.parts or name.as_posix().startswith('lib/firmware/')
+                    or not (member.isfile() or member.isdir() or member.issym())):
+                raise ValueError('Unsafe path or firmware in public package: ' + path.name)
 
 
 def collect_records(paths, selected, kernel_version):
@@ -93,6 +112,10 @@ def dependency_closure(records, roots, kernel_version, compare=None):
                 satisfied_kernel = True
                 return
             candidates = {name} if name in records else providers.get(name, set())
+            # SQM depends on virtual "tc". Prefer the reviewed full variant,
+            # never ship/install tiny+bpf+full simultaneously just to resolve it.
+            if name == 'tc' and 'tc-full' in candidates:
+                candidates = {'tc-full'}
             if len(candidates) != 1:
                 continue
             chosen = next(iter(candidates))
@@ -155,6 +178,9 @@ def main():
     manifest = []
     for name in sorted(closure):
         item = records[name]
+        # This feed is publicly downloadable even when full radio images are
+        # private. Never export radio blobs via a transitive dependency.
+        check_public_payload(item['path'])
         filename = item['path'].name
         shutil.copyfile(item['path'], output / filename)
         row = dict(item['control'], Filename=filename, Size=str(item['path'].stat().st_size), SHA256sum=item['sha256'])

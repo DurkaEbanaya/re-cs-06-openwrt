@@ -28,4 +28,5 @@ jobs:
           sh -n overlay/usr/sbin/re-cs-06-upgrade-preflight
           sh -n overlay/lib/upgrade/re-cs-06.sh
           sh -n scripts/test-network-support.sh
+          sh -n scripts/test-optional-support.sh
           sh -n overlay/usr/libexec/re-cs-06-radio-reconcile

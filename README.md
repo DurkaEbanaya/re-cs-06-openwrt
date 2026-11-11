@@ -3,7 +3,10 @@
 Experimental, source-based build for **JDCloud RE-CS-06 / BE6500** with
 Qualcomm IPQ5322/IPQ5332. This is **not an official OpenWrt release**.
 
-**Latest source update: [r18 package support](docs/RELEASE-R18.md)** — matching
+**In development: [r19 optional modules and signed online feed](docs/PACKAGE-SUPPORT-R19.md).**
+This does not replace the published r18 artifacts or certify a new hardware boot.
+
+**Latest published source update: [r18 package support](docs/RELEASE-R18.md)** — matching
 WG/AWG, veth/TUN, NFQUEUE and modem dependencies, a signed offline feed and upgrade
 guards for the known primary-root layouts. A full local build was tested on one
 122 MiB-root unit, including isolated VPN/NFQUEUE tests and a second reboot with

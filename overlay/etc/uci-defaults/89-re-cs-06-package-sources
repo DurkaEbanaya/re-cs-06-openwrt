@@ -5,6 +5,33 @@
 # package signature verification; never synthesize a standard release number.
 [ "$(cat /tmp/sysinfo/board_name 2>/dev/null)" = jdcloud,re-cs-06 ] || exit 0
 path=/etc/opkg/distfeeds.conf
-[ -f "$path" ] || exit 0
-sed -i '\|^src/gz .*https\{0,1\}://downloads\.openwrt\.org/|s|^|# Disabled for custom build: |' "$path"
+[ ! -f "$path" ] || sed -i '\|^src/gz .*https\{0,1\}://downloads\.openwrt\.org/|s|^|# Disabled for custom build: |' "$path"
+# Generated only after the kernel package version and release URL are frozen.
+# Never source this file as shell code, and never retain an old owned feed after
+# an upgrade. Owner-added sources are not rewritten.
+custom=/etc/opkg/customfeeds.conf
+mkdir -p /etc/opkg
+touch "$custom"
+sed -i '/^src\/gz recs06_release /d' "$custom"
+binding=/usr/share/re-cs-06/release-feed
+[ -f "$binding" ] || exit 0
+{
+ read -r schema
+ read -r expected
+ read -r url
+ read -r fingerprint
+ read -r extra
+} < "$binding"
+[ "$schema" = 1 ] && [ -z "$extra" ] || exit 1
+case "$expected" in ''|*[!a-zA-Z0-9.+_-]*) exit 1 ;; esac
+case "$url" in https://*"$expected"*) ;; *) exit 1 ;; esac
+case "$url" in *[!a-zA-Z0-9.:/~%+_-]*) exit 1 ;; esac
+case "$fingerprint" in ''|*[!a-f0-9]*) exit 1 ;; esac
+[ "${#fingerprint}" = 16 ] && [ -s "/etc/opkg/keys/$fingerprint" ] || exit 1
+actual=$(opkg status kernel | sed -n 's/^Version: //p')
+[ "$actual" = "$expected" ] || {
+ logger -t recs06-feed 'Release feed disabled: installed kernel ABI does not match binding'
+ exit 1
+}
+printf 'src/gz recs06_release %s\n' "$url" >> "$custom"
 exit 0

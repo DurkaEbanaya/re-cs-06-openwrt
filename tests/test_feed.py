@@ -104,6 +104,30 @@ class FeedTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             feed.fields('Package: first\nPackage: second\n')
 
+    def test_full_tc_selected_for_sqm_virtual_dependency(self):
+        records = {'sqm-scripts': self.record('sqm-scripts', 'tc'),
+                   'tc-tiny': self.record('tc-tiny', Provides='tc'),
+                   'tc-full': self.record('tc-full', Provides='tc')}
+        self.assertEqual(feed.dependency_closure(records, ['sqm-scripts'], 'fixture')[0],
+                         {'sqm-scripts', 'tc-full'})
+
+    def test_public_payload_rejects_firmware_and_traversal(self):
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td)/'test.ipk'
+            for name in ['./usr/bin/example', './lib/firmware/radio.bin', '../etc/shadow', '/etc/shadow']:
+                data = io.BytesIO()
+                with tarfile.open(fileobj=data, mode='w:gz') as archive:
+                    entry = tarfile.TarInfo(name); entry.size = 4
+                    archive.addfile(entry, io.BytesIO(b'test'))
+                with tarfile.open(path, mode='w:gz') as archive:
+                    entry = tarfile.TarInfo('./data.tar.gz'); entry.size = len(data.getvalue())
+                    archive.addfile(entry, io.BytesIO(data.getvalue()))
+                if name == './usr/bin/example':
+                    feed.check_public_payload(path)
+                else:
+                    with self.subTest(name=name), self.assertRaises(ValueError):
+                        feed.check_public_payload(path)
+
     def test_new_source_recipe_does_not_copy_whole_kernel(self):
         text = (REPO / 'scripts/prepare-extra-packages.py').read_text()
         lock = __import__('json').loads((REPO / 'extra-packages.lock.json').read_text())
