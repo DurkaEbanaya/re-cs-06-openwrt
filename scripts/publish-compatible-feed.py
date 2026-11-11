@@ -55,6 +55,8 @@ def main():
     feed = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(feed)
     for row in manifest['packages']:
+        if feed.asset_filename(row['filename']) != row['filename']:
+            raise ValueError('Package filename is not release-asset safe')
         feed.check_public_payload(root/row['filename'])
     for line in (root/'SHA256SUMS').read_text().splitlines():
         digest, name = line.split('  ', 1)

@@ -80,6 +80,18 @@ def index_entry(row):
     return '\n'.join(f'{key}: {row[key]}' for key in keys) + '\n\n'
 
 
+def asset_filename(name):
+    # GitHub normalizes '~' (and other special characters) in release asset
+    # names. Normalize BEFORE signing the index, not after uploading it. Keep
+    # Version/Depends unchanged: this affects the transport filename only.
+    if Path(name).name != name or not name.endswith('.ipk'):
+        raise ValueError('Invalid package filename')
+    result = re.sub(r'[^A-Za-z0-9._-]', '.', name)
+    if not result or result.startswith('.'):
+        raise ValueError('Invalid public asset filename')
+    return result
+
+
 def collect_records(paths, selected, kernel_version):
     records = {}
     for path in sorted(paths):
@@ -191,7 +203,9 @@ def main():
         # This feed is publicly downloadable even when full radio images are
         # private. Never export radio blobs via a transitive dependency.
         check_public_payload(item['path'])
-        filename = item['path'].name
+        filename = asset_filename(item['path'].name)
+        if (output / filename).exists():
+            raise ValueError('Public asset filename collision: ' + filename)
         shutil.copyfile(item['path'], output / filename)
         row = dict(item['control'], Filename=filename, Size=str(item['path'].stat().st_size), SHA256sum=item['sha256'])
         index.append(index_entry(row))

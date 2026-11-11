@@ -13,6 +13,14 @@ spec.loader.exec_module(feed)
 
 
 class FeedTests(unittest.TestCase):
+    def test_release_filenames_preserve_versions_only_in_metadata(self):
+        self.assertEqual(feed.asset_filename('luci-app-sqm_26.306~fixture_all.ipk'),
+                         'luci-app-sqm_26.306.fixture_all.ipk')
+        self.assertEqual(feed.asset_filename('libexample_1.0-1_all.ipk'),
+                         'libexample_1.0-1_all.ipk')
+        for name in ['../example.ipk', '.hidden.ipk', 'example.tar.gz']:
+            with self.assertRaises(ValueError):
+                feed.asset_filename(name)
     @staticmethod
     def write_ipk(path, text):
         stream = io.BytesIO()
