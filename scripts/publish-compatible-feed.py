@@ -35,7 +35,7 @@ def main():
     if commit['sha'] != args.commit:
         raise ValueError('Reviewed commit is not available in the destination repository')
     manifest = json.loads((root/'feed-manifest.json').read_text())
-    if args.tag != 'packages-r19-'+manifest['kernel_abi']:
+    if not re.fullmatch(re.escape('packages-r19-'+manifest['kernel_abi'])+r'(?:-feed[2-9][0-9]*)?', args.tag):
         raise ValueError('Tag must bind to this exact r19 ABI')
     sources = args.source_archive.resolve()
     if not sources.is_file() or not re.fullmatch(r'corresponding-package-sources-r19\.tar\.zst', sources.name):
@@ -82,9 +82,13 @@ def main():
         expected |= {sources.name, source_sum.name}
         source_sum_bytes = source_sum.read_bytes()
     release = json.loads(subprocess.check_output(['gh', 'api', f'repos/{args.repo}/releases/tags/{args.tag}']))
-    if {r['name'] for r in release['assets']} != expected:
+    # The embedded release response caps assets at 100; this feed is larger.
+    assets = json.loads(subprocess.check_output(['gh', 'api', '--paginate', '--slurp',
+        f'repos/{args.repo}/releases/{release["id"]}/assets?per_page=100']))
+    assets = [asset for page in assets for asset in page]
+    if {r['name'] for r in assets} != expected:
         raise ValueError('Incomplete upload; inspect release, do not recreate blindly')
-    for row in release['assets']:
+    for row in assets:
         if row['name'] == sources.name:
             wanted = digest.hexdigest()
         elif row['name'] == 'SOURCE-SHA256SUMS':

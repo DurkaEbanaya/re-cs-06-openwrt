@@ -104,6 +104,14 @@ class FeedTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             feed.fields('Package: first\nPackage: second\n')
 
+    def test_transport_fields_precede_multiline_description(self):
+        row = dict(Package='fixture', Description='test\n \n details\n ',
+                   Filename='fixture.ipk', Size='4', SHA256sum='0'*64)
+        text = feed.index_entry(row)
+        self.assertLess(text.index('Filename:'), text.index('Description:'))
+        self.assertLess(text.index('SHA256sum:'), text.index('Description:'))
+        self.assertTrue(text.endswith('\n\n'))
+
     def test_full_tc_selected_for_sqm_virtual_dependency(self):
         records = {'sqm-scripts': self.record('sqm-scripts', 'tc'),
                    'tc-tiny': self.record('tc-tiny', Provides='tc'),

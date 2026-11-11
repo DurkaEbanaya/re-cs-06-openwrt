@@ -70,6 +70,16 @@ def check_public_payload(path):
                 raise ValueError('Unsafe path or firmware in public package: ' + path.name)
 
 
+def index_entry(row):
+    # opkg's fast package-list parser may skip Description and treat a blank
+    # continuation as the end of the record. Keep ALL transport/dependency
+    # metadata before Description, irrespective of the control file's order.
+    keys = [key for key in row if key != 'Description']
+    if 'Description' in row:
+        keys.append('Description')
+    return '\n'.join(f'{key}: {row[key]}' for key in keys) + '\n\n'
+
+
 def collect_records(paths, selected, kernel_version):
     records = {}
     for path in sorted(paths):
@@ -184,7 +194,7 @@ def main():
         filename = item['path'].name
         shutil.copyfile(item['path'], output / filename)
         row = dict(item['control'], Filename=filename, Size=str(item['path'].stat().st_size), SHA256sum=item['sha256'])
-        index.append('\n'.join(f'{key}: {value}' for key, value in row.items()) + '\n\n')
+        index.append(index_entry(row))
         manifest.append(dict(package=name, version=row['Version'], filename=filename, sha256=item['sha256']))
     packages = ''.join(index).encode()
     (output / 'Packages').write_bytes(packages)
