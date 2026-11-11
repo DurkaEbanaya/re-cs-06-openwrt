@@ -1,0 +1,42 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-only
+# Read-only topology/identity report. This does NOT approve a stock migration,
+# perform a backup, restart services or write a block device.
+set -e
+fail() { echo "Preflight refused: $*" >&2; exit 1; }
+[ "$(cat /tmp/sysinfo/board_name)" = jdcloud,re-cs-06 ] || fail board
+[ -r /etc/openwrt_release ] || fail 'OpenWrt installation required'
+root=
+for word in $(cat /proc/cmdline); do
+ case "$word" in root=*) [ -z "$root" ] || fail 'multiple root arguments'; root=${word#root=} ;; esac
+done
+expected=$(sed -n 's/^PARTUUID=//p' /sys/class/block/mmcblk0p23/uevent)
+[ -n "$expected" ] || fail 'missing primary root UUID'
+[ "$(printf '%s' "$root" | tr '[:upper:]' '[:lower:]')" = "partuuid=$(printf '%s' "$expected" | tr '[:upper:]' '[:lower:]')" ] || fail 'not booted from primary root'
+grep -qx 'PARTNAME=0:HLOS' /sys/class/block/mmcblk0p21/uevent || fail 'kernel partition label'
+grep -qx 'PARTNAME=rootfs' /sys/class/block/mmcblk0p23/uevent || fail 'root partition label'
+[ "$(cat /sys/class/block/mmcblk0p21/size)" = 14336 ] || fail 'kernel size'
+sectors=$(cat /sys/class/block/mmcblk0p23/size)
+case "$sectors" in 249856|4194304) ;; *) fail 'unknown root geometry' ;; esac
+[ "$(cat /sys/block/loop0/loop/backing_file)" = /mmcblk0p23 ] || fail 'unexpected overlay backing'
+echo 'RE-CS-06 known primary layout; reporting only, not approval to flash.'
+ubus call system board
+echo '--- Kernel package ABI ---'
+opkg status kernel
+echo '--- Existing owner configuration and application packages ---'
+opkg list-installed
+echo '--- Persistent mounts; back up independently from sysupgrade config ---'
+cat /proc/mounts
+echo '--- Available space ---'
+df -k /tmp /overlay
+echo '--- Upgrade preservation paths (may include application files) ---'
+cat /etc/sysupgrade.conf
+echo '--- Image check ---'
+if [ "$#" -eq 1 ]; then
+ [ -f "$1" ] && [ ! -L "$1" ] || fail 'regular local image required'
+ sha256sum "$1"
+ sysupgrade -T "$1" || fail 'image/geometry check'
+else
+ echo 'No image supplied. Download and independently verify before sysupgrade -T.'
+fi
+echo 'No writes performed. Save an independent config/application backup and a known recovery plan before upgrading.'

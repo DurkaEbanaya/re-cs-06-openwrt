@@ -1,0 +1,9 @@
+{
+  "amneziawg": {
+    "url": "https://github.com/2Grey/awg-openwrt.git",
+    "commit": "e1b127fb4cbe14d81a280805636a57f82df57853",
+    "packages": ["kmod-amneziawg", "amneziawg-tools", "luci-proto-amneziawg"],
+    "kernel_source_commit": "4569c4c67f3a57414969260cafbbd04694fbaae0",
+    "tools_source_commit": "ee0f0a9aa34ff0a0da4b3433b9512781cfe02843"
+  }
+}

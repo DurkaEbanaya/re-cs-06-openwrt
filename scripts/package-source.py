@@ -21,7 +21,7 @@ def patched_paths(repo):
     return names
 
 
-def package(source, output):
+def package(source, output, include_radio=False):
     repo = Path(__file__).resolve().parents[1]
     assert not output.exists()
     omitted = []
@@ -38,22 +38,30 @@ def package(source, output):
             assert path.is_file() or path.is_symlink(), name
             if not path.is_symlink():
                 data = path.read_bytes()
-                if b"\0" in data[:8192] and path.suffix.lower() not in (".png", ".jpg", ".jpeg", ".gif", ".ico", ".woff", ".woff2", ".ttf"):
+                if not include_radio and b"\0" in data[:8192] and path.suffix.lower() not in (".png", ".jpg", ".jpeg", ".gif", ".ico", ".woff", ".woff2", ".ttf"):
                     omitted.append({"tree": prefix, "path": name, "sha256": hashlib.sha256(data).hexdigest(),
                                     "reason": "non-source binary not part of external-radio build"})
                     continue
             inputs.append((path, prefix + "/" + name))
     for path in sorted((source / "dl").iterdir()):
-        if not path.is_file() or path.name.startswith(("ath-fw-", "broadcom-wl-", "ipq-wifi-")):
+        if not path.is_file() or (not include_radio and path.name.startswith(("ath-fw-", "broadcom-wl-", "ipq-wifi-"))):
             continue
         inputs.append((path, "lede/dl/" + path.name))
+    # Explicitly selected external recipes, not arbitrary untracked packages.
+    extra = json.loads((repo / 'extra-packages.lock.json').read_text())
+    for name in extra['amneziawg']['packages']:
+        directory = source / 'package/re-cs-06-extra' / name
+        for path in sorted(directory.rglob('*')):
+            if path.is_file():
+                assert not path.is_symlink() and '.git' not in path.parts
+                inputs.append((path, 'lede/' + path.relative_to(source).as_posix()))
     # Only selected, reviewed configuration/overlay; never keys or build_dir.
     for name in (".config", "feeds.conf"):
         inputs.append((source / name, "lede/" + name))
     for path in (source / "files").rglob("*"):
         if path.is_file():
             assert path.suffix not in (".key", ".pem")
-            assert 'lib/firmware/' not in path.relative_to(source / 'files').as_posix(), \
+            assert include_radio or 'lib/firmware/' not in path.relative_to(source / 'files').as_posix(), \
                 "External-radio source bundle must not include a local firmware overlay"
             inputs.append((path, "lede/" + path.relative_to(source).as_posix()))
     process = subprocess.Popen(["zstd", "-T2", "-3", "-o", str(output)], stdin=subprocess.PIPE)
@@ -80,5 +88,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("source", type=Path)
     parser.add_argument("output", type=Path)
+    parser.add_argument("--include-radio-private", action="store_true",
+                        help="Include local proprietary inputs for a PRIVATE full-image source bundle; not a license grant")
     args = parser.parse_args()
-    print(json.dumps(package(args.source.resolve(), args.output.resolve()), indent=2))
+    print(json.dumps(package(args.source.resolve(), args.output.resolve(), args.include_radio_private), indent=2))

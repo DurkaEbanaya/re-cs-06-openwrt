@@ -1,0 +1,39 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-only
+# Retry only a configured, enabled radio whose PHY appeared after netifd gave up.
+# No wifi reload/down, configuration writes or whole-network restart.
+[ "$(cat /tmp/sysinfo/board_name 2>/dev/null)" = jdcloud,re-cs-06 ] || exit 0
+. /lib/functions.sh
+attempted=' '
+check_radio() {
+ local section="$1" disabled up pending failed phy
+ case "$section" in ''|*[!a-zA-Z0-9_]*) return 0 ;; esac
+ config_get_bool disabled "$section" disabled 0
+ [ "$disabled" = 0 ] || return 0
+ up=$(printf '%s' "$status" | jsonfilter -e "@.$section.up")
+ [ "$up" != true ] || return 0
+ remaining=1
+ pending=$(printf '%s' "$status" | jsonfilter -e "@.$section.pending")
+ failed=$(printf '%s' "$status" | jsonfilter -e "@.$section.retry_setup_failed")
+ [ "$pending" = false ] && [ "$failed" = true ] || return 0
+ case "$attempted" in *" $section "*) return 0 ;; esac
+ phy=$(ubus -S call iwinfo phyname "{\"section\":\"$section\"}" 2>/dev/null | jsonfilter -e '@.phyname')
+ case "$phy" in phy[0-9]*) ;; *) return 0 ;; esac
+ [ -d "/sys/class/ieee80211/$phy" ] || return 0
+ attempted="$attempted$section "
+ logger -t re-cs-06-radio "PHY ready after setup failure; retrying only $section once"
+ /sbin/wifi up "$section"
+ return 0
+}
+for n in $(seq 1 90); do
+ status=$(ubus -S call network.wireless status 2>/dev/null)
+ if [ -n "$status" ]; then
+  remaining=0
+  config_load wireless
+  config_foreach check_radio wifi-device
+  [ "$remaining" != 0 ] || exit 0
+ fi
+ sleep 1
+done
+logger -t re-cs-06-radio 'Radio reconciliation window ended; no further automatic retries'
+exit 0

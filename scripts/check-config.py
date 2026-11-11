@@ -19,6 +19,10 @@ REQUIRED = {
     "luci", "luci-theme-bootstrap", "luci-ssl-openssl", "wpad-openssl",
     "kmod-qcom-ppe", "kmod-dsa-qca8k", "kmod-phy-qca83xx", "kmod-ath12k",
     "kmod-fs-ext4", "e2fsprogs", "opkg", "kmod-usb-storage", "kmod-usb-storage-uas",
+    "kmod-wireguard", "wireguard-tools", "luci-proto-wireguard", "kmod-veth",
+    "kmod-tun", "kmod-nft-queue", "libnetfilter-queue", "kmod-usb-net-qmi-wwan",
+    "kmod-usb-net-cdc-mbim", "kmod-usb-serial-option", "luci-proto-qmi",
+    "luci-proto-mbim", "sms-tool", "coreutils-stty",
 }
 
 

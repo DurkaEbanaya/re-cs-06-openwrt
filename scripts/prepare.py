@@ -56,6 +56,8 @@ def main():
     for feed in lock["feeds"]:
         checkout(feed["url"], feed["commit"], source / "feeds" / feed["name"])
         feed_lines.append(f"src-git {feed['name']} {feed['url']}^{feed['commit']}\n")
+    run(["python3", str(REPO / "scripts/prepare-extra-packages.py"), str(source),
+         str(source.parent / "awg-recipes")], REPO)
     # Feed indexing (-i only) and package selection happen in the container.
     (source / "feeds.conf").write_text("".join(feed_lines))
     if (source / "files").exists():

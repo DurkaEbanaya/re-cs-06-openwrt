@@ -2,6 +2,9 @@
 # Board-specific checked tar upgrade; never changes GPT, ART or boot firmware.
 recs06_prepare_upgrade() {
 	local image="$1" list kernel_dev root_dev kernel_size root_size root_sectors
+	[ "$(board_name)" = jdcloud,re-cs-06 ] || return 1
+	# This is an OpenWrt-to-OpenWrt upgrade, never a stock firmware installer.
+	[ -r /etc/openwrt_release ] || return 1
 	RECS06_TMP=$(mktemp -d /tmp/recs06-upgrade.XXXXXX) || return 1
 	list=$(tar tf "$image") || return 1
 	[ "$list" = 'sysupgrade-jdcloud_re-cs-06/
@@ -25,6 +28,15 @@ sysupgrade-jdcloud_re-cs-06/root' ] || return 1
 	kernel_dev=$(find_mmc_part '0:HLOS')
 	root_dev=$(find_mmc_part rootfs)
 	[ -b "$kernel_dev" ] && [ -b "$root_dev" ] && [ "$kernel_dev" != "$root_dev" ] || return 1
+	# Partition names must resolve to the known primary pair on the same eMMC.
+	# Do not write a secondary slot or change BOOTCONFIG to guess boot selection.
+	[ "$kernel_dev" = /dev/mmcblk0p21 ] && [ "$root_dev" = /dev/mmcblk0p23 ] || return 1
+	grep -qx 'PARTNAME=0:HLOS' /sys/class/block/mmcblk0p21/uevent || return 1
+	grep -qx 'PARTNAME=rootfs' /sys/class/block/mmcblk0p23/uevent || return 1
+	local kernel_start root_start
+	kernel_start=$(cat /sys/class/block/mmcblk0p21/start) || return 1
+	root_start=$(cat /sys/class/block/mmcblk0p23/start) || return 1
+	[ "$kernel_start" -gt 0 ] && [ "$root_start" -ge $((kernel_start + 14336)) ] || return 1
 	[ "$(cat "/sys/class/block/${kernel_dev##*/}/size")" = 14336 ] || return 1
 	root_sectors=$(cat "/sys/class/block/${root_dev##*/}/size") || return 1
 	# Known layouts only: modified 2 GiB or the stock 122 MiB primary slot.

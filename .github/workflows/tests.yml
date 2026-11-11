@@ -24,3 +24,8 @@ jobs:
           sh -n scripts/container-run
           sh -n overlay/etc/uci-defaults/90-minimal-defaults
           sh -n overlay/usr/sbin/re-cs-06-provision-macs
+          sh -n overlay/etc/uci-defaults/89-re-cs-06-package-sources
+          sh -n overlay/usr/sbin/re-cs-06-upgrade-preflight
+          sh -n overlay/lib/upgrade/re-cs-06.sh
+          sh -n scripts/test-network-support.sh
+          sh -n overlay/usr/libexec/re-cs-06-radio-reconcile

@@ -33,6 +33,8 @@ find_device() {
 	local name
 	config_get name "$1" name
 	[ "$name" != "$wanted" ] || found="$1"
+	# config_foreach must not inherit a failed comparison under set -e.
+	return 0
 }
 set_device_mac() {
 	local wanted="$1" value="$2" found=""

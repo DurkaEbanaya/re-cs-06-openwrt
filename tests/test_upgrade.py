@@ -44,6 +44,11 @@ class UpgradeTests(unittest.TestCase):
             sizepath.mkdir(parents=True, exist_ok=True)
             (sizepath / 'size').write_text('14336' if name == 'hlos' else '4194304')
             (sizepath / 'uevent').write_text('PARTUUID=12345678-abcd-0000-0000-000000000001\n')
+        (root / 'sys/hlos/uevent').write_text('PARTNAME=0:HLOS\n')
+        (root / 'sys/rootfs/uevent').write_text('PARTUUID=12345678-abcd-0000-0000-000000000001\nPARTNAME=rootfs\n')
+        (root / 'sys/hlos/start').write_text('72738\n')
+        (root / 'sys/rootfs/start').write_text('101410\n')
+        (root / 'openwrt_release').write_text("DISTRIB_ID='RE-CS-06-Minimal-LEDE'\n")
         (root / 'cmdline').write_text('console=ttyMSM0 root=PARTUUID=12345678-abcd-0000-0000-000000000001 rootwait')
         # Only replace device-test and sysfs path strings. Original write/hash
         # logic runs unchanged against fixture files.
@@ -51,6 +56,10 @@ class UpgradeTests(unittest.TestCase):
         script = script.replace('[ -b "$kernel_dev" ]', '[ -f "$kernel_dev" ]')
         script = script.replace('[ -b "$root_dev" ]', '[ -f "$root_dev" ]')
         script = script.replace('/sys/class/block/', str(root / 'sys') + '/')
+        script = script.replace('/dev/mmcblk0p21', str(root / 'hlos'))
+        script = script.replace('/dev/mmcblk0p23', str(root / 'rootfs'))
+        script = script.replace('mmcblk0p21/', 'hlos/').replace('mmcblk0p23/', 'rootfs/')
+        script = script.replace('/etc/openwrt_release', str(root / 'openwrt_release'))
         script = script.replace('/proc/cmdline', str(root / 'cmdline'))
         script = script.replace('/tmp/recs06-upgrade.', str(root / 'scratch.'))
         (root / 'script').write_text(script)
@@ -58,6 +67,7 @@ class UpgradeTests(unittest.TestCase):
 
     def run_script(self, root, image, operation):
         command = '''. "$FIXTURE/script"
+board_name() { echo jdcloud,re-cs-06; }
 find_mmc_part() { case "$1" in 0:HLOS) echo "$FIXTURE/hlos";; rootfs) echo "$FIXTURE/rootfs";; esac; }
 OPERATION "$FIXTURE/image.tar"
 '''.replace('OPERATION', operation)
@@ -152,6 +162,17 @@ OPERATION "$FIXTURE/image.tar"
                             'root=/dev/mmcblk0p24', 'console=ttyMSM0',
                             'root=PARTUUID=12345678-abcd-0000-0000-000000000001 root=/dev/mmcblk0p24'):
                 (root / 'cmdline').write_text(cmdline)
+                before = (root / 'rootfs').read_bytes(), (root / 'hlos').read_bytes()
+                self.assertNotEqual(self.run_script(root, image, 'recs06_do_upgrade').returncode, 0)
+                self.assertEqual(before, ((root / 'rootfs').read_bytes(), (root / 'hlos').read_bytes()))
+
+    def test_wrong_partition_names_or_overlap_refused_before_write(self):
+        with tempfile.TemporaryDirectory() as temp:
+            for field, value in [('hlos/uevent', 'PARTNAME=0:HLOS_1\n'),
+                                 ('rootfs/uevent', 'PARTNAME=rootfs_1\n'),
+                                 ('rootfs/start', '72739\n')]:
+                root, image, _, _ = self.fixture(temp)
+                (root / 'sys' / field).write_text(value)
                 before = (root / 'rootfs').read_bytes(), (root / 'hlos').read_bytes()
                 self.assertNotEqual(self.run_script(root, image, 'recs06_do_upgrade').returncode, 0)
                 self.assertEqual(before, ((root / 'rootfs').read_bytes(), (root / 'hlos').read_bytes()))

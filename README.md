@@ -3,7 +3,18 @@
 Experimental, source-based build for **JDCloud RE-CS-06 / BE6500** with
 Qualcomm IPQ5322/IPQ5332. This is **not an official OpenWrt release**.
 
-**Latest full local candidate: usb-clocks-r15, Linux 6.18.60.** The same full
+**Latest source update: [r18 package support](docs/RELEASE-R18.md)** — matching
+WG/AWG, veth/TUN, NFQUEUE and modem dependencies, a signed offline feed and upgrade
+guards for the known primary-root layouts. A full local build was tested on one
+122 MiB-root unit, including isolated VPN/NFQUEUE tests and a second reboot with
+the radio-start reconciliation fix. Other layouts and cold boot are not newly
+certified. The public r18 release contains source, not an all-in-one radio image;
+complete personal-use images are distributed separately in a private repository.
+
+**[Простыми словами: ядро и совместимость пакетов](docs/KERNEL-PACKAGES-RU.md)** ·
+**[Состав r18 и границы проверки](docs/PACKAGE-SUPPORT-R18.md)**
+
+**Historical r15 hardware baseline, Linux 6.18.60.** The same full
 image is installed on both inspected RE-CS-06 units: one with a modified
 bootloader/2 GiB primary root and the other with its stock bootloader/122 MiB
 primary root. Each retains its own persistent settings, identity and keys;

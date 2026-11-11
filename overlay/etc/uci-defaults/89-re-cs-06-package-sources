@@ -1,0 +1,10 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-only
+# Run even when an owner network configuration is restored. Official packages
+# do not provide this custom target/kernel ABI. Retain custom/local feeds and
+# package signature verification; never synthesize a standard release number.
+[ "$(cat /tmp/sysinfo/board_name 2>/dev/null)" = jdcloud,re-cs-06 ] || exit 0
+path=/etc/opkg/distfeeds.conf
+[ -f "$path" ] || exit 0
+sed -i '\|^src/gz .*https\{0,1\}://downloads\.openwrt\.org/|s|^|# Disabled for custom build: |' "$path"
+exit 0
